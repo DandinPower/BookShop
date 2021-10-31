@@ -13,13 +13,24 @@ router.post('/', async (req, res, next)=> {
     var result = {}
     try {
         result = await database.sqlConnection(sql);
-        res.json(result)
     } catch(e){
         console.log(e);
         res.sendStatus(500)
     }
-    console.log(result)
-
+    if (result == ""){
+        res.send("無此使用者")
+    }
+    else{
+        var name = result[0].name
+        var password = result[0].password
+        if (password != loginData.userPassword){
+            res.send("密碼錯誤")
+        }
+        else{
+            res.send(`hello ${name}`)
+            return;
+        }
+    }
 })
 
 module.exports = router
