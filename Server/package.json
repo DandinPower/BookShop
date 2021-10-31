@@ -1,0 +1,23 @@
+{
+  "name": "TeamProject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "server": "npx nodemon server.js -w server",
+    "test": "mocha --exit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "app": "^0.1.0",
+    "chai": "^4.3.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mocha": "^9.1.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.14"
+  }
+}

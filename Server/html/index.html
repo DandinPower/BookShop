@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <title>克萊柏登入</title>
+    <style>
+        table,tr,th,td{
+            border:2px solid black;
+            border-collapse:collapse;
+        }
+    </style>
+</head>
+<body>
+    <h2>登入頁面</h2>
+    <form action="/login" method="POST">
+        <h3>帳戶名稱</h3>
+        <input type="text" name="userName" />
+        <h3>密碼</h3>
+        <input type="text" name="userPassword" />
+        <br>
+        <br>
+        <input type="submit" value ="登入"/>
+    </form>  
+    <form action="/register" method="GET">
+        <h3>還沒有帳戶嗎?</h3>
+        <input type="submit" value ="註冊"/>
+    </form>  
+</body>
+</html>
