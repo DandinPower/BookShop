@@ -35,7 +35,7 @@ npm run server
 
 ```json
 {
-		"userName":"admin",
-		"userPassword": "admin"
+    "userName":"admin",
+    "userPassword": "admin"
 }
 ```
