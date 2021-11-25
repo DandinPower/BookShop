@@ -2,11 +2,7 @@ const express = require('express')
 const database = require('../database/index')
 const router = express.Router()
 
-router.get('/', async (req, res, next)=> {        
-    res.sendFile('register.html',{ root: 'html' })
-})
-
-router.post('/send', async (req, res, next)=> {        
+router.post('/', async (req, res, next)=> {        
     var data = req.body
     let _userName = data["userName"]
     let _userPassword = data["userPassword"]
