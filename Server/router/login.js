@@ -8,27 +8,37 @@ router.post('/', async (req, res, next)=> {
         "userName":req.body.userName,
         "userPassword": req.body.userPassword,
     }
-    const sql = `SELECT * FROM customers WHERE name = "${loginData.userName}";`
+    const sql = `SELECT * FROM account WHERE userName = "${loginData.userName}";`
     console.log(sql)
-    var result = {}
+    var response = {
+        "name":"",
+        "token":"",
+        "state":""
+    }
     try {
         result = await database.sqlConnection(sql);
+        console.log(result);
     } catch(e){
         console.log(e);
-        res.sendStatus(500)
     }
     if (result == ""){
-        res.send("無此使用者")
+        response["state"] = "500"
+        res.json(response)
     }
     else{
         var name = result[0].name
         var password = result[0].password
+        console.log(result)
+        var token = "testToken"
         if (password != loginData.userPassword){
-            res.send("密碼錯誤")
+            response["state"] = "500"
+            res.json(response)
         }
         else{
-            res.send(`hello ${name}`)
-            return;
+            response["name"] = name
+            response["token"] = token
+            response["state"] = "200"
+            res.json(response)
         }
     }
 })

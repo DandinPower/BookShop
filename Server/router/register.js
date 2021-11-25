@@ -6,15 +6,23 @@ router.post('/', async (req, res, next)=> {
     var data = req.body
     let _userName = data["userName"]
     let _userPassword = data["userPassword"]
-    let _secret = "dsasdawd4312313"
-    const sql = `insert into customers (name,password,secret) values ("${_userName}","${_userPassword}","${_secret}");`
+    let _name = data["name"]
+    let _gender = data["gender"]
+    let _email = data["email"]
+    let _phone = data["phone"]
+    let _address = data["address"]
+    const sql = `insert into account (address,gender,phone,email,password,username,name) values ("${_address}","${_gender}","${_phone}","${_email}","${_userPassword}","${_userName}","${_name}");`
     console.log(sql)
+    var response = {
+        "state":""
+    }
     try {
         let result = await database.sqlConnection(sql);
-        res.json(result)
+        response["state"] = "200";
+        res.json(response)
     } catch(e){
-        console.log(e);
-        res.sendStatus(500)
+        response["state"] = "500";
+        res.json(response)
     }
 })
 
