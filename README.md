@@ -1,41 +1,112 @@
 # TeamProject
 
-# 安裝指南
+# 使用說明
 
-- 進入Server的目錄開啟Terminal
+1. React前端
+    - 進入Client/bookstore/的目錄開啟Terminal
+2. Express後端
+    - 進入Server/的目錄開啟Terminal
 
-```bash
-npm install
-```
+# 安裝方法
+
+1. React前端
+    
+    ```bash
+    npm install
+    ```
+    
+2. Express後端
+    
+    ```bash
+    npm install
+    ```
+    
 
 # 運行伺服器
 
-```bash
-npm run server
-```
+1. React前端
+    
+    ```bash
+    npm start
+    ```
+    
+2. Express後端
+    
+    ```bash
+    npm run server
+    ```
+    
 
-# API
+# login
 
-## Login登入
+### API
 
-- POST請求
-- 地址為 localhost:5000/login
+- POST
+- [http://localhost:5000/login](http://localhost:5000/login)/
+- Req
+    
+    ```json
+    {
+        "userName":"admin",
+        "userPassword": "admin"
+    }
+    ```
+    
+- Res
+    - 成功
+    
+    ```json
+    {
+    	"name":"test",
+    	"token":"21312312",
+    	"state":"200"
+    }
+    ```
+    
+    - 失敗
+    
+    ```json
+    {
+    	"name":"",
+    	"token":"",
+    	"state":"500"
+    }
+    ```
+    
 
-```json
-{
-    "userName":"admin",
-    "userPassword": "admin"
-}
-```
+## Register
 
-## Register註冊
+### API
 
-- POST請求
-- 地址為 localhost:5000/register
-
-```json
-{
-    "userName":"admin",
-    "userPassword": "admin"
-}
-```
+- POST
+- [http://localhost:5000/](http://localhost:5000/login)register/
+- Req
+    
+    ```json
+    {
+        "userName":"admin",
+        "userPassword": "admin",
+    	"name":"test",
+    	"gender":"1",
+   		"email":"123@gmail.com",
+   		"phone":"091234567",
+   		"address":"台南市安平區87號"
+    }
+    ```
+    
+- Res
+    - 成功
+    
+    ```json
+    {
+   		"state":"200"
+    }
+    ```
+    
+    - 失敗
+    
+    ```json
+    {
+    	"state":"500"
+    }
+    ```
