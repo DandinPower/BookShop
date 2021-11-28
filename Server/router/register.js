@@ -19,11 +19,12 @@ router.post('/', async (req, res, next)=> {
     try {
         let result = await database.sqlConnection(sql);
         response["state"] = "200";
-        res.json(response)
+        console.log(result)
     } catch(e){
         response["state"] = "500";
-        res.json(response)
+        console.log(e)
     }
+    res.json(response)
 })
 
 module.exports = router
