@@ -116,9 +116,6 @@
     - GET
     - [http://localhost:5000/](http://localhost:5000/login)product/categories/
         
-        ```json
-        []
-        ```
         
     - Res
         - 有商品時
