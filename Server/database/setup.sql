@@ -10,7 +10,6 @@ create table account (
         password varchar(20) not null,
         userName varchar(20) not null unique,
         name varchar(20) not null,
-        token varchar(20)
 );
 
 create table product (
