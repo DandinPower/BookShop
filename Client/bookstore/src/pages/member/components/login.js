@@ -7,7 +7,7 @@ const Login = () => {
     const submit = () => {
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/register/',
+            url: 'http://localhost:5000/login/',
             data:{
               userName: id,
               userPassword: password,
