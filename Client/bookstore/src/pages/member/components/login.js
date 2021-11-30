@@ -34,7 +34,7 @@ const Login = () => {
         <br/>
         <button onClick={submit}>登入</button>
         <nav>
-            <li><Link to="/register">註冊</Link></li>
+            <li><Link to="/member/register">註冊</Link></li>
         </nav>
         
     </div>

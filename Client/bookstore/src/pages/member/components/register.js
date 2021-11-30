@@ -38,7 +38,7 @@ const Register = () => {
     return (
         <div>
             <h1>註冊帳號</h1>
-            <table class="table">
+            <table className="table">
                 <colgroup>
                     <col width="30%"/>
                     <col width="70%"/>
