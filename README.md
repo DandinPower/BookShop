@@ -71,6 +71,36 @@
             "state":"500"
         }
         ```
+
+- 驗證token是否正確
+    - POST
+    - [http://localhost:5000/login](http://localhost:5000/login)/check
+    - Req
+        
+        ```json
+        {
+        		"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9zZXBoIiwidXNlck5hbWUiOiJkYW5kaW5wb3dlcjEyMyIsImVtYWlsIjoidG9taG90MjQ2QGdtYWlsLmNvbSIsImlhdCI6MTYzODI4OTU4NCwiZXhwIjoxNjM4Mzc1OTg0fQ.T554S5M_JRFSXmnao8O0ctH3l6ktXNj_zRE7zlPd8h4"
+        }
+        ```
+        
+    - Res
+        - token正確
+        
+        ```json
+        "token 正確"
+        ```
+        
+        - token錯誤
+        
+        ```json
+        "token 錯誤"
+        ```
+        
+        - 沒有傳token
+        
+        ```json
+        "沒有提供token"
+        ```
         
 
 ## Register

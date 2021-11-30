@@ -9,7 +9,7 @@ function verifyToken(req,res,next){
     if (token) {
         jwt.verify(token, 'ThisIsSecurityMix@TPE&4255',(err,decoded)=>{
           if (err) {
-            return res.status(500).send('token認證錯誤')
+            return res.status(500).send('token 錯誤')
           } else {
             req.decoded = decoded;
             next();
@@ -71,7 +71,6 @@ router.post('/', async (req, res, next)=> {
 })
 
 router.post('/check',verifyToken,(req, res)=> {
-    console.log('hi')
     res.send('token 正確')
 })
 
