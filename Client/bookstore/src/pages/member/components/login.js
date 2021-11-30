@@ -26,7 +26,6 @@ const Login = () => {
     }
     return <div>
         <h1>會員登入</h1>
-        <h2>李永祺 到此一遊</h2>
         <input type='text' name='ID' placeholder='請輸入帳號' value={id} onChange={(e) => {setID(e.target.value)}}></input>
         <br/>
         <br/>
