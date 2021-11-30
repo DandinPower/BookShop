@@ -79,7 +79,7 @@
         
         ```json
         {
-        		"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9zZXBoIiwidXNlck5hbWUiOiJkYW5kaW5wb3dlcjEyMyIsImVtYWlsIjoidG9taG90MjQ2QGdtYWlsLmNvbSIsImlhdCI6MTYzODI4OTU4NCwiZXhwIjoxNjM4Mzc1OTg0fQ.T554S5M_JRFSXmnao8O0ctH3l6ktXNj_zRE7zlPd8h4"
+            "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9zZXBoIiwidXNlck5hbWUiOiJkYW5kaW5wb3dlcjEyMyIsImVtYWlsIjoidG9taG90MjQ2QGdtYWlsLmNvbSIsImlhdCI6MTYzODI4OTU4NCwiZXhwIjoxNjM4Mzc1OTg0fQ.T554S5M_JRFSXmnao8O0ctH3l6ktXNj_zRE7zlPd8h4"
         }
         ```
         
