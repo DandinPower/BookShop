@@ -57,6 +57,7 @@
         ```json
         {
             "name":"test",
+            "userName":"admin",
             "token":"21312312",
             "state":"200"
         }
@@ -67,6 +68,7 @@
         ```json
         {
             "name":"",
+            "userName":"",
             "token":"",
             "state":"500"
         }

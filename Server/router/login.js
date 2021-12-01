@@ -30,6 +30,7 @@ router.post('/', async (req, res, next)=> {
     console.log(sql)
     var response = {
         "name":"",
+        "userName":"",
         "token":"",
         "state":""
     }
@@ -46,6 +47,7 @@ router.post('/', async (req, res, next)=> {
     else{
         var name = result[0].name
         var password = result[0].password
+        var userName = result[0].userName
         console.log(result)
         let setToken = {
             name : result[0].name,
@@ -63,6 +65,7 @@ router.post('/', async (req, res, next)=> {
         }
         else{
             response["name"] = name
+            response["userName"] = userName
             response["token"] = token
             response["state"] = "200"
             res.json(response)
