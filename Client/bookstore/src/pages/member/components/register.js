@@ -28,7 +28,8 @@ const Register = () => {
             console.log(response.data);
             console.log(response.data.state);
             if(response.data.state === '200'){
-              alert('註冊成功')
+                window.location.href = '/member/login'
+                alert('註冊成功')
             }
             else if(response.data.state === '500'){
                 alert('註冊失敗')
