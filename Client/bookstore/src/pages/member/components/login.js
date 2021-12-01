@@ -16,6 +16,7 @@ const Login = () => {
             console.log(response.data);
             if(response.data.state === '200'){
                 window.sessionStorage.setItem('name',response.data.name)
+                window.sessionStorage.setItem('userName',response.data.userName)
                 window.sessionStorage.setItem('token',response.data.token)
                 alert('登入成功')
             }
