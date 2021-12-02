@@ -16,7 +16,6 @@ const Category = ({selectCate}) =>{
     return (
         <select onChange={(e => selectCate(e.target.value))}>
             <option>請選擇書的種類</option>
-            <option>全部</option>
             {listCategory}
         </select>
     )
