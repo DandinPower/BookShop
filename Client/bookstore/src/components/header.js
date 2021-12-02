@@ -10,7 +10,7 @@ const Header = () => {
         <div>
             <Link to="/"><img style = {{ width: '50px' ,height: '50px'}} src={Icon1} alt="icon"/></Link>
             <Link to="/member/login">登入</Link>
-            <Link to="/Products">|產品</Link>
+            <Link to="/Products/category">|產品</Link>
             <p>{state}</p>
         </div>
     )
