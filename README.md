@@ -53,7 +53,7 @@
             "email":"123@gmail.com",
             "phone":"091234567",
             "address":"台南市安平區87號",
-            "type":"customer
+            "type":"customer"
         }
         ```
         - type的狀態
@@ -212,7 +212,6 @@
         {
             "userName":"test",    //userName不能修改
             "token":"12312331213231213",
-            "type":"customer",
             "userPassword": "admin",
             "name":"test",
             "gender":"1",
@@ -227,7 +226,6 @@
         {
             "userName":"test",    //userName不能修改
             "token":"12312331213231213",
-            "type":"business",
             "userPassword": "admin",
             "name":"test",
             "gender":"1",
