@@ -3,7 +3,7 @@ import Product from "./product"
 import React, {useState} from 'react'
 const Products = () => {
 
-    const [selectedCategory,setSelectedCategory] =useState('');
+    const [selectedCategory,setSelectedCategory] =useState('all');
 
     return (
         <div>
