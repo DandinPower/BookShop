@@ -1,15 +1,15 @@
 use dandinpo_teamproject;
 create table account ( 
-		id int primary key auto_increment,
-        adminId int,
-        address varchar(50) not null,
-        gender char(1) not null,
-        rating int default 0,
-        phone char(10) not null,
-        email varchar(30) not null unique,
-        password varchar(20) not null,
-        userName varchar(20) not null unique,
-        name varchar(20) not null,
+	id int primary key auto_increment,
+	adminId int,
+	address varchar(50) not null,
+	gender char(1) not null,
+	rating int default 0,
+	phone char(10) not null,
+	email varchar(30) not null unique,
+	password varchar(20) not null,
+	userName varchar(20) not null unique,
+	name varchar(20) not null
 );
 
 create table product (
@@ -31,8 +31,31 @@ create table business (
     logo varchar(100) not null,
     foreign key(id)references account(id)on delete cascade
 );
-
 alter table product add foreign key(businessId)references business(id)on delete cascade;
+
+create table customer (
+	id int primary key,
+    paymentInfo varchar(20),
+    foreign key(id)references account(id)on delete cascade
+);
+
+create table orders (
+	 orderNo int primary key auto_increment,
+     orderDate Date not null,
+     arrivalDate Date,
+     quantity int not null,
+     status varchar(20) not null
+);
+
+create table manage (
+	businessId int,
+    orderNo int,
+    productId int,
+    primary key(businessId,orderNo,productId),
+    foreign key(businessId)references business(id)on delete cascade,
+    foreign key(orderNo)references orders(orderNo)on delete cascade,
+    foreign key(productId)references product(no)on delete cascade
+);
 
 insert into account (address,gender,phone,email,password,userName,name) value ("235新北市中和區景新街347號","1","0912733812","pchome.gmail.com","secret1234","pchome","Pchome24H店家");
 insert into business (id,description,logo) value ((SELECT LAST_INSERT_ID()),"pchome在克萊柏的帳號","image/logo/pchome.png");
