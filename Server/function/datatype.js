@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 function json2json(json){
     var result = {};
     var keys = Object.keys(json);
@@ -6,6 +8,24 @@ function json2json(json){
     });
     return result;
 }
+function verifyToken(req,res,next){
+    let token = req.body.token || req.query.token;
+    console.log("verify Token" , token);
+    if (token) {
+        jwt.verify(token, 'ThisIsSecurityMix@TPE&4255',(err,decoded)=>{
+          if (err) {
+            return res.status(500).send('token 錯誤')
+          } else {
+            req.decoded = decoded;
+            next();
+          }
+        })
+      } else {
+        return res.status(403).send('沒有提供token')
+      }
+  }
+
+
 function getUser() {
     // Code here
 }
@@ -17,5 +37,6 @@ function getUsers() {
 module.exports = {
     getUser,
     getUsers,
-    json2json
+    json2json,
+    verifyToken
 }

@@ -20,7 +20,7 @@ router.get('/categories', async (req, res, next)=> {
 })
 
 router.get('/category/:name', async (req, res, next)=> {        
-    const sql = `select A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where P.category = "${req.params.name}" and B.id = A.id;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where P.category = "${req.params.name}" and B.id = A.id;`
     var response = []
     console.log(sql)
     try {
@@ -38,7 +38,7 @@ router.get('/category/:name', async (req, res, next)=> {
 })
 
 router.get('/all', async (req, res, next)=> {        
-    const sql = `select A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id;`
     var response = []
     console.log(sql)
     try {
