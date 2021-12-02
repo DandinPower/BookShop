@@ -27,15 +27,15 @@ create table product (
 
 create table business (
 	id int primary key,
-    description varchar(100),
-    logo varchar(100) not null,
+    description varchar(100) default "",
+    logo varchar(100) default "image/1.jpg",
     foreign key(id)references account(id)on delete cascade
 );
 alter table product add foreign key(businessId)references business(id)on delete cascade;
 
 create table customer (
 	id int primary key,
-    paymentInfo varchar(20),
+    paymentInfo varchar(20) default "現金",
     foreign key(id)references account(id)on delete cascade
 );
 
@@ -63,3 +63,7 @@ insert into business (id,description,logo) value ((SELECT LAST_INSERT_ID()),"pch
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述物理學歷史","你應該擁有的一本牛頓萬有引力",1099,"1","物理","image/product/picture2.jpg","2021-11-30");
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述電子學的知識","電子學概論",999,"1","電類","image/product/picture3.jpg","2021-11-28");
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29");
+
+select * from business;
+select * from customer;
+select * from account;

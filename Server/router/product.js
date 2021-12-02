@@ -54,7 +54,7 @@ router.get('/all', async (req, res, next)=> {
     }
     res.json(response)
 })
-
+/*
 router.post('/add', async (req, res, next)=> {      
     req.forEach(function(item, index, array) {
         let product = datatype.json2json(item)
@@ -72,7 +72,7 @@ router.post('/add', async (req, res, next)=> {
         }
       });
     res.send(response)
-})
+})*/
 
 router.post('/search', async (req, res, next)=> {        
     var userName = req.body.userName;

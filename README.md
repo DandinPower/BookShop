@@ -188,6 +188,7 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "description":"pchome賣家",
+            "logo":"image/1.jpg", //可以是預設的圖片
             "error":"",
             "state":200
         }
@@ -219,7 +220,8 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "paymentInfo":"現金",
-            "description":""
+            "description":"",
+            "logo":""
         }
         ```
         ```json
@@ -233,7 +235,8 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "paymentInfo":"",
-            "description":"pchome賣家"
+            "description":"pchome賣家",
+            "logo":"image/1.jpg"
         }
         ```
         
