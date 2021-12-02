@@ -57,7 +57,7 @@ router.post('/', async (req, res, next)=> {
         let token = jwt.sign(
             JSON.parse(JSON.stringify(setToken)), 
             'ThisIsSecurityMix@TPE&4255',
-            {expiresIn: 60*60*24}
+            {expiresIn: 60*6*24}
           )
         if (password != loginData.userPassword){
             response["state"] = "500"

@@ -6,7 +6,7 @@ create table account (
         gender char(1) not null,
         rating int default 0,
         phone char(10) not null,
-        email varchar(30) not null,
+        email varchar(30) not null unique,
         password varchar(20) not null,
         userName varchar(20) not null unique,
         name varchar(20) not null,
