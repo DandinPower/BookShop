@@ -64,6 +64,4 @@ insert into product (businessId,description,name,price,status,category,image,upl
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述電子學的知識","電子學概論",999,"1","電類","image/product/picture3.jpg","2021-11-28");
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29");
 
-select * from business;
-select * from customer;
-select * from account;
+select A.userName,A.userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo,B.description,B.logo from account as A,customer as C,business as B where A.id = C.id or A.id = B.id;

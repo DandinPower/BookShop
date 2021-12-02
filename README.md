@@ -131,19 +131,28 @@
         - token正確
         
         ```json
-        "token 正確"
+        {
+            "error":"",
+            "state":200
+        }
         ```
         
         - token錯誤
         
         ```json
-        "token 錯誤"
+        {
+            "error":"token錯誤",
+            "state":500
+        }
         ```
         
         - 沒有傳token
         
         ```json
-        "沒有提供token"
+        {
+            "error":"沒有提供token",
+            "state":500
+        }
         ```
         
 - 查詢個人狀態
@@ -171,6 +180,8 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "paymentInfo":"現金",
+            "description":"",
+            "logo":"",
             "error":"",
             "state":200
         }
@@ -187,6 +198,7 @@
             "email":"123@gmail.com",
             "phone":"091234567",
             "address":"台南市安平區87號",
+            "paymentInfo":"",
             "description":"pchome賣家",
             "logo":"image/1.jpg", //可以是預設的圖片
             "error":"",

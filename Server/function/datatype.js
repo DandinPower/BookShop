@@ -14,14 +14,20 @@ function verifyToken(req,res,next){
     if (token) {
         jwt.verify(token, 'ThisIsSecurityMix@TPE&4255',(err,decoded)=>{
           if (err) {
-            return res.status(500).send('token 錯誤')
+            return res.status(500).json({
+              "error":"token錯誤",
+              "state":500
+          })
           } else {
             req.decoded = decoded;
             next();
           }
         })
       } else {
-        return res.status(403).send('沒有提供token')
+        return res.status(403).json({
+          "error":"沒有提供token",
+          "state":500
+      })
       }
   }
 
