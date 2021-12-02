@@ -37,4 +37,22 @@ router.get('/category/:name', async (req, res, next)=> {
     res.json(response)
 })
 
+router.get('/all', async (req, res, next)=> {        
+    const sql = `select A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id;`
+    var response = []
+    console.log(sql)
+    try {
+        result = await database.sqlConnection(sql);
+        console.log(result);
+        result.forEach(function(item, index, array) {
+            let product = datatype.json2json(item)
+            console.log(product)
+            response.push(product)
+          });
+    } catch(e){
+        console.log(e);
+    }
+    res.json(response)
+})
+
 module.exports = router
