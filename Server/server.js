@@ -7,8 +7,6 @@ const index = require('./router/index')
 const register = require('./router/register')
 const product = require('./router/product')
 
-console.log('測試')
-
 app.use(express.json())
 app.use(cors())
 app.use('',index)

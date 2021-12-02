@@ -164,8 +164,55 @@
         ```json
         []
         ```
+
+- 取得所有商品資訊
+    - GET
+    - [http://localhost:5000/](http://localhost:5000/login)product/all
+    - Res
+        - 資料庫有商品
         
-- 根據商品分類
+        ```json
+        [
+        	{
+                "businessName": "Pchome24H店家",
+                "description": "講述物理學歷史",
+                "name": "你應該擁有的一本牛頓萬有引力",
+                "price": 1099,
+                "status": "1",
+                "category": "物理",
+                "image": "image/product/picture2.jpg",
+                "uploadedDate": "2021-11-29T16:00:00.000Z"
+            },
+            {
+                "businessName": "Pchome24H店家",
+                "description": "講述電子學的知識",
+                "name": "電子學概論",
+                "price": 999,
+                "status": "1",
+                "category": "電類",
+                "image": "image/product/picture3.jpg",
+                "uploadedDate": "2021-11-27T16:00:00.000Z"
+            },
+            {
+                "businessName": "Pchome24H店家",
+                "description": "講述基本電學的知識",
+                "name": "基本電學概論",
+                "price": 890,
+                "status": "1",
+                "category": "電類",
+                "image": "image/product/picture1.jpg",
+                "uploadedDate": "2021-11-28T16:00:00.000Z"
+            }
+        ]
+        ```
+        
+        - 資料庫沒有商品
+        
+        ```json
+        []
+        ```   
+
+- 根據商品分類取得商品資訊
     - GET
     - [http://localhost:5000/](http://localhost:5000/login)product/category/分類名稱
     - Res
