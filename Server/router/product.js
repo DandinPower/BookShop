@@ -55,4 +55,39 @@ router.get('/all', async (req, res, next)=> {
     res.json(response)
 })
 
+router.post('/add', async (req, res, next)=> {      
+    req.forEach(function(item, index, array) {
+        let product = datatype.json2json(item)
+        var userName = product.body.userName;
+        var token = product.body.token;
+        var productId = product.body.productId;
+        var quantity = product.body.quantity;
+        const sql = ``
+        console.log(sql)
+        try {
+            result = await database.sqlConnection(sql);
+            console.log(result);
+        } catch(e){
+            console.log(e);
+        }
+      });
+    res.send(response)
+})
+
+router.post('/search', async (req, res, next)=> {        
+    var userName = req.body.userName;
+    var token = req.body.token;
+    const sql = ``
+    console.log(sql)
+    try {
+        result = await database.sqlConnection(sql);
+        console.log(result);
+    } catch(e){
+        console.log(e);
+    }
+    res.send(response)
+})
+
+
+
 module.exports = router

@@ -155,6 +155,7 @@
         ```
         
     - Res
+        - 如果是customer
         
         ```json
         {
@@ -166,20 +167,31 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "paymentInfo":"現金",
+            "error":"",
             "state":200
         }
         ```
         
+        - 如果是business
+
         ```json
         {
-            "userName":"",
-            "userPassword": "",
-            "name":"",
-            "gender":"",
-            "email":"",
-            "phone":"",
-            "address":"",
-            "paymentInfo":"",
+            "userName":"test",
+            "userPassword": "admin",
+            "name":"test",
+            "gender":"1",
+            "email":"123@gmail.com",
+            "phone":"091234567",
+            "address":"台南市安平區87號",
+            "description":"pchome賣家",
+            "error":"",
+            "state":200
+        }
+        ```
+
+        ```json
+        {
+            "error":"",
             "state":500
         }
         ```
