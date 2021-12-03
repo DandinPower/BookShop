@@ -34,6 +34,7 @@
         2. 沒有庫存
         3. 找不到使用者
         4. 查詢失敗
+
 - 更改商品數量
     - POST
     - http://localhost:5000/shopcar/update
@@ -63,7 +64,13 @@
             "state":500
         }
         ```
-        
+    - error 的狀態
+        1. token錯誤
+        2. 沒有庫存
+        3. 找不到使用者
+        4. 查詢失敗
+        5. 購物車沒有這項商品
+
 - 查詢購物車狀態
     - POST
     - http://localhost:5000/shopcar/all

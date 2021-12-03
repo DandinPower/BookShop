@@ -74,4 +74,5 @@ insert into product (businessId,description,name,price,status,category,image,upl
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29");
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"無敵的主角","穿越異世界",890,"0","小說","image/picture4.jpg","2021-12-3");
 select * from product;
+delete from product_list;
 select A.userName,A.userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo,B.description,B.logo from account as A,customer as C,business as B where A.id = C.id or A.id = B.id;
