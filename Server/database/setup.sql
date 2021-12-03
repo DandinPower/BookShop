@@ -57,11 +57,21 @@ create table manage (
     foreign key(productId)references product(no)on delete cascade
 );
 
+create table product_list (
+	customerId int,
+    productId int,
+    quantity int not null default 1,
+    primary key(customerId,productId),
+    foreign key(customerId)references customer(id)on delete cascade,
+    foreign key(productId)references product(no)on delete cascade
+);
+
 insert into account (address,gender,phone,email,password,userName,name) value ("235新北市中和區景新街347號","1","0912733812","pchome.gmail.com","secret1234","pchome","Pchome24H店家");
 insert into business (id,description,logo) value ((SELECT LAST_INSERT_ID()),"pchome在克萊柏的帳號","image/logo/pchome.png");
 
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述物理學歷史","你應該擁有的一本牛頓萬有引力",1099,"1","物理","image/product/picture2.jpg","2021-11-30");
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述電子學的知識","電子學概論",999,"1","電類","image/product/picture3.jpg","2021-11-28");
 insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29");
-
+insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (2,"無敵的主角","穿越異世界",890,"0","小說","image/picture4.jpg","2021-12-3");
+select * from product;
 select A.userName,A.userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo,B.description,B.logo from account as A,customer as C,business as B where A.id = C.id or A.id = B.id;

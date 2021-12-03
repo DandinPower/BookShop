@@ -12,7 +12,7 @@ app.use(cors())
 app.use('',index)
 app.use('/account',account)
 app.use('/product',product)
-app.use('./shopcar',shopcar)
+app.use('/shopcar',shopcar)
 
 app.listen(port,()=>{        //伺服器運行的Function
     console.log(`Server listening at http://localhost:${port}`)  //運作提示字樣

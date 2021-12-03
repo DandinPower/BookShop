@@ -21,6 +21,23 @@ let sqlConnection = (sql) => {
     })
 }
 
+async function GetUserId (userName){
+    try{
+        result = await sqlConnection(`select id from account where userName = "${userName}";`)
+        console.log(result);
+        if (result.length != 0){
+            return result[0]["id"]
+        }
+        else{
+            return null
+        }
+    }catch(e){
+        console.log(e);
+        return null
+    }
+}
+
 module.exports = {
-    sqlConnection
+    sqlConnection,
+    GetUserId
 }
