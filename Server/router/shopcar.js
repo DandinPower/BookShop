@@ -87,62 +87,85 @@ router.post('/update', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
-router.post('/all', async (req, res, next)=> {        
-    var userName = req.body.userName;
-    var token = req.body.token;
-    const sql = ``
+router.post('/all', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName
+    var id = await database.GetUserId(userName)
+    const sql = `select P.no as productId,A.name as businessName,P.name,P.price,P.image,PL.quantity
+                    from product as P,account as A,customer as C,product_list as PL 
+                    where PL.customerId = ${id} and PL.customerId = C.id and PL.productId = P.no and A.id = P.businessId;`
     console.log(sql)
     try {
+        let response = []
         result = await database.sqlConnection(sql);
-        console.log(result);
+        result.forEach(function(item, index, array) {
+            let product = datatype.json2json(item)
+            console.log(product)
+            response.push(product)
+          });
+        res.json(response)
     } catch(e){
-        console.log(e);
+        let response = {
+            "error":"查詢購物車失敗",
+            "state":500
+        }
+        res.json(response)
     }
-    res.send(response)
 })
 
-router.post('/delete', async (req, res, next)=> {        
+router.post('/delete', datatype.verifyToken,async (req, res, next)=> {        
     var userName = req.body.userName;
-    var token = req.body.token;
     var productId = req.body.productId;
-    const sql = ``
+    var id = await database.GetUserId(userName)
+    const sql = `delete from product_list where customerId = ${id} and productId = ${productId};`
     console.log(sql)
+    var response = {
+        "error":"",
+        "state":0
+    }
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
+        if (result["affectedRows"] != 0){
+            response["state"] = 200
+        }
+        else {
+            response["error"] = "購物車沒有這項商品"
+            response["state"] = 500
+        }
     } catch(e){
         console.log(e);
+        response["error"] = "資料庫刪除失敗"
+        response["state"] = 500
     }
-    res.send(response)
+    res.json(response)
 })
 
-router.post('/delete', async (req, res, next)=> {        
-    var userName = req.body.userName;
-    var token = req.body.token;
-    var productId = req.body.productId;
-    const sql = ``
-    console.log(sql)
-    try {
-        result = await database.sqlConnection(sql);
-        console.log(result);
-    } catch(e){
-        console.log(e);
-    }
-    res.send(response)
-})
 
-router.post('/deleteall', async (req, res, next)=> {        
+router.post('/deleteall', datatype.verifyToken,async (req, res, next)=> {        
     var userName = req.body.userName;
-    var token = req.body.token;
-    const sql = ``
+    var id = await database.GetUserId(userName)
+    const sql = `delete from product_list where customerId = ${id};`
     console.log(sql)
+    var response = {
+        "error":"",
+        "state":0
+    }
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
+        if (result["affectedRows"] != 0){
+            response["state"] = 200
+        }
+        else {
+            response["error"] = "購物車沒有這項商品"
+            response["state"] = 500
+        }
     } catch(e){
         console.log(e);
+        response["error"] = "資料庫刪除失敗"
+        response["state"] = 500
     }
-    res.send(response)
+    res.json(response)
 })
 
 module.exports = router
