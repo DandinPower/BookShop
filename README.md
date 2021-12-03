@@ -39,15 +39,12 @@
 
 # Account
 
-[文件連結]
-(document/account.md)
+[說明文件](document/account.md)
         
 ## Product
 
-[文件連結]
-(document/product.md)
+[說明文件](document/product.md)
 
 ## Shopping Car
 
-[文件連結]
-(document/shopcar.md)
+[說明文件](document/shopcar.md)
