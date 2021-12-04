@@ -7,7 +7,7 @@ const Login = () => {
     const submit = () => {
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/login/',
+            url: 'http://localhost:5000/account/login/',
             data:{
               userName: id,
               userPassword: password,
@@ -22,7 +22,7 @@ const Login = () => {
                 alert('登入成功')
             }
             else if(response.data.state === '500'){
-                alert('登入失敗')
+                alert(response.data.error)
               }
           })
     }

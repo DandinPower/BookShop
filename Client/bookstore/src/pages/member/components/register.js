@@ -11,10 +11,12 @@ const Register = () => {
     const [gender,setGender] = useState('')
     const [phone,setPhone] = useState('')
     const [address,setAddress] = useState('')
+    const [type,setType] = useState('customer')
     const send = () =>{
+        console.log(type)
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/register/',
+            url: 'http://localhost:5000/account/register/',
             data:{
               userName: id,
               userPassword: password,
@@ -22,7 +24,8 @@ const Register = () => {
               gender: gender,
               email: email,
               phone: phone,
-              address: address
+              address: address,
+              type:type
             }
           }).then((response) => {
             console.log(response.data);
@@ -32,7 +35,7 @@ const Register = () => {
                 alert('註冊成功')
             }
             else if(response.data.state === '500'){
-                alert('註冊失敗')
+                alert(response.data.error)
               }
           })
         }
@@ -102,6 +105,17 @@ const Register = () => {
                         </th>
                         <td>
                             <input type='text' name="Address" value={address} onChange={(e) => {setAddress(e.target.value)}}></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label>用戶類型</label>
+                        </th>
+                        <td>
+                            <select onChange={(e) => {setType(e.target.value)}}>
+                                <option value='customer'>customer</option>
+                                <option value='business'>business</option>
+                            </select>
                         </td>
                     </tr>
                 </tbody>

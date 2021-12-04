@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+
 const Category = ({setBookInfo}) =>{
     const [category,setCategory] = useState([''])
     const [selectCate,setSelectCate] = useState('all')
@@ -36,15 +37,15 @@ const Category = ({setBookInfo}) =>{
         return <option>{data}</option>
     })
 
+
     const listBooks = bookData.map((data)=>{
         if(data.image !== undefined){
             return(
                 <div>
-                    <img src={require(`./${data.image}`).default} alt={data.description}></img>
+                    <Link to="/Products/product"><img src={require(`./${data.image}`).default}  alt={data.description} onClick={e => setBookInfo(data)}></img></Link>
                     <div>書名:{data.name}</div>
                     <div>簡述:{data.description}</div>
                     <div>價格:{data.price}</div>
-                   <Link to="/Products/product"><button onClick={setBookInfo(data)}>瀏覽</button></Link>
                 </div>)
         }
         else{
