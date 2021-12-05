@@ -86,10 +86,15 @@ select * from product;
 select P.no as productId,A.name as businessName,P.name,P.price,P.image,PL.quantity
                     from product as P,account as A,customer as C,product_list as PL 
                     where PL.customerId = 17 and PL.customerId = C.id and PL.productId = P.no and A.id = P.businessId;
-select A.userName,A.userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo,B.description,B.logo from account as A,customer as C,business as B where A.id = C.id or A.id = B.id;
+select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo from account as A,customer as C where A.id = C.id;
+select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.image from account as A,business as B where A.id = B.id;
 select businessId from product where no = 5;
 
 select * from manage;
 select * from orders;
+delete from orders;
+describe account;
 
-select P.price,P.name,O.quantity,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = 17;
+
+
+select P.price,P.name,O.quantity,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = 17 and C.id = O.customerId;
