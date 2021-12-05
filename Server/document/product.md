@@ -172,16 +172,16 @@
                 "name":"電子學概論",
                 "quantity":2,
                 "status":"未出貨",
-                "orderdate":"2021-11-28T16:00:00.000Z",
-                "arrivaldate":"2021-12-28T16:00:00.000Z"
+                "orderDate":"2021-11-28T16:00:00.000Z",
+                "arrivalDate":"2021-12-28T16:00:00.000Z"
             },
             {
                 "price":999,
                 "name":"基本概論",
                 "quantity":2,
                 "status":"未出貨",
-                "orderdate":"2021-11-28T16:00:00.000Z",
-                "arrivaldate":"2021-12-28T16:00:00.000Z"
+                "orderDate":"2021-11-28T16:00:00.000Z",
+                "arrivalDate":"2021-12-28T16:00:00.000Z"
             }
         ]
         ```

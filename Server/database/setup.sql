@@ -91,3 +91,5 @@ select businessId from product where no = 5;
 
 select * from manage;
 select * from orders;
+
+select P.price,P.name,O.quantity,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = 17;

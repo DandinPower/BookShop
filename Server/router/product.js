@@ -89,24 +89,6 @@ router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {
             return "fail"
         }
         try{
-            var businessId = await database.GetBusinessId(productId)
-            console.log(businessId)
-        }catch(e){
-            response["error"] = "找不到廠商"
-            response["state"] = 500
-            state = false
-            return "fail"
-        }
-        try{
-            var businessId = await database.GetBusinessId(productId)
-            console.log(businessId)
-        }catch(e){
-            response["error"] = "找不到廠商"
-            response["state"] = 500
-            state = false
-            return "fail"
-        }
-        try{
             const sqlInsert = `insert into orders(customerId,orderDate,quantity)value(${customerId},"${currentDate}",${quantity})`
             console.log(sqlInsert)
             var InsertResult = await database.sqlConnection(sqlInsert)
@@ -136,18 +118,36 @@ router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {
     res.json(response)
 })
 
-router.post('/search', async (req, res, next)=> {        
+router.post('/search', datatype.verifyToken,async (req, res, next)=> {        
     var userName = req.body.userName;
-    var token = req.body.token;
-    const sql = ``
-    console.log(sql)
-    try {
-        result = await database.sqlConnection(sql);
-        console.log(result);
-    } catch(e){
-        console.log(e);
+    try{
+        var customerId = await database.GetUserId(userName)
+        console.log(customerId)
+        try{
+            let response = []
+            var sqlSearch = `select P.price,P.name,O.quantity,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
+            console.log(sqlSearch)
+            var result = await database.sqlConnection(sqlSearch)
+            result.forEach(function(item, index, array) {
+                let product = datatype.json2json(item)
+                console.log(product)
+                response.push(product)
+              });
+            res.json(response)
+        }catch(e){
+            let response = {
+                "error":"找尋訂單失敗",
+                "state":500
+            }
+            res.json(response)
+        }
+    }catch(e){
+        let response = {
+            "error":"找不到使用者",
+            "state":500
+        }
+        res.json(response)
     }
-    res.send(response)
 })
 
 
