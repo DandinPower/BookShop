@@ -53,6 +53,7 @@ router.post('/update', datatype.verifyToken,async (req, res, next)=> {
     const sqlCheck = `select status from product where no = ${productId}`
     const sqlUpdate = `update product_list set quantity = ${quantity} where customerId = ${id} and productId = ${productId};`
     console.log(sqlCheck)
+    console.log(sqlUpdate)
     try {
         result = await database.sqlConnection(sqlCheck);
         let status = result[0]["status"]

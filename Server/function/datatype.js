@@ -9,7 +9,7 @@ function json2json(json){
     return result;
 }
 function verifyToken(req,res,next){
-    let token = req.body.token || req.query.token;
+    let token = req.body.token || req.query.token || req["token"];
     console.log("verify Token" , token);
     if (token) {
         jwt.verify(token, 'ThisIsSecurityMix@TPE&4255',(err,decoded)=>{
@@ -29,20 +29,42 @@ function verifyToken(req,res,next){
           "state":500
       })
       }
-  }
-
-
-function getUser() {
-    // Code here
 }
 
-function getUsers() {
-    // Code here
+function verifyTokenByList(req,res,next){
+  var check = false
+  reqList = req.body 
+  reqList.every(async(request,response,array) =>{
+    let token = request["token"]
+    console.log("verify Token" , token);
+    if (token) {
+        jwt.verify(token, 'ThisIsSecurityMix@TPE&4255',(err,decoded)=>{
+          if (err) {
+            check = false
+            return false
+          } else {
+            check = true 
+            return true 
+          }
+        })
+      } else {
+        check = false
+        return false
+      }
+  })
+  if (check){
+    next()
+  }
+  else{
+    res.status(500).json({
+      "error":"token錯誤",
+      "state":500
+    })
+  }
 }
 
 module.exports = {
-    getUser,
-    getUsers,
     json2json,
-    verifyToken
+    verifyToken,
+    verifyTokenByList
 }

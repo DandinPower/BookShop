@@ -41,11 +41,15 @@ create table customer (
 
 create table orders (
 	 orderNo int primary key auto_increment,
+     customerId int,
      orderDate Date not null,
      arrivalDate Date,
      quantity int not null,
-     status varchar(20) not null
+     status varchar(20) not null default "未出貨",
+     foreign key (customerId) references account(id) on delete cascade
 );
+describe orders;
+
 
 create table manage (
 	businessId int,
@@ -83,3 +87,7 @@ select P.no as productId,A.name as businessName,P.name,P.price,P.image,PL.quanti
                     from product as P,account as A,customer as C,product_list as PL 
                     where PL.customerId = 17 and PL.customerId = C.id and PL.productId = P.no and A.id = P.businessId;
 select A.userName,A.userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo,B.description,B.logo from account as A,customer as C,business as B where A.id = C.id or A.id = B.id;
+select businessId from product where no = 5;
+
+select * from manage;
+select * from orders;
