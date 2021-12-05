@@ -112,17 +112,97 @@ router.post('/login/check',datatype.verifyToken,(req, res)=> {
 
 
 router.post('/search', datatype.verifyToken,async (req, res, next)=> {        
+    var checkState = true
     var userName = req.body.userName;
-    const sql = ``
-
-    console.log(sql)
-    try {
-        result = await database.sqlConnection(sql);
-        console.log(result);
-    } catch(e){
-        console.log(e);
+    var response = {
+        "userName": userName,
+		"userPassword": "",
+		"name":"",
+		"gender":"",
+		"email":"",
+		"phone":"091234567",
+		"address":"",
+		"paymentInfo":"",
+		"description":"",
+		"logo":"",
+		"error":"",
+		"state":0
     }
-    res.send(response)
+    try{
+        var userId = await database.GetUserId(userName)
+        console.log(userId)
+        if (userId != null){
+            try{
+                var sqlCustomer = `select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo from account as A,customer as C where A.id = C.id and C.id = ${userId};`
+                var result = await database.sqlConnection(sqlCustomer)
+                console.log(result)
+                if (result.length != 0){
+                    response["userPassword"] = result[0]["userPassword"]
+                    response["name"] = result[0]["name"]
+                    response["gender"] = result[0]["gender"]
+                    response["email"] = result[0]["email"]
+                    response["phone"] = result[0]["phone"]
+                    response["address"] = result[0]["address"]
+                    response["paymentInfo"] = result[0]["paymentInfo"]
+                    response["state"] = 200
+                    checkState = false
+                    res.json(response)
+                }
+            }catch(e){
+                let response = {
+                    "error":"嘗試查詢customer失敗",
+                    "state":500
+                }
+                res.json(response)
+            }
+            try{
+                var sqlBusiness = `select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.logo from account as A,business as B where A.id = B.id and B.id = ${userId};`
+                var result = await database.sqlConnection(sqlBusiness)
+                console.log(result)
+                if (result.length != 0){
+                    response["userPassword"] = result[0]["userPassword"]
+                    response["name"] = result[0]["name"]
+                    response["gender"] = result[0]["gender"]
+                    response["email"] = result[0]["email"]
+                    response["phone"] = result[0]["phone"]
+                    response["address"] = result[0]["address"]
+                    response["description"] = result[0]["description"]
+                    response["logo"] = result[0]["logo"]
+                    response["state"] = 200
+                    checkState = false
+                    res.json(response)
+                }
+            }
+            catch(e){
+                let response = {
+                    "error":"嘗試查詢business失敗",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }
+        else{
+            let response = {
+                "error":"查詢不到使用者",
+                "state":500
+            }
+            res.json(response)
+        }
+        
+    }catch(e){
+        let response = {
+            "error":"查詢不到使用者",
+            "state":500
+        }
+        res.json(response)
+    }
+    if (checkState){
+        let response = {
+            "error":"查詢不到使用者",
+            "state":500
+        }
+        res.json(response)
+    }
 })
 
 router.post('/update', datatype.verifyToken ,async (req, res, next)=> {        
@@ -180,7 +260,7 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
             var businessId = await database.GetUserId(userName)
             console.log(businessId)
             try{
-                var sqlUpdateBusiness = `update business set description = "${description},logo = ${description}" where id = ${businessId};`;
+                var sqlUpdateBusiness = `update business set description = "${description}",logo = "${logo}" where id = ${businessId};`;
                 var result = await database.sqlConnection(sqlUpdateBusiness)
                 console.log(result)
                 if (result["affectedRows"]!=0){
