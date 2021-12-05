@@ -56,5 +56,5 @@ async function GetBusinessId (productId){
 module.exports = {
     sqlConnection,
     GetUserId,
-    GetBusinessId,
+    GetBusinessId
 }
