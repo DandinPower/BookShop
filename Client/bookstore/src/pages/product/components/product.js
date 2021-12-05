@@ -1,6 +1,29 @@
+import axios from 'axios'
 
 const Product = ({bookInfo}) =>{
-    console.log(bookInfo)
+
+    function leave(){
+        window.location.href = '/Products/category'
+    }
+    const addShopCart = () =>{
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/shopcar/add',
+            data:{
+              userName: window.sessionStorage.getItem('userName'),
+              token: window.sessionStorage.getItem('token'),
+              productId:bookInfo.productId
+            }
+          }).then((response) => {
+            if(response.data.state === 200){
+                alert('加入成功')
+            }
+            else if(response.data.state === 500){
+                alert(response.data.error)
+              }
+          })
+    }
+
     return(
         <div>
             <img src={require(`./${bookInfo.image}`).default}  alt={bookInfo.description}></img>
@@ -8,6 +31,10 @@ const Product = ({bookInfo}) =>{
             <div>產品代號: {bookInfo.productId}</div>
             <div>商家名稱: {bookInfo.businessName}</div>
             <div>價格: {bookInfo.price}</div>
+            <div>產品敘述: {bookInfo.description}</div>
+            <button onClick={addShopCart}>加入購物車</button>
+            <button>直接購買</button>
+            <button onClick = {leave}>瀏覽其他商品</button>
         </div>
     )
 }

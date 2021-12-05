@@ -5,6 +5,7 @@ import Category from "../product/components/category";
 import Header from "../../components/header"
 import Product from "../product/components/product";
 import AccountInfo from "../member/components/accountInfo";
+import ShopCart from "../product/components/shopcart";
 import React, {useState} from 'react'
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>
             <Route path="/Products/product" element={<Product bookInfo={bookInfo}/>}/>
+            <Route path="/Products/shopcart" element={<ShopCart/>}/>
         </Routes>
     </BrowserRouter>
         

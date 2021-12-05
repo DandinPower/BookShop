@@ -12,6 +12,7 @@ const Header = () => {
             <Link to="/member/login">登入</Link>
             <Link to="/member/accountInfo">|個人資訊</Link>
             <Link to="/Products/category">|產品</Link>
+            <Link to="/Products/shopcart">|購物車</Link>
             <p>{state}</p>
         </div>
     )
