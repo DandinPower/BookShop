@@ -143,7 +143,6 @@ const ShopCart = () => {
           }).then((response) => {
             if(response.data.state === 200){
                 alert('下訂成功')
-                deleteall()
             }
             else if (response.data.state === 500){
                 alert(response.data.error)

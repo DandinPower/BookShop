@@ -22,6 +22,7 @@ const Order =()=>{
         return orderBooks.map((book)=>{
             return (
                 <div>
+                    <br/>
                     <div>名稱:{book.name}</div>
                     <div>數量:{book.quantity}</div>
                     <div>價格:{book.price * parseInt(book.quantity)}</div>
