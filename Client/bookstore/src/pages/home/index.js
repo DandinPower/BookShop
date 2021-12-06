@@ -6,10 +6,12 @@ import Header from "../../components/header"
 import Product from "../product/components/product";
 import AccountInfo from "../member/components/accountInfo";
 import ShopCart from "../product/components/shopcart";
+import Order from "../product/components/order";
 import React, {useState} from 'react'
 
 const Home = () => {
     const [bookInfo, setBookInfo] = useState();
+
     return (
         <BrowserRouter>
         <div>
@@ -23,6 +25,7 @@ const Home = () => {
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>
             <Route path="/Products/product" element={<Product bookInfo={bookInfo}/>}/>
             <Route path="/Products/shopcart" element={<ShopCart/>}/>
+            <Route path="/member/order" element={<Order/>}/>
         </Routes>
     </BrowserRouter>
         

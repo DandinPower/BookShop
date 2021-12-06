@@ -24,6 +24,26 @@ const Product = ({bookInfo}) =>{
           })
     }
 
+    const postBook=()=>{
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/product/add',
+            data:[{
+                "userName": window.sessionStorage.getItem('userName'),
+                "token": window.sessionStorage.getItem('token'),
+                "productId":bookInfo.productId,
+                "quantity":1
+            }]
+          }).then((response) => {
+            if(response.data.state === 200){
+                alert('下單成功')
+            }
+            else if(response.data.state === 500){
+                alert(response.data.error)
+              }
+          })
+    }
+
     return(
         <div>
             <img src={require(`./${bookInfo.image}`).default}  alt={bookInfo.description}></img>
@@ -33,7 +53,7 @@ const Product = ({bookInfo}) =>{
             <div>價格: {bookInfo.price}</div>
             <div>產品敘述: {bookInfo.description}</div>
             <button onClick={addShopCart}>加入購物車</button>
-            <button>直接購買</button>
+            <button onClick={postBook}>直接購買</button>
             <button onClick = {leave}>瀏覽其他商品</button>
         </div>
     )

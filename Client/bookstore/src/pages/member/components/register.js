@@ -1,6 +1,6 @@
-import './register.css'
 import { useState } from 'react'
 import axios from 'axios'
+import {Button} from 'react-bootstrap'; 
 //成功 200 不成功 500 state
 //session react 
 const Register = () => { 
@@ -42,7 +42,7 @@ const Register = () => {
     return (
         <div>
             <h1>註冊帳號</h1>
-            <table className="table">
+            <table striped bordered hover>
                 <colgroup>
                     <col width="30%"/>
                     <col width="70%"/>
@@ -112,7 +112,7 @@ const Register = () => {
                             <label>用戶類型</label>
                         </th>
                         <td>
-                            <select onChange={(e) => {setType(e.target.value)}}>
+                            <select aria-label="Default select example" onChange={(e) => {setType(e.target.value)}}>
                                 <option value='customer'>customer</option>
                                 <option value='business'>business</option>
                             </select>
@@ -121,7 +121,7 @@ const Register = () => {
                 </tbody>
             </table>
             <br/>
-            <button onClick={send}>確定送出</button>
+            <Button variant="dark" onClick={send}>確定送出</Button>
         </div>
     )
 }
