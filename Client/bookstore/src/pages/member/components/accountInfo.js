@@ -1,6 +1,5 @@
 import { useState,useEffect } from 'react'
 import axios from 'axios'
-import './register.css'
 //未完成
 const AccountInfo =()=>{
     const [userName,setuserName] = useState('')
@@ -45,7 +44,7 @@ const AccountInfo =()=>{
 
     if (window.sessionStorage.getItem('token')!== null) {
         return(
-            <table className="table">
+            <table striped bordered hover>
             <colgroup>
                 <col width="30%"/>
                 <col width="70%"/>

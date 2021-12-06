@@ -1,5 +1,6 @@
 import React, { useEffect,useState} from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 const ShopCart = () => {
     const [books, setBooks] = useState(['']);
@@ -122,12 +123,41 @@ const ShopCart = () => {
           })
     }
 
+    const postBooks = books.map((book)=>{
+        var bookInfo = 
+        {
+            'userName': window.sessionStorage.getItem('userName'),
+            'token': window.sessionStorage.getItem('token'),
+            'productId': book.productId,
+            'quantity':  book.quantity ,
+        }
+        return(bookInfo);
+    })
+
+
+    const orderBooks=()=>{
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/product/add',
+            data:postBooks
+          }).then((response) => {
+            if(response.data.state === 200){
+                alert('下訂成功')
+                deleteall()
+            }
+            else if (response.data.state === 500){
+                alert(response.data.error)
+              }
+          })
+    }
+
     return(
     <div>
         <button onClick = {deleteall}>全部刪除</button>
         {listBooks}
         <div>總價格</div>
         <div>{price}</div>
+        <Link to="/member/order"><button onClick={orderBooks}>下單</button></Link>
     </div>
     )
 }
