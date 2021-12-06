@@ -8,6 +8,10 @@ const Header = () => {
     useEffect(() => {
         setstate(window.sessionStorage.getItem('userName')) 
       }, [])
+      let userName = window.sessionStorage.getItem('userName')
+      if(userName === null){
+          userName = 'login'
+      }
     /*return (
         <div>
             <Button variant="primary"> 幹 </Button>
@@ -30,7 +34,7 @@ const Header = () => {
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                 >
-                    <Nav.Link href="/member/login">login</Nav.Link>
+                    <Nav.Link href="/member/login">{userName}</Nav.Link>
                     <Nav.Link href="/member/accountInfo">個人資訊</Nav.Link>
                     <Nav.Link href="/Products/category">產品</Nav.Link>
                     <Nav.Link href="/Products/shopcart">購物車</Nav.Link>
