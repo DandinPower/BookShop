@@ -25,7 +25,7 @@ router.post('/add', datatype.verifyToken,async (req, res, next)=> {
                 response["state"] = 200
             }catch(e){
                 console.log(e);
-                response["error"] = "找不到使用者"
+                response["error"] = "購物車已存在這項商品"
                 response["state"] = 500
             }
         } 

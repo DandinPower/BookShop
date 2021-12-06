@@ -87,13 +87,14 @@ select P.no as productId,A.name as businessName,P.name,P.price,P.image,PL.quanti
                     from product as P,account as A,customer as C,product_list as PL 
                     where PL.customerId = 17 and PL.customerId = C.id and PL.productId = P.no and A.id = P.businessId;
 select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo from account as A,customer as C where A.id = C.id;
-select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.image from account as A,business as B where A.id = B.id;
+select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.logo from account as A,business as B where A.id = B.id;
 select businessId from product where no = 5;
 
 select * from manage;
 select * from orders;
 delete from orders;
 describe account;
+
 
 
 
