@@ -86,7 +86,7 @@ select * from product;
 select P.no as productId,A.name as businessName,P.name,P.price,P.image,PL.quantity
                     from product as P,account as A,customer as C,product_list as PL 
                     where PL.customerId = 17 and PL.customerId = C.id and PL.productId = P.no and A.id = P.businessId;
-select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo from account as A,customer as C where A.id = C.id;
+select A.id,A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo from account as A,customer as C where A.id = C.id;
 select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.logo from account as A,business as B where A.id = B.id;
 select businessId from product where no = 5;
 
@@ -95,7 +95,15 @@ select * from orders;
 delete from orders;
 describe account;
 
+insert into account (address,gender,phone,email,password,userName,name) value ("235新北市中和區景新街347號","1","0912733812","pchome.gmail.com","123","pchome24","Pchome24H店家");
+insert into customer (id) value ((SELECT LAST_INSERT_ID()));
 
+
+select * from orders where customerId = 40;
+select * from manage;
+insert into orders(customerId,orderDate,quantity)value(40,"2021-12-7",1);
+insert into manage(businessId,orderNo,productId)value(2,(SELECT LAST_INSERT_ID()),6);
+insert into manage(businessId,orderNo,productId)value(2,(SELECT LAST_INSERT_ID()),5);
 
 
 select P.price,P.name,O.quantity,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = 17 and C.id = O.customerId;

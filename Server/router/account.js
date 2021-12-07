@@ -19,12 +19,6 @@ router.post('/register', async (req, res, next)=> {
     const sql = `insert into account (address,gender,phone,email,password,userName,name) values ("${_address}","${_gender}","${_phone}","${_email}","${_userPassword}","${_userName}","${_name}");`
     var sql2 = ``;
     console.log(sql)
-    if (_type == "customer"){
-        sql2 = `insert into customer (id) value ((SELECT LAST_INSERT_ID()));`;
-    }
-    else if (_type == "business"){
-        sql2 = `insert into business (id) value ((SELECT LAST_INSERT_ID()));`;
-    }
     var response = {
         "error":"",
         "state":""
@@ -33,6 +27,12 @@ router.post('/register', async (req, res, next)=> {
         let result = await database.sqlConnection(sql);
         response["state"] = "200";
         console.log(result)
+        if (_type == "customer"){
+            sql2 = `insert into customer (id) value (${result["insertId"]});`;
+        }
+        else if (_type == "business"){
+            sql2 = `insert into business (id) value (${result["insertId"]});`;
+        }
         try {
             let result = await database.sqlConnection(sql2);
             response["state"] = "200";

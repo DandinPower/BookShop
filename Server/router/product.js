@@ -73,43 +73,50 @@ router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {
         try{
             var customerId = await database.GetUserId(userName)
             console.log(customerId)
+            try{
+                var businessId = await database.GetBusinessId(productId)
+                console.log(businessId)
+                try{
+                    const sqlInsert = `insert into orders(customerId,orderDate,quantity)value(${customerId},"${currentDate}",${quantity});`
+                    console.log(sqlInsert)
+                    var InsertResult = await database.sqlConnection(sqlInsert)
+                    console.log(InsertResult)
+                    var insertId = InsertResult["insertId"]
+                    try{
+                        const sqlManage = `insert into manage(businessId,orderNo,productId)value(${businessId},${insertId},${productId});`
+                        console.log(sqlManage)
+                        var ManageResult = await database.sqlConnection(sqlManage)
+                        console.log(ManageResult)
+                    }catch(e){
+                        console.log(e)
+                        response["error"] = "插入manage失敗"
+                        response["state"] = 500
+                        state = false
+                        return "fail"
+                    }
+                }catch(e){
+                    console.log(e)
+                    response["error"] = "插入order失敗"
+                    response["state"] = 500
+                    state = false
+                    return "fail"
+                }         
+            }catch(e){
+                console.log(e)
+                response["error"] = "找不到廠商"
+                response["state"] = 500
+                state = false
+                return "fail"
+            }
+            
         }catch(e){
+            console.log(e)
             response["error"] = "找不到使用者"
             response["state"] = 500
             state = false
             return "fail"
         }
-        try{
-            var businessId = await database.GetBusinessId(productId)
-            console.log(businessId)
-        }catch(e){
-            response["error"] = "找不到廠商"
-            response["state"] = 500
-            state = false
-            return "fail"
-        }
-        try{
-            const sqlInsert = `insert into orders(customerId,orderDate,quantity)value(${customerId},"${currentDate}",${quantity})`
-            console.log(sqlInsert)
-            var InsertResult = await database.sqlConnection(sqlInsert)
-            console.log(InsertResult)
-        }catch(e){
-            response["error"] = "插入order失敗"
-            response["state"] = 500
-            state = false
-            return "fail"
-        }
-        try{
-            const sqlManage = `insert into manage(businessId,orderNo,productId)value(${businessId},(SELECT LAST_INSERT_ID()),${productId})`
-            console.log(sqlManage)
-            var ManageResult = await database.sqlConnection(sqlManage)
-            console.log(ManageResult)
-        }catch(e){
-            response["error"] = "插入manage失敗"
-            response["state"] = 500
-            state = false
-            return "fail"
-        }
+        
         return "true"   
     }));
     if (state){
