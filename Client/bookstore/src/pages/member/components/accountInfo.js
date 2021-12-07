@@ -3,6 +3,7 @@ import axios from 'axios'
 //未完成
 const AccountInfo =()=>{
     const [userName,setuserName] = useState('')
+    const [type,setType] = useState('')
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -34,6 +35,7 @@ const AccountInfo =()=>{
                     setPaymentInfo(response.data.paymentInfo)
                     setDescription(response.data.description)
                     setLogo(response.data.logo)
+                    setType(response.data.type)
                   }
                   else{
                       alert('error')
@@ -144,7 +146,7 @@ const AccountInfo =()=>{
                         <label>paymentInfo:</label>
                     </th>
                     <td>
-                    <input type='text' value={paymentInfo} onChange={(e) => {setPaymentInfo(e.target.value)}}></input>
+                    <input type='text' value={paymentInfo} onChange={(e) => {setPaymentInfo(e.target.value)}} disabled={type === 'business'}></input>
                     </td>
                 </tr>
                 <tr>
@@ -152,7 +154,7 @@ const AccountInfo =()=>{
                         <label>description:</label>
                     </th>
                     <td>
-                    <input type='text' value={description} onChange={(e) => {setDescription(e.target.value)}}></input>
+                    <input type='text' value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'}></input>
                     </td>
                 </tr>
                 <tr>
@@ -160,7 +162,7 @@ const AccountInfo =()=>{
                         <label>logo:</label>
                     </th>
                     <td>
-                    <input type='text' value={logo} onChange={(e) => {setLogo(e.target.value)}}></input>
+                    <input type='text' value={logo} onChange={(e) => {setLogo(e.target.value)}} disabled={type === 'customer'}></input>
                     </td>
                 </tr>
             </tbody>
