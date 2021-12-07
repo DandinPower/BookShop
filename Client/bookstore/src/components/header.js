@@ -2,8 +2,15 @@ import { Navbar, Container, Nav, Form, FormControl, Button} from 'react-bootstra
 import 'bootstrap/dist/css/bootstrap.min.css';        
 const Header = () => {
     let userName = window.sessionStorage.getItem('userName')
+    let logout ='登出'
     if(userName === null){
         userName = 'login'
+        logout =''
+    }
+
+    const logOut=()=>{
+        window.sessionStorage.clear()
+        window.location.href = `/member/login`
     }
 
     return(
@@ -17,7 +24,8 @@ const Header = () => {
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                 >
-                    <Nav.Link href="/member/login">{userName}</Nav.Link>
+                    <Nav.Link href="/member/login" disabled={userName !== 'login'}>{userName}</Nav.Link>
+                    <Nav.Link onClick={logOut}>{logout}</Nav.Link>
                     <Nav.Link href="/member/accountInfo">個人資訊</Nav.Link>
                     <Nav.Link href="/Products/category">產品</Nav.Link>
                     <Nav.Link href="/Products/shopcart">購物車</Nav.Link>

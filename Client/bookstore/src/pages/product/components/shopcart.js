@@ -1,6 +1,5 @@
 import React, { useEffect,useState} from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
 
 const ShopCart = () => {
     const [books, setBooks] = useState(['']);
@@ -143,6 +142,8 @@ const ShopCart = () => {
           }).then((response) => {
             if(response.data.state === 200){
                 alert('下訂成功')
+                window.location.href = `/member/order`
+                deleteall()
             }
             else if (response.data.state === 500){
                 alert(response.data.error)
@@ -156,7 +157,7 @@ const ShopCart = () => {
         {listBooks}
         <div>總價格</div>
         <div>{price}</div>
-        <Link to="/member/order"><button onClick={orderBooks}>下單</button></Link>
+        <button onClick={orderBooks}>下單</button>
     </div>
     )
 }
