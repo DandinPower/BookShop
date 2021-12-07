@@ -293,4 +293,37 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
     res.json(response)
 })
 
+router.get('/getAllCustomer',async (req, res, next)=> {        
+    var response = []
+    const sql = `select A.id,A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,C.paymentInfo from account as A,customer as C where A.id = C.id;`
+    try{
+        var result = await database.sqlConnection(sql)
+        console.log(result)
+        result.forEach(function(item,index,array){
+            var customer = datatype.json2json(item)
+            response.push(customer)
+        })
+        res.status(200).json(response)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("讀取資料庫失敗")
+    }
+})
+
+router.get('/getAllBusiness',async (req, res, next)=> {        
+    var response = []
+    const sql = `select A.id,A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.logo from account as A,business as B where A.id = B.id;`
+    try{
+        var result = await database.sqlConnection(sql)
+        console.log(result)
+        result.forEach(function(item,index,array){
+            var customer = datatype.json2json(item)
+            response.push(customer)
+        })
+        res.status(200).json(response)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("讀取資料庫失敗")
+    }
+})
 module.exports = router

@@ -2,14 +2,12 @@ const express = require('express')   //導入框架
 const cors = require('cors')
 const app = express()  //宣告框架變數
 const port = 5000  //定義本地伺服端port 
-const index = require('./router/index')
 const product = require('./router/product')
 const account = require('./router/account')
 const shopcar = require('./router/shopcar')
 
 app.use(express.json())
 app.use(cors())
-app.use('',index)
 app.use('/account',account)
 app.use('/product',product)
 app.use('/shopcar',shopcar)
