@@ -1,5 +1,10 @@
 use dandinpo_teamproject;
 
+insert into admin (userName,password,authority) values
+("admin1","123","master"),
+("admin2","123","event"),
+("admin3","123","account");
+
 insert into account (address,gender,phone,email,password,userName,name) value ("台南市安平區87號","0","0912345678","tom@gmail.com","123","customer1","Liaw");
 insert into customer (id) value ((select last_insert_id()));
 insert into account (address,gender,phone,email,password,userName,name) value ("台北市中正區古亭站","1","0987878787","ban@yahoo.com.tw","123","customer2","Bananachen");
@@ -19,4 +24,44 @@ values
 (5,"講述電子學的知識","電子學概論",999,"1","電類","image/product/picture3.jpg","2021-11-28"),
 (5,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29"),
 (6,"無敵的主角","穿越異世界",890,"0","小說","image/picture4.jpg","2021-12-3");
+select * from product;
+insert into product_list(customerId,productId)
+values
+(1,2),
+(1,3),
+(1,4),
+(2,5);
 
+insert into organizer()values
+(),
+(),
+();
+
+update admin set organizerId = 1 where id = 2;
+update business set organizerId = 2 where id = 4;
+update business set organizerId = 3 where id = 5;
+
+insert into event(organizerId,name,discount,date)
+values
+(1,"聖誕節全館95折",0.95,"2021-12-31"),
+(2,"本館學術書籍85折",0.85,"2021-12-30"),
+(3,"同人小說跳樓折價75折",0.75,"2021-12-29");
+
+insert into coupon(code,eventName,category,date,discount)
+values
+("XMAS88","聖誕節全館95折","打折","2021-12-30",0.88),
+("STUDY77","本館學術書籍85折","打折","2021-12-29",0.77),
+("HAPPY69","同人小說跳樓折價75折","打折","2021-12-28",0.69);
+
+insert into have(customerId,couponCode,quantity)
+values
+(1,"XMAS88",2),
+(2,"STUDY77",3),
+(3,"HAPPY69",4);
+
+insert into orders(customerId,orderDate,quantity)value(1,"2021-12-8",3);
+insert into manage(businessId,orderNo,productId)value(4,(select last_insert_id()),2);
+insert into orders(customerId,orderDate,quantity)value(2,"2021-12-8",2);
+insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()),3);
+insert into orders(customerId,orderDate,quantity)value(3,"2021-12-8",1);
+insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),5);

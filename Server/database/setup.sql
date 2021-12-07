@@ -2,7 +2,7 @@ use dandinpo_teamproject;
 
 create table organizer (
 	organizerId int primary key auto_increment,
-    eventQuantity int not null
+    eventQuantity int not null default 0
 );
 
 create table event (
@@ -43,8 +43,10 @@ create table account (
 	email varchar(30) not null unique,
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
-	name varchar(20) not null
+	name varchar(20) not null,
+    foreign key (adminId)references admin(id)on delete set null
 );
+
 
 create table customer (
 	id int primary key,
