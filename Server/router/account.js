@@ -115,6 +115,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
     var checkState = true
     var userName = req.body.userName;
     var response = {
+        "type":"",
         "userName": userName,
 		"userPassword": "",
 		"name":"",
@@ -137,6 +138,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 var result = await database.sqlConnection(sqlCustomer)
                 console.log(result)
                 if (result.length != 0){
+                    response["type"] = "customer"
                     response["userPassword"] = result[0]["userPassword"]
                     response["name"] = result[0]["name"]
                     response["gender"] = result[0]["gender"]
@@ -160,6 +162,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 var result = await database.sqlConnection(sqlBusiness)
                 console.log(result)
                 if (result.length != 0){
+                    response["type"] = "business"
                     response["userPassword"] = result[0]["userPassword"]
                     response["name"] = result[0]["name"]
                     response["gender"] = result[0]["gender"]
