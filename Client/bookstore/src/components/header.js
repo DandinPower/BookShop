@@ -16,7 +16,7 @@ const Header = () => {
     return(
         <Navbar bg="dark" expand="lg" variant="dark">
             <Container fluid>
-                <Navbar.Brand href="/">克萊柏</Navbar.Brand>
+                <Navbar.Brand href="/">fucking克萊柏</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                 <Nav
