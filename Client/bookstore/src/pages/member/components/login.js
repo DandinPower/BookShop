@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
-import "./login.css"
+import "./css.css"
 
 import { Navbar, Container, Nav, Form, FormControl, Button,Row,Col} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';        
@@ -31,7 +31,7 @@ const Login = () => {
           })
     }
     return (
-        <div className='center' >
+        <div className='login' >
             <div>        
                 <h1>會員登入</h1>
             </div>
@@ -43,7 +43,7 @@ const Login = () => {
                 <p>密碼:  <input type='password' name='Password' placeholder='請輸入密碼' value={password} onChange={(e) => {setPassword(e.target.value)}}></input></p>
             </div>
             <div>
-            <button onClick={submit}>登入</button>
+            <button onClick={submit} className='button-ex1'>登入</button>
             <nav>
                 <li><Link to="/member/register">註冊</Link></li>
             </nav>

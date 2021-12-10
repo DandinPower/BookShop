@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import axios from 'axios'
 import {Button} from 'react-bootstrap'; 
+import "./css.css"
+
+
 //成功 200 不成功 500 state
 //session react 
 const Register = () => { 
@@ -40,7 +43,7 @@ const Register = () => {
           })
         }
     return (
-        <div>
+        <div className='register'>
             <h1>註冊帳號</h1>
             <table striped bordered hover>
                 <colgroup>
@@ -120,8 +123,7 @@ const Register = () => {
                     </tr>
                 </tbody>
             </table>
-            <br/>
-            <Button variant="dark" onClick={send}>確定送出</Button>
+            <button  onClick={send}  className='button-ex1'>確定送出</button>
         </div>
     )
 }

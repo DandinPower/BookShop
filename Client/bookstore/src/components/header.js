@@ -1,5 +1,6 @@
-import { Navbar, Container, Nav, Form, FormControl, Button} from 'react-bootstrap'; 
+import { Navbar, Container, Nav, Form, FormControl, Button,Image} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';        
+import Logo from '../image/icon.jpg'
 const Header = () => {
     let userName = window.sessionStorage.getItem('userName')
     let logout ='登出'
@@ -16,7 +17,7 @@ const Header = () => {
     return(
         <Navbar bg="dark" expand="lg" variant="dark">
             <Container fluid>
-                <Navbar.Brand href="/">fucking克萊柏</Navbar.Brand>
+                <Navbar.Brand href="/"> <img width="85" height="80"  src={Logo}  alt="logo" /> </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                 <Nav
@@ -34,7 +35,7 @@ const Header = () => {
                 <Form className="d-flex">
                     <FormControl
                     type="search"
-                    placeholder="Search"
+                    placeholder="搜尋"
                     className="me-2"
                     aria-label="Search"
                     />
