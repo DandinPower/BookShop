@@ -12,8 +12,6 @@ describe('test 1', function(){
         })
         /*.catch(error => {
         })*/
-        console.log(res.data.state)
-        console.log("=====")
         assert.equal(res.data.state,200);   
     })
 })
