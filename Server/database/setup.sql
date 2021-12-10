@@ -77,8 +77,9 @@ create table product (
 	no int primary key auto_increment,
 	businessId int,
     description varchar(100),
-    name varchar(30) not null,
+    name varchar(30) not null unique,
     price int not null,
+    launch boolean default False,
     status char(1) not null,
     category varchar(20) not null,
     rating int default 0,
@@ -86,6 +87,16 @@ create table product (
     uploadedDate datetime not null,
     foreign key(businessId)references business(id)on delete cascade
 );
+
+create table product_comment (
+    productId int,
+    customerId int,
+    orderNo int,
+    star int 1~5,
+    comment varchar(30)
+);
+
+
 
 create table orders (
 	 orderNo int primary key auto_increment,
