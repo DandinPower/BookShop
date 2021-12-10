@@ -1,6 +1,10 @@
 import {Link} from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
+import "./login.css"
+
+import { Navbar, Container, Nav, Form, FormControl, Button,Row,Col} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';        
 const Login = () => {
     const [id,setID] = useState('')
     const [password,setPassword] = useState('')
@@ -26,19 +30,28 @@ const Login = () => {
               }
           })
     }
-    return <div>
-        <h1>會員登入</h1>
-        <input type='text' name='ID' placeholder='請輸入帳號' value={id} onChange={(e) => {setID(e.target.value)}}></input>
-        <br/>
-        <br/>
-        <input type='password' name='Password' placeholder='請輸入密碼' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
-        <br/>
-        <br/>
-        <button onClick={submit}>登入</button>
-        <nav>
-            <li><Link to="/member/register">註冊</Link></li>
-        </nav>
-        
-    </div>
+    return (
+        <div className='center' >
+            <div>        
+                <h1>會員登入</h1>
+            </div>
+            <div>
+
+                <p>帳號: <input type='text' name='ID' placeholder='請輸入帳號' value={id} onChange={(e) => {setID(e.target.value)}}></input></p>
+            </div>
+            <div>
+                <p>密碼:  <input type='password' name='Password' placeholder='請輸入密碼' value={password} onChange={(e) => {setPassword(e.target.value)}}></input></p>
+            </div>
+            <div>
+            <button onClick={submit}>登入</button>
+            <nav>
+                <li><Link to="/member/register">註冊</Link></li>
+            </nav>
+            </div>
+        </div>
+)
+    
+    
 }
+
 export default Login

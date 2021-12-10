@@ -1,0 +1,13 @@
+.center{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: rgb(245, 243, 241);
+    width:600px;
+    height:235px;
+    margin-left: 35%;
+    margin-top: 200px;
+    border-style: double;
+}
