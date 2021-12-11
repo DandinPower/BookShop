@@ -56,51 +56,68 @@ router.post('/login', async (req, res, next)=> {
         "userName":req.body.userName,
         "userPassword": req.body.userPassword,
     }
-    const sql = `SELECT * FROM account WHERE userName = "${loginData.userName}";`
-    console.log(sql)
     var response = {
+        "type":"",
         "name":"",
         "userName":"",
         "token":"",
         "error":"",
         "state":""
     }
-    try {
-        result = await database.sqlConnection(sql);
-        console.log(result);
-    } catch(e){
-        console.log(e);
-    }
-    if (result == ""){
-        response["state"] = "500"
-        res.json(response)
-    }
-    else{
-        var name = result[0].name
-        var password = result[0].password
-        var userName = result[0].userName
-        console.log(result)
-        let setToken = {
-            userName : result[0].userName
-          }
-        let token = jwt.sign(
-            JSON.parse(JSON.stringify(setToken)), 
-            'ThisIsSecurityMix@TPE&4255',
-            {expiresIn: 60*6*24}
-          )
-        if (password != loginData.userPassword){
-            response["error"] = "登入失敗"
+    try{
+        var userId = await database.GetUserId(loginData["userName"])
+        console.log(userId)
+        const sql = `select a.userName,a.password,a.name,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = ${userId} union select a.userName,a.password,a.name,b.logo as info from account as a,business as b where a.id = b.id and a.id = ${userId};`
+        console.log(sql)
+        try {
+            result = await database.sqlConnection(sql);
+            console.log(result);
+        } catch(e){
+            console.log(e);
+        }
+        if (result == ""){
             response["state"] = "500"
             res.json(response)
         }
         else{
-            response["name"] = name
-            response["userName"] = userName
-            response["token"] = token
-            response["state"] = "200"
-            res.json(response)
+            var name = result[0].name
+            var password = result[0].password
+            var userName = result[0].userName
+            if (result[0].info == "現金" || result[0].info == "信用卡"){
+                var type = "customer"
+            }
+            else {
+                var type = "business"
+            }
+            console.log(result)
+            let setToken = {
+                userName : result[0].userName
+            }
+            let token = jwt.sign(
+                JSON.parse(JSON.stringify(setToken)), 
+                'ThisIsSecurityMix@TPE&4255',
+                {expiresIn: 60*6*24}
+            )
+            if (password != loginData.userPassword){
+                response["error"] = "登入失敗"
+                response["state"] = "500"
+                res.json(response)
+            }
+            else{
+                response["type"] = type
+                response["name"] = name
+                response["userName"] = userName
+                response["token"] = token
+                response["state"] = "200"
+                res.json(response)
+            }
         }
+    }catch(e){
+        response["error"] = "登入失敗"
+        response["state"] = "500"
+        res.json(response)
     }
+    
 })
 
 router.post('/login/check',datatype.verifyToken,(req, res)=> {

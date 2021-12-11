@@ -57,6 +57,7 @@
         
         ```json
         {
+            "type":"customer",
             "name":"test",
             "userName":"admin",
             "token":"21312312",
@@ -69,6 +70,7 @@
         
         ```json
         {
+            "type":"",
             "name":"",
             "userName":"",
             "token":"",

@@ -96,6 +96,10 @@ create table product_comment (
     comment varchar(30)
 );
 
+select a.userName,a.password as userPassword,a.name,a.gender,a.email,a.phone,a.address,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = 4
+union
+select a.userName,a.password as userPassword,a.name,a.gender,a.email,a.phone,a.address,b.logo as info from account as a,business as b where a.id = b.id and a.id = 4;
+
 
 
 create table orders (
