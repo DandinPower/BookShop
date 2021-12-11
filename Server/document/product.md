@@ -112,6 +112,33 @@
         ```json
         []
         ```
+
+- 根據商品取得評論
+    - POST
+    - [http://localhost:5000/](http://localhost:5000/login)/product/comment
+    - Req
+        ```json
+        {
+                "productId":1
+        }
+        ```
+    - Res
+        ```json
+        [
+            {
+                "productId":1,
+                "star":5,
+                "comment":"爛死了",
+                "customerName":""
+            },
+            {
+                "productId":1,
+                "star":5,
+                "comment":"爛死了",
+                "customerName":""		
+            }
+        ]
+        ```
         
 - 下訂單
     - POST
@@ -190,3 +217,226 @@
         1. 未出貨
         2. 出貨
         3. 訂單完成
+
+- 賣家新增商品  
+    - POST
+    - http://localhost:5000/product/manage/add
+    - Req
+        
+        ```json
+        {
+            "userName":"test",
+            "token":"132315234dads",
+            "description":"這是一本好書",
+            "name":"戀愛教學",
+            "price":1000,
+            "status":"1",
+            "category":"教學",
+            "image":"image/book1.jpg"
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"書名重複",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
+        
+- 賣家查詢商品
+    - POST
+    - http://localhost:5000/product/manage/search
+    - Req
+        
+        ```json
+        {
+            "userName":"",
+            "token":""
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        [
+            {
+                "productId":"3",
+                "description":"說明書籍",
+                "name":"無敵主角",
+                "price":"999",
+                "launch":true,
+                "status":"1",
+                "category":"小說",
+                "image":"image/1.jpg"
+            }
+        ]
+        ```
+        
+- 賣家修改商品
+    - POST
+    - http://localhost:5000/product/manage/update
+    - Req
+        
+        ```json
+        {
+            "userName":"c",
+            "token":"321jdiijiqw",
+            "productId":"1",
+            "description":"說明書籍",
+            "name":"新名字",
+            "price":"688",
+            "status":"0",
+            "category":"1",
+            "image":"image/32"
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"錯誤訊息",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
+        
+- 賣家上下架商品
+    - POST
+    - http://localhost:5000/product/manage/launch
+    - Req
+        
+        ```json
+        {
+            "userName":"pname",
+            "token":"sadasda",
+            "productId":"1",
+            "launch":false
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
+        
+        ```json
+        {
+            "error":"3122312312",
+            "state":500
+        }
+        ```
+        
+- 賣家查詢訂單
+    - POST
+    - http://localhost:5000/product/order/manage/search
+    - Req
+        
+        ```json
+        {
+            "userName":"",
+            "token":""
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        [
+            {
+                "orderNo":"1",
+                "orderDate":"2021-11-12",
+                "arrivalDate":"null",
+                "quantity":"3",
+                "status":"未出貨",      //訂單的status
+                "productId":"1",
+                "customerId":"3",
+                "name":"書籍名稱",
+                "price":"333"
+            }
+        ]
+        ```
+        
+- 賣家更改訂單狀態
+    - POST
+    - http://localhost:5000/product/order/manage/status
+    - Req
+        
+        ```json
+        {
+            "userName":"username",
+            "token":"231231321ssfd",
+            "orderNo":"1",
+            "status":"已出貨"     
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"更改失敗",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
+        
+    - status狀態
+        1. 未出貨
+        2. 出貨
+        3. 訂單完成
+- 買家評論訂單商品 
+    - POST
+    - http://localhost:5000/product/order/comment
+    - Req
+        
+        ```json
+        {
+            "userName":"b",
+            "token":"23slkadjio123",
+            "orderNo":"1",
+            "star":5,    //限制1~5
+            "comment":"好攢"    
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"評論失敗",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
