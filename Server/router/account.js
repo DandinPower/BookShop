@@ -5,7 +5,7 @@ const datatype = require('../function/datatype')
 const router = express.Router()
 
 
-
+//註冊請求
 router.post('/register', async (req, res, next)=> {        
     var data = req.body
     let _userName = data["userName"]
@@ -16,6 +16,8 @@ router.post('/register', async (req, res, next)=> {
     let _phone = data["phone"]
     let _address = data["address"]
     let _type = data["type"]
+    
+    //放入Table `account`之中
     const sql = `insert into account (address,gender,phone,email,password,userName,name) values ("${_address}","${_gender}","${_phone}","${_email}","${_userPassword}","${_userName}","${_name}");`
     var sql2 = ``;
     console.log(sql)
@@ -50,6 +52,7 @@ router.post('/register', async (req, res, next)=> {
     res.json(response)
 })
 
+//登入請求
 router.post('/login', async (req, res, next)=> {        
     
     var loginData = {
