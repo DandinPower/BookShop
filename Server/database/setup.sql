@@ -39,14 +39,13 @@ create table account (
 	address varchar(50) not null,
 	gender char(1) not null,
 	rating int default 0,
-	phone char(10) not null,
+	phone char(10) not null unique,
 	email varchar(30) not null unique,
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
 	name varchar(20) not null,
     foreign key (adminId)references admin(id)on delete set null
 );
-
 
 create table customer (
 	id int primary key,
@@ -71,7 +70,6 @@ create table business (
     foreign key(id)references account(id)on delete cascade,
     foreign key(organizerId)references organizer(organizerId) on delete set null
 );
-
 
 create table product (
 	no int primary key auto_increment,

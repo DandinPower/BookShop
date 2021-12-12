@@ -25,39 +25,35 @@ router.post('/register', async (req, res, next)=> {
         "error":"",
         "state":""
     }
-    try {
-        let result = await database.sqlConnection(sql);
-        response["state"] = "200";
-        console.log(result)
-        if (_type == "customer"){
-            sql2 = `insert into customer (id) value (${result["insertId"]});`;
-        }
-        else if (_type == "business"){
-            sql2 = `insert into business (id) value (${result["insertId"]});`;
-        }
-        else {
-            sql2 = `delete from account where id = ${result["insertId"]};`;
-        }
+    if (_type == "customer" | _type == "business"){
         try {
-            let result = await database.sqlConnection(sql2);
-            
-            if (_type == 'customer' | _type == 'business'){
-                response["state"] = "200";
-            }
-            else {
-                response["error"] = "未指定用戶類別"
-                response["state"] = "500"
-            }
+            let result = await database.sqlConnection(sql);
+            response["state"] = "200";
             console.log(result)
+            if (_type == "customer"){
+                sql2 = `insert into customer (id) value (${result["insertId"]});`;
+            }
+            else if (_type == "business"){
+                sql2 = `insert into business (id) value (${result["insertId"]});`;
+            }
+            try {
+                let result = await database.sqlConnection(sql2);
+                response["state"] = "200";
+                console.log(result)
+            } catch(e){
+                response["error"] = "註冊失敗"
+                response["state"] = "500"
+                console.log(e)
+            }
         } catch(e){
             response["error"] = "註冊失敗"
             response["state"] = "500"
             console.log(e)
         }
-    } catch(e){
-        response["error"] = "註冊失敗"
+    }
+    else{
+        response["error"] = "未指定用戶類別"
         response["state"] = "500"
-        console.log(e)
     }
     res.json(response)
 })
@@ -89,6 +85,7 @@ router.post('/login', async (req, res, next)=> {
             console.log(e);
         }
         if (result == ""){
+            response["error"] = "登入失敗"
             response["state"] = "500"
             res.json(response)
         }
