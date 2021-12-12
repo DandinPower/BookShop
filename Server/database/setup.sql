@@ -79,7 +79,7 @@ create table product (
     description varchar(100),
     name varchar(30) not null unique,
     price int not null,
-    launch boolean default False,
+    launch boolean default False not null,
     status char(1) not null,
     category varchar(20) not null,
     rating int default 0,
@@ -92,15 +92,13 @@ create table product_comment (
     productId int,
     customerId int,
     orderNo int,
-    star int 1~5,
-    comment varchar(30)
+    star int default 0 not null,
+    comment varchar(30),
+    primary key(productId,customerId,orderNo),
+    foreign key(productId)references product(no)on delete cascade,
+    foreign key(customerId)references customer(id) on delete cascade,
+    foreign key(orderNo)references orders(orderNo) on delete cascade
 );
-
-select a.userName,a.password as userPassword,a.name,a.gender,a.email,a.phone,a.address,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = 4
-union
-select a.userName,a.password as userPassword,a.name,a.gender,a.email,a.phone,a.address,b.logo as info from account as a,business as b where a.id = b.id and a.id = 4;
-
-
 
 create table orders (
 	 orderNo int primary key auto_increment,
@@ -130,8 +128,4 @@ create table product_list (
     foreign key(customerId)references customer(id)on delete cascade,
     foreign key(productId)references product(no)on delete cascade
 );
-
-
-
-
 
