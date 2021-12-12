@@ -129,7 +129,3 @@ create table product_list (
     foreign key(productId)references product(no)on delete cascade
 );
 
-
-
-
-

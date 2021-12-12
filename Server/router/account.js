@@ -33,9 +33,19 @@ router.post('/register', async (req, res, next)=> {
         else if (_type == "business"){
             sql2 = `insert into business (id) value (${result["insertId"]});`;
         }
+        else {
+            sql2 = `delete from account where id = ${result["insertId"]};`;
+        }
         try {
             let result = await database.sqlConnection(sql2);
-            response["state"] = "200";
+            
+            if (_type == 'customer' | _type == 'business'){
+                response["state"] = "200";
+            }
+            else {
+                response["error"] = "未指定用戶類別"
+                response["state"] = "500"
+            }
             console.log(result)
         } catch(e){
             response["error"] = "註冊失敗"
