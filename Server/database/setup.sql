@@ -126,4 +126,3 @@ create table product_list (
     foreign key(customerId)references customer(id)on delete cascade,
     foreign key(productId)references product(no)on delete cascade
 );
-
