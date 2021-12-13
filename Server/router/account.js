@@ -36,15 +36,22 @@ router.post('/register', async (req, res, next)=> {
             else if (_type == "business"){
                 sql2 = `insert into business (id) value (${result["insertId"]});`;
             }
-            try {
-                let result = await database.sqlConnection(sql2);
-                response["state"] = "200";
-                console.log(result)
-            } catch(e){
-                response["error"] = "註冊失敗"
-                response["state"] = "500"
-                console.log(e)
+            if (_phone.length == 10){
+                try {
+                    let result = await database.sqlConnection(sql2);
+                    response["state"] = "200";
+                    console.log(result)
+                } catch(e){
+                    response["error"] = "註冊失敗"
+                    response["state"] = "500"
+                    console.log(e)
+                }
             }
+            else{
+                response["error"] = "電話號碼不符合10位數"
+                response["state"] = "500"
+            }
+            
         } catch(e){
             response["error"] = "註冊失敗"
             response["state"] = "500"
