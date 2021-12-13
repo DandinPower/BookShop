@@ -1,4 +1,4 @@
-import { Carousel,Container,Row,Col} from 'react-bootstrap'; 
+import { Carousel,Container,Row,Col,Table} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';        
 import carouselImg1 from './../../image/getImage.jpg';
 import carouselImg2 from './../../image/getImage2.jpg';
@@ -8,44 +8,35 @@ import './home.css';
 
 const HomeContent = () =>{
     return (
-    <Container className='home'> 
-        <Row>
-                <h1>你好</h1>
-        </Row>
-        <Row>        
-
-            <Col>
-                <Carousel>
-                        <Carousel.Item>
-                            <img
-                            src={carouselImg1}
-                            alt="First slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            src={carouselImg2}
-                            alt="Second slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            width={750}
-                            height={240}
-                            src={carouselImg3}
-                            alt="Third slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            src={carouselImg4}
-                            alt="fourth slide"
-                            />
-                        </Carousel.Item>
-                    </Carousel>
-                </Col>
-        </Row>   
-    </Container>
+    <Table striped bordered hover>
+        <tbody>
+            <tr>
+                <td>123</td>
+                <td>
+                    <Container className='home'> 
+                        <Row>            
+                            <Col>
+                                <Carousel>
+                                        <Carousel.Item>
+                                            <img src={carouselImg1} alt="First slide"/>
+                                        </Carousel.Item>
+                                        <Carousel.Item>
+                                            <img src={carouselImg2}  alt="Second slide"/>
+                                        </Carousel.Item>
+                                        <Carousel.Item>
+                                            <img width={750} height={240} src={carouselImg3} alt="Third slide"/>
+                                        </Carousel.Item>
+                                        <Carousel.Item>
+                                            <img src={carouselImg4} alt="fourth slide"/>
+                                        </Carousel.Item>
+                                </Carousel>
+                            </Col>
+                        </Row>   
+                    </Container>
+                </td>
+            </tr>
+        </tbody>
+    </Table>
     )
 }
 export default HomeContent
