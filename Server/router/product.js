@@ -56,6 +56,24 @@ router.get('/all', async (req, res, next)=> {
     res.json(response)
 })
 
+router.get('/comment', async (req, res, next)=> {        
+    const sql = `select PC.productId,PC.star,PC.comment,A.name from product_comment as PC,account as A,customer as C where PC.customerId = C.id and C.id = A.id and PC.customerId;` 
+    var response = []
+    console.log(sql)
+    try {
+        result = await database.sqlConnection(sql);
+        console.log(result);
+        result.forEach(function(item, index, array) {
+            let product = datatype.json2json(item)
+            console.log(product)
+            response.push(product)
+          });
+    } catch(e){
+        console.log(e);
+    }
+    res.json(response)
+})
+
 router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {       
     var state = true
     var request = req.body

@@ -186,7 +186,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 }
             }catch(e){
                 let response = {
-                    "error":"嘗試查詢customer失敗",
+                    "error":"網路連線錯誤",
                     "state":500
                 }
                 res.json(response)
@@ -212,7 +212,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
             }
             catch(e){
                 let response = {
-                    "error":"嘗試查詢business失敗",
+                    "error":"網路連線錯誤",
                     "state":500
                 }
                 res.json(response)
@@ -235,7 +235,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
     }
     if (checkState){
         let response = {
-            "error":"查詢不到使用者",
+            "error":"網路連線錯誤",
             "state":500
         }
         res.json(response)
