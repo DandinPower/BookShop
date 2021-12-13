@@ -24,7 +24,9 @@ values
 (5,"講述電子學的知識","電子學概論",999,"1","電類","image/product/picture3.jpg","2021-11-28"),
 (5,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29"),
 (6,"無敵的主角","穿越異世界",890,"0","小說","image/picture4.jpg","2021-12-3");
-select * from product;
+
+insert into product_comment(productId,customerId,orderNo,star,comment) value(11,1,9,5,"好書推薦");
+
 insert into product_list(customerId,productId)
 values
 (1,2),

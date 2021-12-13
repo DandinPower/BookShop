@@ -397,5 +397,64 @@ router.post('/manage/order/status', datatype.verifyToken,async (req, res, next)=
     res.json(response)
 })
 
+router.post('/order/comment', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName
+    var orderNo= req.body.orderNo
+    var star = req.body.star 
+    var comment = req.body.comment 
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        var customerId = await database.GetUserId(userName)
+        console.log(customerId)
+        if (customerId != null){
+            try{
+                const sqlSearch = `select productId from manage where orderNo = ${orderNo};`
+                var result = await database.sqlConnection(sqlSearch)
+                if (result.length == 0){
+                    response["error"] = "找不到該訂單"
+                    response["state"] = 500
+                }
+                else{
+                    productId = result[0]["productId"]
+                    if (star < 5 & star >= 0){
+                        try{
+                            const sqlInsert = `insert into product_comment(productId,customerId,orderNo,star,comment) value(${productId},${customerId},${orderNo},${star},"${comment}");`
+                            let result = await database.sqlConnection(sqlInsert)
+                            console.log(result)
+                            response["state"] = 200
+                        }catch(e){
+                            console.log(e)
+                            response["error"] = "插入評論失敗"
+                            response["state"] = 500
+                        }
+                    }
+                    else{
+                        response["error"] = "評價超出限制"
+                        response["state"] = 500
+                    }
+                    
+                }
+            }catch(e){
+                console.log(e)
+                response["error"] = "找不到該訂單"
+                response["state"] = 500
+            }
+        }
+        else{
+            console.log(e)
+            response["error"] = "找不到使用者"
+            response["state"] = 500
+        }
+    }catch(e){
+        console.log(e)
+        response["error"] = "找不到使用者"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
 
 module.exports = router
