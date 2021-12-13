@@ -24,7 +24,7 @@ function verifyToken(req,res,next){
           }
         })
       } else {
-        return res.status(403).json({
+        return res.json({
           "error":"沒有提供token",
           "state":500
       })
@@ -56,7 +56,7 @@ function verifyTokenByList(req,res,next){
     next()
   }
   else{
-    res.status(500).json({
+    res.json({
       "error":"token錯誤",
       "state":500
     })

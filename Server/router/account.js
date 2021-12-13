@@ -263,8 +263,13 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
             var customerId = await database.GetUserId(userName)
             console.log(customerId)
             try{
-                var sqlUpdateCustomer = `update customer set paymentInfo = "${paymentInfo}" where id = ${customerId};`;
-                var result = await database.sqlConnection(sqlUpdateCustomer)
+                if (paymentInfo != ""){
+                    var sqlUpdate = `update customer set paymentInfo = "${paymentInfo}" where id = ${customerId};`;
+                }
+                else{
+                    var sqlUpdate = `update business set description = "${description}",logo = "${logo}" where id = ${businessId};`;
+                }
+                var result = await database.sqlConnection(sqlUpdate)
                 console.log(result)
                 if (result["affectedRows"]!=0){
                     try{
@@ -284,7 +289,7 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
                 }
                 
             } catch(e){
-                response["error"] = "更新customer失敗"
+                response["error"] = "網路連線錯誤"
                 response["state"] = 500
             }
         } catch(e){
@@ -340,7 +345,7 @@ router.get('/getAllCustomer',async (req, res, next)=> {
         res.status(200).json(response)
     }catch(e){
         console.log(e)
-        res.status(500).send("讀取資料庫失敗")
+        res.status(500).send("網路連線失敗")
     }
 })
 
@@ -357,7 +362,7 @@ router.get('/getAllBusiness',async (req, res, next)=> {
         res.status(200).json(response)
     }catch(e){
         console.log(e)
-        res.status(500).send("讀取資料庫失敗")
+        res.status(500).send("網路連線失敗")
     }
 })
 module.exports = router
