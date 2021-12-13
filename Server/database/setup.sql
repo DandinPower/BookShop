@@ -77,7 +77,7 @@ create table product (
     description varchar(100),
     name varchar(30) not null unique,
     price int not null,
-    launch boolean default False not null,
+    launch boolean default True not null,
     status char(1) not null,
     category varchar(20) not null,
     rating int default 0,

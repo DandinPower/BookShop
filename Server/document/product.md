@@ -39,6 +39,7 @@
                 "name": "你應該擁有的一本牛頓萬有引力",
                 "price": 1099,
                 "status": "1",
+                "launch":"1",
                 "category": "物理",
                 "image": "image/product/picture2.jpg",
                 "uploadedDate": "2021-11-29T16:00:00.000Z"
@@ -51,6 +52,7 @@
                 "price": 999,
                 "status": "1",
                 "category": "電類",
+                "launch":"1",
                 "image": "image/product/picture3.jpg",
                 "uploadedDate": "2021-11-27T16:00:00.000Z"
             },
@@ -61,6 +63,7 @@
                 "name": "基本電學概論",
                 "price": 890,
                 "status": "1",
+                "launch":"1",
                 "category": "電類",
                 "image": "image/product/picture1.jpg",
                 "uploadedDate": "2021-11-28T16:00:00.000Z"
@@ -89,6 +92,7 @@
                 "name": "電子學概論",
                 "price": 999,
                 "status": "1",
+                "launch":"1",
                 "category": "電類",
                 "image": "image/product/picture3.jpg",
                 "uploadedDate": "2021-11-27T16:00:00.000Z"
@@ -100,6 +104,7 @@
                 "name": "基本電學概論",
                 "price": 890,
                 "status": "1",
+                "launch":"1",
                 "category": "電類",
                 "image": "image/product/picture1.jpg",
                 "uploadedDate": "2021-11-28T16:00:00.000Z"
@@ -273,7 +278,7 @@
                 "description":"說明書籍",
                 "name":"無敵主角",
                 "price":"999",
-                "launch":true,
+                "launch":"1",
                 "status":"1",
                 "category":"小說",
                 "image":"image/1.jpg"
@@ -326,7 +331,7 @@
             "userName":"pname",
             "token":"sadasda",
             "productId":"1",
-            "launch":false
+            "launch":"False"
         }
         ```
         

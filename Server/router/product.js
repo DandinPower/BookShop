@@ -21,7 +21,7 @@ router.get('/categories', async (req, res, next)=> {
 })
 
 router.get('/category/:name', async (req, res, next)=> {        
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where P.category = "${req.params.name}" and B.id = A.id and P.businessId = B.id;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where P.category = "${req.params.name}" and B.id = A.id and P.businessId = B.id;`
     var response = []
     console.log(sql)
     try {
@@ -39,7 +39,7 @@ router.get('/category/:name', async (req, res, next)=> {
 })
 
 router.get('/all', async (req, res, next)=> {        
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = B.id;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = B.id;`
     var response = []
     console.log(sql)
     try {
@@ -208,7 +208,7 @@ router.post('/manage/search', datatype.verifyToken,async (req, res, next)=> {
         console.log(businessId)
         if (businessId != null){
             try{
-                const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = ${businessId} and P.businessId = B.id;`
+                const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.launch,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = ${businessId} and P.businessId = B.id;`
                 var result = await database.sqlConnection(sqlInsert)
                 var response = []
                 console.log(result)
@@ -266,7 +266,42 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
             response["error"] = "找不到使用者"
             response["state"] = 500
         }
-        
+    }catch(e){
+        console.log(e)
+        response["error"] = "找不到使用者"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
+router.post('/manage/launch', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName
+    var productId = req.body.productId
+    var launch = req.body.launch
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        var businessId = await database.GetUserId(userName)
+        console.log(businessId)
+        if (businessId != null){
+            try{
+                const sqlInsert = `update product set launch = "${launch}" where no = ${productId};`
+                var result = await database.sqlConnection(sqlInsert)
+                console.log(result)
+                response["state"] = 200
+            }catch(e){
+                console.log(e)
+                response["error"] = "修改上下架失敗"
+                response["state"] = 500
+            }
+        }
+        else{
+            console.log(e)
+            response["error"] = "找不到使用者"
+            response["state"] = 500
+        }
     }catch(e){
         console.log(e)
         response["error"] = "找不到使用者"
