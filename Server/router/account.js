@@ -258,33 +258,33 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
         "error":"",
         "state":0
     }
-    if (paymentInfo != ""){  //customer
-        try{
-            var customerId = await database.GetUserId(userName)
-            console.log(customerId)
+    try{
+        var userId = await database.GetUserId(userName)
+        console.log(userId)
+        if (userId != null){
             try{
                 if (paymentInfo != ""){
-                    var sqlUpdate = `update customer set paymentInfo = "${paymentInfo}" where id = ${customerId};`;
+                    var sqlUpdate = `update customer set paymentInfo = "${paymentInfo}" where id = ${userId};`;
                 }
                 else{
-                    var sqlUpdate = `update business set description = "${description}",logo = "${logo}" where id = ${businessId};`;
+                    var sqlUpdate = `update business set description = "${description}",logo = "${logo}" where id = ${userId};`;
                 }
                 var result = await database.sqlConnection(sqlUpdate)
                 console.log(result)
                 if (result["affectedRows"]!=0){
                     try{
-                        var sqlUpdateAccount = `update account set password = "${userPassword}",name = "${name}",gender = "${gender}",email = "${email}",phone = "${phone}",address = "${address}" where id = ${customerId};`;
+                        var sqlUpdateAccount = `update account set password = "${userPassword}",name = "${name}",gender = "${gender}",email = "${email}",phone = "${phone}",address = "${address}" where id = ${userId};`;
                         var result = await database.sqlConnection(sqlUpdateAccount)
                         console.log(result)
                         response["state"] = 200
                     } catch(e){
                         console.log(e)
-                        response["error"] = "更新account失敗"
+                        response["error"] = "沒有更新到account"
                         response["state"] = 500
                     }
                 }
                 else{
-                    response["error"] = "更新customer失敗"
+                    response["error"] = "沒有更新到customer或business"
                     response["state"] = 500
                 }
                 
@@ -292,43 +292,16 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
                 response["error"] = "網路連線錯誤"
                 response["state"] = 500
             }
-        } catch(e){
+        }
+        else{
             response["error"] = "查無消費者"
             response["state"] = 500
-        }
+        }  
+    } catch(e){
+        response["error"] = "查無消費者"
+        response["state"] = 500
     }
-    else { 
-        try{
-            var businessId = await database.GetUserId(userName)
-            console.log(businessId)
-            try{
-                var sqlUpdateBusiness = `update business set description = "${description}",logo = "${logo}" where id = ${businessId};`;
-                var result = await database.sqlConnection(sqlUpdateBusiness)
-                console.log(result)
-                if (result["affectedRows"]!=0){
-                    try{
-                        var sqlUpdateAccount = `update account set password = "${userPassword}",name = "${name}",gender = "${gender}",email = "${email}",phone = "${phone}",address = "${address}" where id = ${businessId};`;
-                        var result = await database.sqlConnection(sqlUpdateAccount)
-                        console.log(result)
-                        response["state"] = 200
-                    } catch(e){
-                        response["error"] = "更新account失敗"
-                        response["state"] = 500
-                    }
-                }
-                else{
-                    response["error"] = "更新business失敗"
-                    response["state"] = 500
-                }
-            } catch(e){
-                response["error"] = "更新business失敗"
-                response["state"] = 500
-            }
-        } catch(e){
-            response["error"] = "查無消費者"
-            response["state"] = 500
-        }
-    }
+     
     res.json(response)
 })
 
