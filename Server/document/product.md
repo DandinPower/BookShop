@@ -353,7 +353,7 @@
         
 - 賣家查詢訂單
     - POST
-    - http://localhost:5000/product/order/manage/search
+    - http://localhost:5000/product/manage/order/search
     - Req
         
         ```json

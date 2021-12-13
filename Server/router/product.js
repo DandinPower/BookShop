@@ -310,5 +310,50 @@ router.post('/manage/launch', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
+router.post('/manage/order/search', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName;
+    try{
+        var businessId = await database.GetUserId(userName)
+        console.log(businessId)
+        if (businessId != null){
+            try{
+                let response = []
+                var sqlSearch = `select P.no as productId,P.price,P.name,O.orderNo,O.quantity,O.status,O.orderDate,O.arrivalDate,O.customerId from product as P,orders as O,manage as M,business as B where P.no = M.productId and O.orderNo = M.orderNo and M.businessId = ${businessId} and B.id = M.businessId;`
+                console.log(sqlSearch)
+                var result = await database.sqlConnection(sqlSearch)
+                result.forEach(function(item, index, array) {
+                    let product = datatype.json2json(item)
+                    console.log(product)
+                    response.push(product)
+                  });
+                res.json(response)
+            }catch(e){
+                console.log(e)
+                let response = {
+                    "error":"找尋訂單失敗",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }
+        else{
+            console.log(e)
+            let response = {
+                "error":"找不到使用者",
+                "state":500
+            }
+            res.json(response)
+        }
+        
+    }catch(e){
+        console.log(e)
+        let response = {
+            "error":"找不到使用者",
+            "state":500
+        }
+        res.json(response)
+    }
+})
+
 
 module.exports = router
