@@ -1,0 +1,14 @@
+.home{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: rgb(245, 243, 241);
+    width: 800px;
+}
+.carousel .carousel-item {
+    height: 240px;
+    width: 750px;
+  }
+  
