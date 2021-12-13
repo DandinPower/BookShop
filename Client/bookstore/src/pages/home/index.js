@@ -7,6 +7,7 @@ import Product from "../product/components/product";
 import AccountInfo from "../member/components/accountInfo";
 import ShopCart from "../product/components/shopcart";
 import Order from "../product/components/order";
+import HomeContent from "./homecontent";
 import React, {useState} from 'react'
 
 const Home = () => {
@@ -18,7 +19,7 @@ const Home = () => {
             <Header/>
         </div>
         <Routes>
-            <Route path="/" element={Home}/>
+            <Route path="/" element={<HomeContent/>}/>
             <Route path="/member/login" element={<Login/>}/>
             <Route path="/member/register" element={<Register/>}/>
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
