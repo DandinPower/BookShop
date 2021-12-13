@@ -126,3 +126,5 @@ create table product_list (
     foreign key(customerId)references customer(id)on delete cascade,
     foreign key(productId)references product(no)on delete cascade
 );
+
+update orders set status = "出貨中" where orderNo = 9 and orderNo = (select orderNo from manage where businessId = 6);

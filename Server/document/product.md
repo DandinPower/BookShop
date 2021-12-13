@@ -383,7 +383,7 @@
         
 - 賣家更改訂單狀態
     - POST
-    - http://localhost:5000/product/order/manage/status
+    - http://localhost:5000/product/manage/order/status
     - Req
         
         ```json

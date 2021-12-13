@@ -355,5 +355,47 @@ router.post('/manage/order/search', datatype.verifyToken,async (req, res, next)=
     }
 })
 
+router.post('/manage/order/status', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName
+    var orderNo= req.body.orderNo
+    var status = req.body.status
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        var businessId = await database.GetUserId(userName)
+        console.log(businessId)
+        if (businessId != null){
+            try{
+                const sqlUpdate = `update orders set status = "${status}" where orderNo = ${orderNo} and orderNo = (select orderNo from manage where businessId = ${businessId});`
+                var result = await database.sqlConnection(sqlUpdate)
+                if (result["affectedRows"] == 0){
+                    response["error"] = "找不到該訂單"
+                    response["state"] = 500
+                }
+                else{
+                    console.log(result)
+                    response["state"] = 200
+                }
+            }catch(e){
+                console.log(e)
+                response["error"] = "修改訂單status失敗"
+                response["state"] = 500
+            }
+        }
+        else{
+            console.log(e)
+            response["error"] = "找不到使用者"
+            response["state"] = 500
+        }
+    }catch(e){
+        console.log(e)
+        response["error"] = "找不到使用者"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
 
 module.exports = router
