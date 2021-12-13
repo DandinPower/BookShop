@@ -157,6 +157,67 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
     }
 })
 
+router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName;
+    var description = req.body.description
+    var name = req.body.name
+    var price = req.body.price
+    var status = req.body.status
+    var category = req.body.category
+    var image = req.body.image
+    var today = new Date();
+    var currentDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate()
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        var businessId = await database.GetUserId(userName)
+        console.log(businessId)
+        try{
+            const sqlInsert = `insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (${businessId},"${description}","${name}",${price},"${status}","${category}","${image}","${currentDate}");`
+            var result = await database.sqlConnection(sqlInsert)
+            console.log(result)
+            response["state"] = 200
+        }catch(e){
+            response["error"] = "新增商品失敗"
+            response["state"] = 500
+        }
+    }catch(e){
+        response["error"] = "找不到使用者"
+        response["state"] = 500
+    }
+    res.json(response)
+})
 
+router.post('/manage/search', datatype.verifyToken,async (req, res, next)=> {        
+    var userName = req.body.userName;
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        var businessId = await database.GetUserId(userName)
+        console.log(businessId)
+        try{
+            const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = ${businessId} and P.businessId = B.id;`
+            var result = await database.sqlConnection(sqlInsert)
+            var response = []
+            console.log(result)
+            result.forEach(function(item, index, array) {
+                let product = datatype.json2json(item)
+                console.log(product)
+                response.push(product)
+            });
+        }catch(e){
+            response["error"] = "查找商品失敗"
+            response["state"] = 500
+        }
+    }catch(e){
+        response["error"] = "找不到使用者"
+        response["state"] = 500
+    }
+    res.json(response)
+})
 
 module.exports = router

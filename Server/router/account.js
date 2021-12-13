@@ -80,47 +80,47 @@ router.post('/login', async (req, res, next)=> {
         console.log(sql)
         try {
             result = await database.sqlConnection(sql);
-            console.log(result);
-        } catch(e){
-            console.log(e);
-        }
-        if (result == ""){
-            response["error"] = "登入失敗"
-            response["state"] = "500"
-            res.json(response)
-        }
-        else{
-            var name = result[0].name
-            var password = result[0].password
-            var userName = result[0].userName
-            if (result[0].info == "現金" || result[0].info == "信用卡"){
-                var type = "customer"
-            }
-            else {
-                var type = "business"
-            }
-            console.log(result)
-            let setToken = {
-                userName : result[0].userName
-            }
-            let token = jwt.sign(
-                JSON.parse(JSON.stringify(setToken)), 
-                'ThisIsSecurityMix@TPE&4255',
-                {expiresIn: 60*6*24}
-            )
-            if (password != loginData.userPassword){
+            console.log(result.length);
+            if (result.length == 0){
                 response["error"] = "登入失敗"
                 response["state"] = "500"
                 res.json(response)
             }
             else{
-                response["type"] = type
-                response["name"] = name
-                response["userName"] = userName
-                response["token"] = token
-                response["state"] = "200"
-                res.json(response)
+                var name = result[0].name
+                var password = result[0].password
+                var userName = result[0].userName
+                if (result[0].info == "現金" || result[0].info == "信用卡"){
+                    var type = "customer"
+                }
+                else {
+                    var type = "business"
+                }
+                console.log(result)
+                let setToken = {
+                    userName : result[0].userName
+                }
+                let token = jwt.sign(
+                    JSON.parse(JSON.stringify(setToken)), 
+                    'ThisIsSecurityMix@TPE&4255',
+                    {expiresIn: 60*6*24}
+                )
+                if (password != loginData.userPassword){
+                    response["error"] = "登入失敗"
+                    response["state"] = "500"
+                    res.json(response)
+                }
+                else{
+                    response["type"] = type
+                    response["name"] = name
+                    response["userName"] = userName
+                    response["token"] = token
+                    response["state"] = "200"
+                    res.json(response)
+                }
             }
+        } catch(e){
+            console.log(e);
         }
     }catch(e){
         response["error"] = "登入失敗"
