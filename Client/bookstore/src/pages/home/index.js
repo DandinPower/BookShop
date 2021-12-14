@@ -8,6 +8,8 @@ import AccountInfo from "../member/components/accountInfo";
 import ShopCart from "../product/components/shopcart";
 import Order from "../product/components/order";
 import HomeContent from "./homecontent";
+import Manage from "../product/components/business/manage";
+import AddProduct from "../product/components/business/addProduct";
 import React, {useState} from 'react'
 
 const Home = () => {
@@ -27,6 +29,8 @@ const Home = () => {
             <Route path="/Products/product" element={<Product bookInfo={bookInfo}/>}/>
             <Route path="/Products/shopcart" element={<ShopCart/>}/>
             <Route path="/member/order" element={<Order/>}/>
+            <Route path="/Products/business/manage" element={<Manage/>}/>
+            <Route path="/Products/business/addproduct" element={<AddProduct/>}/>
         </Routes>
     </BrowserRouter>
         

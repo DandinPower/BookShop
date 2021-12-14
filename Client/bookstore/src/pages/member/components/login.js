@@ -3,7 +3,6 @@ import { useState } from 'react'
 import axios from 'axios'
 import "./css.css"
 
-import { Navbar, Container, Nav, Form, FormControl, Button,Row,Col} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';        
 const Login = () => {
     const [id,setID] = useState('')
@@ -22,6 +21,7 @@ const Login = () => {
                 window.sessionStorage.setItem('name',response.data.name)
                 window.sessionStorage.setItem('userName',response.data.userName)
                 window.sessionStorage.setItem('token',response.data.token)
+                window.sessionStorage.setItem('type',response.data.type)
                 window.location.href = `${window.location.origin}`
                 alert('登入成功')
             }

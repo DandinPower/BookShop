@@ -1,8 +1,9 @@
-import { Navbar, Container, Nav, Form, FormControl, Button,Image} from 'react-bootstrap'; 
+import { Navbar, Container, Nav, Form, FormControl, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';        
 import Logo from '../image/icon.jpg'
 const Header = () => {
     let userName = window.sessionStorage.getItem('userName')
+    let userType = window.sessionStorage.getItem('type')
     let logout ='登出'
     if(userName === null){
         userName = 'login'
@@ -29,8 +30,9 @@ const Header = () => {
                     <Nav.Link onClick={logOut}>{logout}</Nav.Link>
                     <Nav.Link href="/member/accountInfo">個人資訊</Nav.Link>
                     <Nav.Link href="/Products/category">產品</Nav.Link>
-                    <Nav.Link href="/Products/shopcart">購物車</Nav.Link>
-                    <Nav.Link href="/member/order">order</Nav.Link>
+                    <Nav.Link href="/Products/shopcart" disabled={userType !== 'customer'}>購物車</Nav.Link>
+                    <Nav.Link href="/member/order" disabled={userType !== 'customer'}>order</Nav.Link>
+                    <Nav.Link href="/Products/business/manage" disabled={userType !== 'business'}>管理商品</Nav.Link>
                 </Nav>
                 <Form className="d-flex">
                     <FormControl
