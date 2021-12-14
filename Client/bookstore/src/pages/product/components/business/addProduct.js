@@ -6,6 +6,23 @@ const AddProduct = () =>{
     const [price,setPrice] = useState('')
     const [status,setStatus] = useState('')
     const [category,setCategory] = useState('')
+    const [imageSrc, setImageSrc] = useState('');
+    const handleOnPreview = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+          // convert image file to base64 string
+          setImageSrc(reader.result)
+        }, false);
+    
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      };
+    const addProduct = () =>{
+        const formData = new FormData();
+        formData.append('image', imageSrc);
+    };
     return(<div>
                 <div>
                     <p>書名: <input type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}></input></p>
@@ -28,8 +45,10 @@ const AddProduct = () =>{
                     </div>
                 </div>
                 <div>
-                    <p>圖片: <input type='file' ></input></p>
+                    <p>圖片: <input type="file" accept="image/*"onChange={handleOnPreview}></input></p>
+                    <img src={imageSrc} alt="" />
                 </div>
+                <button onClick={addProduct}>新增商品</button>
            </div>)
 }
 export default AddProduct
