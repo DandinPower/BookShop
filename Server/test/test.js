@@ -6,7 +6,6 @@ const axios = require('axios')
 
 //初次創建測試 建立c1 c2 b1的帳戶
 describe('Account test', function(){ 
-
     it("Check whether first customer registration is success in normal", async function(){
         let res = await axios.post('http://localhost:5000/account/register/', {
             "userName":"c1",
@@ -274,4 +273,3 @@ describe('Login test', function(){
         assert.equal(res.data.error, "登入失敗");
     })
 })
-
