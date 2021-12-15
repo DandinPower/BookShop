@@ -572,7 +572,7 @@ router.post('/manage/add/image/:productId',file.UploadImage.single('image'),asyn
         }
         var sql = `insert into image_list(productId,content)value(${productId},?);`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
-        console.log(result)
+        //console.log(result)
     }catch(e){
         console.log(e)
         response["error"] = "已存在圖片"

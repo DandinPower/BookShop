@@ -42,7 +42,7 @@ const Category = ({setBookInfo}) =>{
         if(data.image !== undefined){
             return(
                 <div>
-                    <Link to="/Products/product"><img src={require(`./${data.image}`).default}  alt={data.description} onClick={e => setBookInfo(data)}></img></Link>
+                    <Link to="/Products/product"><img src = {`data:image/png;base64,${data.image}`}  alt={data.description} onClick={e => setBookInfo(data)}></img></Link>
                     <div>書名:{data.name}</div>
                     <div>簡述:{data.description}</div>
                     <div>價格:{data.price}</div>

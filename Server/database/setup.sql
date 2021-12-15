@@ -133,15 +133,9 @@ create table image_list (
     businessId int unique,
     content blob,
     primary key (imageId),
-    foreign key(productId)references product(no)on delete cascade,
-    foreign key(businessId)references business(id)on delete cascade
+    foreign key(productId)references product(no)on delete set null,
+    foreign key(businessId)references business(id)on delete set null
 );
-
-select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,I.content as logo 
-from account as A
-join business as B on A.id = B.id
-left join image_list as I on  I.businessId = B.id
-where B.id = 4;
 
 
 
