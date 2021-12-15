@@ -117,6 +117,81 @@
         ```json
         []
         ```
+- 根據商品分類取得商品圖片
+    - GET
+    - [http://localhost:5000/](http://localhost:5000/login)product/image/category/分類名稱
+    - Res
+        - 分類中有商品
+        
+        ```json
+        [
+            {
+                "productId":1,
+                "image": "132231132321oifsvdjwandh2qu2i3j12j3ijwleas"
+            },
+            {
+                "productId":2,
+                "image": "132kdhfyaej93u132iujeaksododkasodoko",
+            }
+        ]
+        ```
+        
+        - 分類中沒有商品
+        
+        ```json
+        []
+        ```
+        
+- 取得所有商品圖片
+    - GET
+    - [http://localhost:5000/](http://localhost:5000/login)product/image/all
+    - Res
+        - 有商品
+        
+        ```json
+        [
+            {
+                "productId":1,
+                "image": "132231132321oifsvdjwandh2qu2i3j12j3ijwleas"
+            },
+            {
+                "productId":2,
+                "image": "132kdhfyaej93u132iujeaksododkasodoko",
+            },
+        		{
+                "productId":3,
+                "image": "132kdhfyaej93u132iujeadasdsaksododkasodoko",
+            }
+        ]
+        ```
+        
+        - 沒有商品
+        
+        ```json
+        []
+        ```
+        
+- 根據商品取得商品圖片
+    - GET
+    - [http://localhost:5000/](http://localhost:5000/login)product/image/產品ID
+    - Res
+        - 有商品
+        
+        ```json
+        {
+            "productId":1,
+            "image": "132231132321oifsvdjwandh2qu2i3j12j3ijwleas"
+        }
+        ```
+        
+        - 沒有商品
+        
+        ```json
+        {
+            "productId":0,
+            "image": "",
+        }
+        ```
 
 - 根據商品取得評論
     - POST
@@ -347,7 +422,31 @@
             "state":200
         }
         ```
+- 賣家修改商品圖片
+    - POST
+    - http://localhost:5000/product/manage/update/image/產品ID
+    - Req
         
+        ```json
+        透過formData傳輸圖片
+        key為'image'
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"沒有這項商品或圖片不存在",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```       
 - 賣家上下架商品
     - POST
     - http://localhost:5000/product/manage/launch

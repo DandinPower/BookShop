@@ -58,6 +58,70 @@ router.get('/all', async (req, res, next)=> {
     res.json(response)
 })
 
+router.get('/image/all',async (req, res, next)=> {        
+    var response = []
+    try{
+        const sql = `select * from image_list;`
+        let result = await database.sqlConnection(sql)
+        console.log(result)
+        result.forEach(function(item, index, array) {
+            let productId = item["productId"]
+            let content = item["content"]
+            let image = Buffer.from(content).toString('base64')
+            let product = {
+                "productId":productId,
+                "image":image
+            }
+            console.log(product)
+            response.push(product)
+          });
+    }catch(e){
+        console.log(e)
+    }
+    res.send(response)
+})
+
+router.get('/image/category/:name',async (req, res, next)=> {        
+    var response = []
+    try{
+        const sql = `select * from image_list as I,product as P where I.productId = P.no and P.category = "${req.params.name}";`
+        let result = await database.sqlConnection(sql)
+        console.log(result)
+        result.forEach(function(item, index, array) {
+            let productId = item["productId"]
+            let content = item["content"]
+            let image = Buffer.from(content).toString('base64')
+            let product = {
+                "productId":productId,
+                "image":image
+            }
+            console.log(product)
+            response.push(product)
+          });
+    }catch(e){
+        console.log(e)
+    }
+    res.send(response)
+})
+
+router.get('/image/:productId',async (req, res, next)=> {        
+    var product = {
+        "productId":0,
+        "image":""
+    }
+    try{
+        const sql = `select * from image_list where productId = ${req.params.productId};`
+        let result = await database.sqlConnection(sql)
+        console.log(result)
+        product["productId"] = result[0]["productId"]
+        let content = result[0]["content"]
+        product["image"] = Buffer.from(content).toString('base64')
+    }catch(e){
+        console.log(e)
+    }
+    res.send(product)
+})
+
 router.get('/comment', async (req, res, next)=> {        
     const sql = `select PC.productId,PC.star,PC.comment,A.name from product_comment as PC,account as A,customer as C where PC.customerId = C.id and C.id = A.id and PC.customerId;` 
     var response = []
@@ -500,6 +564,36 @@ router.post('/manage/add/image/:productId',file.UploadImage.single('image'),asyn
     }catch(e){
         console.log(e)
         response["error"] = "已存在圖片"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
+router.post('/manage/update/image/:productId',file.UploadImage.single('image'),async (req, res, next)=> {        
+    var productId = req.params.productId
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        if (req.file != undefined){
+            console.log(req.file)  
+        }
+        else{
+            console.log('沒有上傳圖片')
+        }
+        var sql = `update image_list set content = ? where productId = ${productId};`
+        let result = await database.sqlConnectionFile(sql,req.file.buffer)
+        console.log(result)
+        response["state"] = 200
+        if (result["affectedRows"] ==0){
+            response["error"] = "沒有此項商品或者不存在圖片"
+            response["state"] = 500
+        }
+        
+    }catch(e){
+        console.log(e)
+        response["error"] = "網路連線錯誤"  //資料庫錯誤
         response["state"] = 500
     }
     res.json(response)
