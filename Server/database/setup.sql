@@ -136,5 +136,12 @@ create table image_list (
     foreign key(productId)references product(no)on delete cascade,
     foreign key(businessId)references business(id)on delete cascade
 );
-describe image_list;
-select * from image_list;
+
+select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,I.content as logo 
+from account as A
+join business as B on A.id = B.id
+left join image_list as I on  I.businessId = B.id
+where B.id = 4;
+
+
+

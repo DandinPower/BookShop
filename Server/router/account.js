@@ -192,7 +192,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 res.json(response)
             }
             try{
-                var sqlBusiness = `select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,I.content as logo from account as A,business as B,image_list as I where A.id = B.id and I.businessId = B.id and B.id = ${userId};`
+                var sqlBusiness = `select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,I.content as logo from account as A join business as B on A.id = B.id left join image_list as I on  I.businessId = B.id where B.id = ${userId};`
                 var result = await database.sqlConnection(sqlBusiness)
                 console.log(result)
                 if (result.length != 0){
@@ -204,7 +204,12 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                     response["phone"] = result[0]["phone"]
                     response["address"] = result[0]["address"]
                     response["description"] = result[0]["description"]
-                    response["logo"] = Buffer.from(result[0]["logo"]).toString('base64')
+                    if (result[0]["logo"] != null){
+                        response["logo"] = Buffer.from(result[0]["logo"]).toString('base64')
+                    }
+                    else{
+                        response["logo"] = ""
+                    } 
                     response["state"] = 200
                     checkState = false
                     res.json(response)

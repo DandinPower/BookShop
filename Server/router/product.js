@@ -23,7 +23,7 @@ router.get('/categories', async (req, res, next)=> {
 })
 
 router.get('/category/:name', async (req, res, next)=> {        
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from business as B,product as P,account as A,image_list as I where P.category = "${req.params.name}" and B.id = A.id and P.businessId = B.id and I.productId = P.no;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where P.category = "${req.params.name}";`
     var response = []
     console.log(sql)
     try {
@@ -31,7 +31,12 @@ router.get('/category/:name', async (req, res, next)=> {
         console.log(result);
         result.forEach(function(item, index, array) {
             let product = datatype.json2json(item)
-            product["image"] = Buffer.from(product["image"]).toString('base64')
+            if (product["image"] != null){
+                product["image"] = Buffer.from(product["image"]).toString('base64')
+            }
+            else{
+                product["image"] = ""
+            }
             console.log(product)
             response.push(product)
           });
@@ -42,7 +47,7 @@ router.get('/category/:name', async (req, res, next)=> {
 })
 
 router.get('/all', async (req, res, next)=> {        
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from business as B,product as P,account as A,image_list as I where B.id = A.id and P.businessId = B.id and I.productId = P.no;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no;`
     var response = []
     console.log(sql)
     try {
@@ -50,7 +55,12 @@ router.get('/all', async (req, res, next)=> {
         console.log(result);
         result.forEach(function(item, index, array) {
             let product = datatype.json2json(item)
-            product["image"] = Buffer.from(product["image"]).toString('base64')
+            if (product["image"] != null){
+                product["image"] = Buffer.from(product["image"]).toString('base64')
+            }
+            else{
+                product["image"] = ""
+            }
             console.log(product)
             response.push(product)
           });
