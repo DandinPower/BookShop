@@ -23,7 +23,7 @@ router.get('/categories', async (req, res, next)=> {
 })
 
 router.get('/category/:name', async (req, res, next)=> {        
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where P.category = "${req.params.name}" and B.id = A.id and P.businessId = B.id;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from business as B,product as P,account as A,image_list as I where P.category = "${req.params.name}" and B.id = A.id and P.businessId = B.id and I.productId = P.no;`
     var response = []
     console.log(sql)
     try {
@@ -31,6 +31,7 @@ router.get('/category/:name', async (req, res, next)=> {
         console.log(result);
         result.forEach(function(item, index, array) {
             let product = datatype.json2json(item)
+            product["image"] = Buffer.from(product["image"]).toString('base64')
             console.log(product)
             response.push(product)
           });
@@ -41,7 +42,7 @@ router.get('/category/:name', async (req, res, next)=> {
 })
 
 router.get('/all', async (req, res, next)=> {        
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = B.id;`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from business as B,product as P,account as A,image_list as I where B.id = A.id and P.businessId = B.id and I.productId = P.no;`
     var response = []
     console.log(sql)
     try {
@@ -49,6 +50,7 @@ router.get('/all', async (req, res, next)=> {
         console.log(result);
         result.forEach(function(item, index, array) {
             let product = datatype.json2json(item)
+            product["image"] = Buffer.from(product["image"]).toString('base64')
             console.log(product)
             response.push(product)
           });
@@ -248,7 +250,6 @@ router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {
     var price = req.body.price
     var status = req.body.status
     var category = req.body.category
-    var image = req.body.image
     var today = new Date();
     var currentDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate()
     var response = {
@@ -261,7 +262,7 @@ router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {
         console.log(businessId)
         if (businessId != null){
             try{
-                const sqlInsert = `insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (${businessId},"${description}","${name}",${price},"${status}","${category}","${image}","${currentDate}");`
+                const sqlInsert = `insert into product (businessId,description,name,price,status,category,uploadedDate) value (${businessId},"${description}","${name}",${price},"${status}","${category}","${currentDate}");`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["productId"] = result["insertId"]
@@ -552,15 +553,16 @@ router.post('/manage/add/image/:productId',file.UploadImage.single('image'),asyn
     try{
         if (req.file != undefined){
             console.log(req.file)  
+            response["state"] = 200
         }
         else{
             console.log('沒有上傳圖片')
+            response["error"] = "沒選擇圖片"
+            response["state"] = 500 
         }
         var sql = `insert into image_list(productId,content)value(${productId},?);`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
         console.log(result)
-        response["state"] = 200
-        
     }catch(e){
         console.log(e)
         response["error"] = "已存在圖片"
@@ -577,15 +579,17 @@ router.post('/manage/update/image/:productId',file.UploadImage.single('image'),a
     }
     try{
         if (req.file != undefined){
+            response["state"] = 200
             console.log(req.file)  
         }
         else{
             console.log('沒有上傳圖片')
+            response["error"] = "沒選擇圖片"
+            response["state"] = 500 
         }
         var sql = `update image_list set content = ? where productId = ${productId};`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
         console.log(result)
-        response["state"] = 200
         if (result["affectedRows"] ==0){
             response["error"] = "沒有此項商品或者不存在圖片"
             response["state"] = 500

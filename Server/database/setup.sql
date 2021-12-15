@@ -130,9 +130,11 @@ create table product_list (
 create table image_list (
 	imageId int auto_increment,
     productId int unique,
-    businessId int,
+    businessId int unique,
     content blob,
     primary key (imageId),
     foreign key(productId)references product(no)on delete cascade,
     foreign key(businessId)references business(id)on delete cascade
 );
+describe image_list;
+select * from image_list;

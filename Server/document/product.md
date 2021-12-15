@@ -39,9 +39,8 @@
                 "name": "你應該擁有的一本牛頓萬有引力",
                 "price": 1099,
                 "status": "1",
-                "launch":"1",
                 "category": "物理",
-                "image": "image/product/picture2.jpg",
+                "image": "dadsadsawadsadsa",
                 "uploadedDate": "2021-11-29T16:00:00.000Z"
             },
             {
@@ -52,8 +51,7 @@
                 "price": 999,
                 "status": "1",
                 "category": "電類",
-                "launch":"1",
-                "image": "image/product/picture3.jpg",
+                "image": "adsadswadwdwawdsdsaw",
                 "uploadedDate": "2021-11-27T16:00:00.000Z"
             },
             {
@@ -63,9 +61,8 @@
                 "name": "基本電學概論",
                 "price": 890,
                 "status": "1",
-                "launch":"1",
                 "category": "電類",
-                "image": "image/product/picture1.jpg",
+                "image": "awdawdwassadwwasdsaw",
                 "uploadedDate": "2021-11-28T16:00:00.000Z"
             }
         ]
@@ -92,9 +89,8 @@
                 "name": "電子學概論",
                 "price": 999,
                 "status": "1",
-                "launch":"1",
                 "category": "電類",
-                "image": "image/product/picture3.jpg",
+                "image": "dsadawdwadawdasadsdwdwa",
                 "uploadedDate": "2021-11-27T16:00:00.000Z"
             },
             {
@@ -104,9 +100,8 @@
                 "name": "基本電學概論",
                 "price": 890,
                 "status": "1",
-                "launch":"1",
                 "category": "電類",
-                "image": "image/product/picture1.jpg",
+                "image": "wadwsasdadwwdadsadwwdaadw",
                 "uploadedDate": "2021-11-28T16:00:00.000Z"
             }
         ]
@@ -312,7 +307,6 @@
             "price":1000,
             "status":"1",
             "category":"教學",
-            "image":"image/book1.jpg"
         }
         ```
         

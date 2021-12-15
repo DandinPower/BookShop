@@ -145,14 +145,14 @@
             "address":"台南市安平區87號",
             "paymentInfo":"現金",
             "description":"",
-            "logo":"",
+            "logo":"", //可以是預設的圖片
             "error":"",
             "state":200
         }
         ```
         
         - 如果是business
-
+        
         ```json
         {
             "type":"business",
@@ -165,15 +165,15 @@
             "address":"台南市安平區87號",
             "paymentInfo":"",
             "description":"pchome賣家",
-            "logo":"image/1.jpg", //可以是預設的圖片
+            "logo":"dajdsaidiahuwueamkmasdakkmwds", //可以是預設的圖片
             "error":"",
             "state":200
         }
         ```
-
+        
         ```json
         {
-            "error":"",
+            "error":"查詢出錯",
             "state":500
         }
         ```
@@ -197,10 +197,10 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "paymentInfo":"現金",
-            "description":"",
-            "logo":""
+            "description":""
         }
         ```
+        
         ```json
         {
             "userName":"test",    //userName不能修改
@@ -212,8 +212,7 @@
             "phone":"091234567",
             "address":"台南市安平區87號",
             "paymentInfo":"",
-            "description":"pchome賣家",
-            "logo":"image/1.jpg"
+            "description":"pchome賣家"
         }
         ```
         
@@ -230,5 +229,57 @@
         {
             "error":"修改失敗",
             "state":500
+        }
+        ```
+
+- 賣家新增logo
+    - POST
+    - http://localhost:5000/account/logo/add/賣家ID
+    - Req
+        
+        ```json
+        透過formData傳輸圖片
+        key為'image'
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"沒有這個使用者或圖片不存在",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
+        
+- 賣家修改logo
+    - POST
+    - http://localhost:5000/account/logo/update/賣家ID
+    - Req
+        
+        ```json
+        透過formData傳輸圖片
+        key為'image'
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"已有這項圖片",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":200
         }
         ```

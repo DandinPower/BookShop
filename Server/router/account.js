@@ -2,6 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const database = require('../database/index')
 const datatype = require('../function/datatype')
+const file = require('../function/file')
 const router = express.Router()
 
 
@@ -144,7 +145,6 @@ router.post('/login/check',datatype.verifyToken,(req, res)=> {
     })
 })
 
-
 router.post('/search', datatype.verifyToken,async (req, res, next)=> {        
     var checkState = true
     var userName = req.body.userName;
@@ -192,7 +192,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 res.json(response)
             }
             try{
-                var sqlBusiness = `select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,B.logo from account as A,business as B where A.id = B.id and B.id = ${userId};`
+                var sqlBusiness = `select A.userName,A.password as userPassword,A.name,A.gender,A.email,A.phone,A.address,B.description,I.content as logo from account as A,business as B,image_list as I where A.id = B.id and I.businessId = B.id and B.id = ${userId};`
                 var result = await database.sqlConnection(sqlBusiness)
                 console.log(result)
                 if (result.length != 0){
@@ -204,7 +204,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                     response["phone"] = result[0]["phone"]
                     response["address"] = result[0]["address"]
                     response["description"] = result[0]["description"]
-                    response["logo"] = result[0]["logo"]
+                    response["logo"] = Buffer.from(result[0]["logo"]).toString('base64')
                     response["state"] = 200
                     checkState = false
                     res.json(response)
@@ -253,7 +253,6 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
     var address = req.body.address;
     var paymentInfo = req.body.paymentInfo;
     var description = req.body.description;
-    var logo = req.body.logo;
     var response = {
         "error":"",
         "state":0
@@ -267,7 +266,7 @@ router.post('/update', datatype.verifyToken ,async (req, res, next)=> {
                     var sqlUpdate = `update customer set paymentInfo = "${paymentInfo}" where id = ${userId};`;
                 }
                 else{
-                    var sqlUpdate = `update business set description = "${description}",logo = "${logo}" where id = ${userId};`;
+                    var sqlUpdate = `update business set description = "${description}" where id = ${userId};`;
                 }
                 var result = await database.sqlConnection(sqlUpdate)
                 console.log(result)
@@ -338,4 +337,65 @@ router.get('/getAllBusiness',async (req, res, next)=> {
         res.status(500).send("網路連線失敗")
     }
 })
+
+//新增使用者logo
+router.post('/logo/add/:businessId',file.UploadImage.single('image'),async (req, res, next)=> {        
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        if (req.file != undefined){
+            console.log(req.file) 
+            response["state"] = 200
+        }
+        else{
+            console.log('沒有上傳圖片')
+            response["error"] = "沒選擇圖片"
+            response["state"] = 500 
+        }
+        var sql = `insert into image_list(businessId,content)value(${req.params.businessId},?);`
+        let result = await database.sqlConnectionFile(sql,req.file.buffer)
+        console.log(result)
+        
+        
+    }catch(e){
+        response["error"] = "已存在圖片"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
+//修改使用者logo
+router.post('/logo/update/:businessId',file.UploadImage.single('image'),async (req, res, next)=> {        
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        if (req.file != undefined){
+            console.log(req.file)  
+            response["state"] = 200
+        }
+        else{
+            console.log('沒有上傳圖片')
+            response["error"] = "沒選擇圖片"
+            response["state"] = 500 
+        }
+        var sql = `update image_list set content = ? where businessId = ${req.params.businessId};`
+        let result = await database.sqlConnectionFile(sql,req.file.buffer)
+        console.log(result)
+        if (result["affectedRows"] ==0){
+            response["error"] = "沒有此使用者或者不存在圖片"
+            response["state"] = 500
+        }
+        
+    }catch(e){
+        console.log(e)
+        response["error"] = "已存在圖片"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
 module.exports = router
