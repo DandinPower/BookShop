@@ -2,6 +2,8 @@ const { request } = require('express')
 const express = require('express')
 const database = require('../database/index')
 const datatype = require('../function/datatype')
+const file = require('../function/file')
+const multer = require('multer')
 const router = express.Router()
 
 router.get('/categories', async (req, res, next)=> {        
@@ -186,6 +188,7 @@ router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {
     var today = new Date();
     var currentDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate()
     var response = {
+        "productId":0,
         "error":"",
         "state":0
     }
@@ -197,7 +200,9 @@ router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {
                 const sqlInsert = `insert into product (businessId,description,name,price,status,category,image,uploadedDate) value (${businessId},"${description}","${name}",${price},"${status}","${category}","${image}","${currentDate}");`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
+                response["productId"] = result["insertId"]
                 response["state"] = 200
+                
             }catch(e){
                 response["error"] = "新增商品失敗"
                 response["state"] = 500
@@ -469,6 +474,32 @@ router.post('/order/comment', datatype.verifyToken,async (req, res, next)=> {
     }catch(e){
         console.log(e)
         response["error"] = "找不到使用者"
+        response["state"] = 500
+    }
+    res.json(response)
+})
+
+router.post('/manage/add/image/:productId',file.UploadImage.single('image'),async (req, res, next)=> {        
+    var productId = req.params.productId
+    var response = {
+        "error":"",
+        "state":0
+    }
+    try{
+        if (req.file != undefined){
+            console.log(req.file)  
+        }
+        else{
+            console.log('沒有上傳圖片')
+        }
+        var sql = `insert into image_list(productId,content)value(${productId},?);`
+        let result = await database.sqlConnectionFile(sql,req.file.buffer)
+        console.log(result)
+        response["state"] = 200
+        
+    }catch(e){
+        console.log(e)
+        response["error"] = "已存在圖片"
         response["state"] = 500
     }
     res.json(response)

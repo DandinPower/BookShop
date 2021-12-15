@@ -21,6 +21,25 @@ let sqlConnection = (sql) => {
     })
 }
 
+const sqlConnectionFile = (sql, values) => {
+    return new Promise((reslove, reject) => {
+      pool.getConnection((err, connection) => {
+        if (err) {
+          reject(err);
+        } else {
+          connection.query(sql, values, (error, rows) => {
+            if (error) {
+              reject(error);
+            } else {
+              reslove(rows);
+            }
+            connection.release();
+          });
+        }
+      });
+    });
+  }
+
 async function GetUserId (userName){
     try{
         result = await sqlConnection(`select id from account where userName = "${userName}";`)
@@ -55,6 +74,7 @@ async function GetBusinessId (productId){
 
 module.exports = {
     sqlConnection,
+    sqlConnectionFile,
     GetUserId,
     GetBusinessId
 }

@@ -245,7 +245,34 @@
         
         ```json
         {
+            "productId":0,
             "error":"書名重複",
+            "state":500
+        }
+        ```
+        
+        ```json
+        {
+            "productId":8,
+            "error":"",
+            "state":200
+        }
+        ```
+- 賣家新增商品圖片
+    - POST
+    - http://localhost:5000/product/manage/add/image/產品ID
+    - Req
+        
+        ```json
+        透過formData傳輸圖片
+        key為'image'
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"已存在圖片",
             "state":500
         }
         ```
@@ -256,7 +283,7 @@
             "state":200
         }
         ```
-        
+
 - 賣家查詢商品
     - POST
     - http://localhost:5000/product/manage/search

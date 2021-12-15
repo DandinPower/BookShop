@@ -126,3 +126,13 @@ create table product_list (
     foreign key(customerId)references customer(id)on delete cascade,
     foreign key(productId)references product(no)on delete cascade
 );
+
+create table image_list (
+	imageId int auto_increment,
+    productId int unique,
+    businessId int,
+    content blob,
+    primary key (imageId),
+    foreign key(productId)references product(no)on delete cascade,
+    foreign key(businessId)references business(id)on delete cascade
+);
