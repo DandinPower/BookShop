@@ -134,8 +134,9 @@ router.get('/image/:productId',async (req, res, next)=> {
     res.send(product)
 })
 
-router.get('/comment', async (req, res, next)=> {        
-    const sql = `select PC.productId,PC.star,PC.comment,A.name from product_comment as PC,account as A,customer as C where PC.customerId = C.id and C.id = A.id and PC.customerId;` 
+router.post('/comment', async (req, res, next)=> {        
+    var productId = req.body.productId
+    const sql = `select PC.productId,PC.star,PC.comment,A.name from product_comment as PC,account as A,customer as C where PC.customerId = C.id and C.id = A.id and PC.productId = ${productId};` 
     var response = []
     console.log(sql)
     try {
@@ -523,7 +524,7 @@ router.post('/order/comment', datatype.verifyToken,async (req, res, next)=> {
                 }
                 else{
                     productId = result[0]["productId"]
-                    if (star < 5 & star >= 0){
+                    if (star <= 5 & star >= 0){
                         try{
                             const sqlInsert = `insert into product_comment(productId,customerId,orderNo,star,comment) value(${productId},${customerId},${orderNo},${star},"${comment}");`
                             let result = await database.sqlConnection(sqlInsert)
