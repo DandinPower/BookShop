@@ -109,6 +109,7 @@ router.post('/all', datatype.verifyToken,async (req, res, next)=> {
           });
         res.json(response)
     } catch(e){
+        console.log(e)
         let response = {
             "error":"查詢購物車失敗",
             "state":500
