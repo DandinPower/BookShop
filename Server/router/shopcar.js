@@ -91,13 +91,7 @@ router.post('/update', datatype.verifyToken,async (req, res, next)=> {
 router.post('/all', datatype.verifyToken,async (req, res, next)=> {        
     var userName = req.body.userName
     var id = await database.GetUserId(userName)
-    const sql = `select P.no as productId,A.name as businessName,P.name,P.price,I.content as image,PL.quantity
-                    from product as P
-                    join product_list as PL on P.no = PL.productId
-                    join customer as C on C.id = PL.customerId
-                    join account as A on A.id = P.businessId
-                    left join image_list as I on I.productId = PL.productId;
-                    where PL.customerId = ${id};`
+    const sql = `select P.no as productId,A.name as businessName,P.name,P.price,I.content as image,PL.quantity from product as P join product_list as PL on P.no = PL.productId join customer as C on C.id = PL.customerId join account as A on A.id = P.businessId left join image_list as I on I.productId = PL.productId where PL.customerId = ${id};`
     console.log(sql)
     try {
         let response = []
