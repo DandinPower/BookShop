@@ -312,6 +312,12 @@ router.post('/manage/search', datatype.verifyToken,async (req, res, next)=> {
                 console.log(result)
                 result.forEach(function(item, index, array) {
                     let product = datatype.json2json(item)
+                    if (product["image"] != null){
+                        product["image"] = Buffer.from(product["image"]).toString('base64')
+                    }
+                    else{
+                        product["image"] = ""
+                    }
                     console.log(product)
                     response.push(product)
                 });
@@ -573,7 +579,7 @@ router.post('/manage/add/image/:productId',file.UploadImage.single('image'),asyn
         var sql = `insert into image_list(productId,content)value(${productId},?);`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
         //response["error"] = Buffer.from(req.file.buffer).toString('base64')
-        //console.log(result)
+        console.log(result)
     }catch(e){
         console.log(e)
         response["error"] = "已存在圖片"
@@ -601,6 +607,7 @@ router.post('/manage/update/image/:productId',file.UploadImage.single('image'),a
         var sql = `update image_list set content = ? where productId = ${productId};`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
         //response["error"] = Buffer.from(req.file.buffer).toString('base64')
+        console.log(result)
         if (result["affectedRows"] ==0){
             response["error"] = "沒有此項商品或者不存在圖片"
             response["state"] = 500

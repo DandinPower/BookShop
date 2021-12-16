@@ -8,23 +8,24 @@ const AddProduct = () =>{
     const [status,setStatus] = useState('')
     const [category,setCategory] = useState('')
     const [imageSrc, setImageSrc] = useState('');
+    const [imageFile, setImageFile] = useState('');
     const [productId, setProductId] = useState('');
     const handleOnPreview = (event) => {
-        const file = event.target.files[0];
+        setImageFile(event.target.files[0])
         const reader = new FileReader();
         reader.addEventListener("load", function () {
           // convert image file to base64 string
           setImageSrc(reader.result)
         }, false);
     
-        if (file) {
-          reader.readAsDataURL(file);
+        if (imageFile) {
+          reader.readAsDataURL(imageFile);
         }
       };
 
     const uploadImage = () =>{
         const formData = new FormData();
-        formData.append('image', imageSrc);
+        formData.append('image', imageFile);
         console.log(productId);
         axios({
             method: 'POST',

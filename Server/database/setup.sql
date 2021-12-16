@@ -131,11 +131,10 @@ create table image_list (
 	imageId int auto_increment,
     productId int unique,
     businessId int unique,
-    content blob,
+    content mediumblob,
     primary key (imageId),
     foreign key(productId)references product(no)on delete set null,
     foreign key(businessId)references business(id)on delete set null
 );
-
 
 
