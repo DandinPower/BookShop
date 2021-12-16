@@ -33,6 +33,7 @@ const Header = () => {
                     <Nav.Link href="/Products/shopcart" disabled={userType !== 'customer'}>購物車</Nav.Link>
                     <Nav.Link href="/member/order" disabled={userType !== 'customer'}>order</Nav.Link>
                     <Nav.Link href="/Products/business/manage" disabled={userType !== 'business'}>管理商品</Nav.Link>
+                    <Nav.Link href="/Products/business/manageorder" disabled={userType !== 'business'}>管理訂單</Nav.Link>
                 </Nav>
                 <Form className="d-flex">
                     <FormControl

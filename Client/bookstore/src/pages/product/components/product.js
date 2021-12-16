@@ -1,10 +1,25 @@
 import axios from 'axios'
+import React, {useState,useEffect} from 'react'
 
 const Product = ({bookInfo}) =>{
-
+    const [comments, setComments] = useState(['']);
     function leave(){
         window.location.href = '/Products/category'
     }
+
+    useEffect(()=>{
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/product/comment',
+            data:
+            {
+                productId:bookInfo.productId
+            }
+          }).then((response) => {
+            setComments(response.data)
+          })
+    },[bookInfo])
+
     const addShopCart = () =>{
         axios({
             method: 'POST',
@@ -23,6 +38,7 @@ const Product = ({bookInfo}) =>{
               }
           })
     }
+
 
     const postBook=()=>{
         axios({
@@ -43,6 +59,14 @@ const Product = ({bookInfo}) =>{
               }
           })
     }
+    const listComments = comments.map((data)=>{
+        return(
+            <div>  
+                <div>customerName:{data.name}</div>
+                <div>star:{data.star}</div>
+                <div>comment:{data.comment}</div>
+            </div>) 
+    })
 
     return(
         <div>
@@ -55,6 +79,7 @@ const Product = ({bookInfo}) =>{
             <button onClick={addShopCart}>加入購物車</button>
             <button onClick={postBook}>直接購買</button>
             <button onClick = {leave}>瀏覽其他商品</button>
+            <div>{listComments}</div>
         </div>
     )
 }
