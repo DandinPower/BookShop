@@ -29,30 +29,36 @@ router.post('/register', async (req, res, next)=> {
     if (_phone.length == 10){
         if (_userName.length >= 3){
             if (_type == "customer" | _type == "business"){
-                try {
-                    let result = await database.sqlConnection(sql);
-                    response["state"] = "200";
-                    console.log(result)
-                    if (_type == "customer"){
-                        sql2 = `insert into customer (id) value (${result["insertId"]});`;
-                    }
-                    else if (_type == "business"){
-                        sql2 = `insert into business (id) value (${result["insertId"]});`;
-                    }
+                if (_userPassword.length >= 3){
                     try {
-                        let result = await database.sqlConnection(sql2);
+                        let result = await database.sqlConnection(sql);
                         response["state"] = "200";
                         console.log(result)
+                        if (_type == "customer"){
+                            sql2 = `insert into customer (id) value (${result["insertId"]});`;
+                        }
+                        else if (_type == "business"){
+                            sql2 = `insert into business (id) value (${result["insertId"]});`;
+                        }
+                        try {
+                            let result = await database.sqlConnection(sql2);
+                            response["state"] = "200";
+                            console.log(result)
+                        } catch(e){
+                            response["error"] = "網路連線錯誤"  //插入business或customer失敗
+                            response["state"] = "500"
+                            console.log(e)
+                        }
+                        
                     } catch(e){
-                        response["error"] = "網路連線錯誤"  //插入business或customer失敗
+                        response["error"] = "網路連線錯誤"  //插入帳戶失敗
                         response["state"] = "500"
                         console.log(e)
                     }
-                    
-                } catch(e){
-                    response["error"] = "網路連線錯誤"  //插入帳戶失敗
+                }
+                else{
+                    response["error"] = "密碼至少要有3個字元"
                     response["state"] = "500"
-                    console.log(e)
                 }
             }
             else{
