@@ -2,9 +2,6 @@ import { useState } from 'react'
 import axios from 'axios'
 import "./css.css"
 
-
-//成功 200 不成功 500 state
-//session react 
 const Register = () => { 
     const [id,setID] = useState('')
     const [name,setName] = useState('')
@@ -15,32 +12,43 @@ const Register = () => {
     const [address,setAddress] = useState('')
     const [type,setType] = useState('customer')
     const send = () =>{
-        console.log(type)
-        axios({
-            method: 'POST',
-            url: 'http://localhost:5000/account/register/',
-            data:{
-              userName: id,
-              userPassword: password,
-              name: name,
-              gender: gender,
-              email: email,
-              phone: phone,
-              address: address,
-              type:type
-            }
-          }).then((response) => {
-            console.log(response.data);
-            console.log(response.data.state);
-            if(response.data.state === '200'){
-                window.location.href = '/member/login'
-                alert('註冊成功')
-            }
-            else if(response.data.state === '500'){
-                alert(response.data.error)
-              }
-          })
+        console.log(id.length);
+        if(phone.length !== 10){
+            alert('電話號碼請等於10位數')
         }
+        else if(id.length < 3){
+            alert('帳號長度要大於3')
+        }
+        else if(password.length < 3){
+            alert('密碼長度要大於3')
+        }
+        else{
+            axios({
+                method: 'POST',
+                url: 'http://localhost:5000/account/register/',
+                data:{
+                  userName: id,
+                  userPassword: password,
+                  name: name,
+                  gender: gender,
+                  email: email,
+                  phone: phone,
+                  address: address,
+                  type:type
+                }
+              }).then((response) => {
+                if(response.data.state === '200'){
+                    window.location.href = '/member/login'
+                    alert('註冊成功')
+                }
+                else if(response.data.state === '500'){
+                    alert(response.data.error)
+                  }
+              })
+            }
+       
+    }
+        
     return (
         <div className='register'>
             <h1>註冊帳號</h1>

@@ -14,7 +14,7 @@ const ShopCart = () => {
               token: window.sessionStorage.getItem('token'),
             }
           }).then((response) => {
-            if(response.data.state !== '500'){
+            if(response.data.state !== 500){
                 setBooks(response.data)
             }
             else{

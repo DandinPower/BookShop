@@ -17,10 +17,10 @@ import OrderComment from "../product/components/orderComment";
 import React, {useState} from 'react';
 
 const Home = () => {
-    const [bookInfo, setBookInfo] = useState();
-    const [productInfo, setProductInfo] = useState();
-    const [orderInfo, setOrderInfo] = useState();
-    const [clientOrderInfo,setClientOrderInfo] = useState();
+    const [bookInfo, setBookInfo] = useState(['']);
+    const [productInfo, setProductInfo] = useState(['']);
+    const [orderInfo, setOrderInfo] = useState(['']);
+    const [clientOrderInfo,setClientOrderInfo] = useState(['']);
     return (
         <BrowserRouter>
         <div>
