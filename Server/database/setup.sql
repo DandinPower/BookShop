@@ -86,18 +86,6 @@ create table product (
     foreign key(businessId)references business(id)on delete cascade
 );
 
-create table product_comment (
-    productId int,
-    customerId int,
-    orderNo int,
-    star int default 0 not null,
-    comment varchar(30),
-    primary key(productId,customerId,orderNo),
-    foreign key(productId)references product(no)on delete cascade,
-    foreign key(customerId)references customer(id) on delete cascade,
-    foreign key(orderNo)references orders(orderNo) on delete cascade
-);
-
 create table orders (
 	 orderNo int primary key auto_increment,
      customerId int,
@@ -127,6 +115,18 @@ create table product_list (
     foreign key(productId)references product(no)on delete cascade
 );
 
+create table product_comment (
+    productId int,
+    customerId int,
+    orderNo int,
+    star int default 0 not null,
+    comment varchar(30),
+    primary key(productId,customerId,orderNo),
+    foreign key(productId)references product(no)on delete cascade,
+    foreign key(customerId)references customer(id) on delete cascade,
+    foreign key(orderNo)references orders(orderNo) on delete cascade
+);
+
 create table image_list (
 	imageId int auto_increment,
     productId int unique,
@@ -137,5 +137,4 @@ create table image_list (
     foreign key(businessId)references business(id)on delete set null
 );
 
-delete from image_list;
 
