@@ -98,6 +98,12 @@ router.post('/all', datatype.verifyToken,async (req, res, next)=> {
         result = await database.sqlConnection(sql);
         result.forEach(function(item, index, array) {
             let product = datatype.json2json(item)
+            if (product["image"] != null){
+                product["image"] = Buffer.from(product["image"]).toString('base64')
+            }
+            else{
+                product["image"] = ""
+            }
             console.log(product)
             response.push(product)
           });
