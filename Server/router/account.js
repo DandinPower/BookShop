@@ -26,41 +26,47 @@ router.post('/register', async (req, res, next)=> {
         "error":"",
         "state":""
     }
-    if (_type == "customer" | _type == "business"){
-        try {
-            let result = await database.sqlConnection(sql);
-            response["state"] = "200";
-            console.log(result)
-            if (_type == "customer"){
-                sql2 = `insert into customer (id) value (${result["insertId"]});`;
-            }
-            else if (_type == "business"){
-                sql2 = `insert into business (id) value (${result["insertId"]});`;
-            }
-            if (_phone.length == 10){
+    if (_phone.length == 10){
+        if (_userName.length >= 3){
+            if (_type == "customer" | _type == "business"){
                 try {
-                    let result = await database.sqlConnection(sql2);
+                    let result = await database.sqlConnection(sql);
                     response["state"] = "200";
                     console.log(result)
+                    if (_type == "customer"){
+                        sql2 = `insert into customer (id) value (${result["insertId"]});`;
+                    }
+                    else if (_type == "business"){
+                        sql2 = `insert into business (id) value (${result["insertId"]});`;
+                    }
+                    try {
+                        let result = await database.sqlConnection(sql2);
+                        response["state"] = "200";
+                        console.log(result)
+                    } catch(e){
+                        response["error"] = "網路連線錯誤"  //插入business或customer失敗
+                        response["state"] = "500"
+                        console.log(e)
+                    }
+                    
                 } catch(e){
-                    response["error"] = "註冊失敗"
+                    response["error"] = "網路連線錯誤"  //插入帳戶失敗
                     response["state"] = "500"
                     console.log(e)
                 }
             }
             else{
-                response["error"] = "電話號碼不符合10位數"
+                response["error"] = "未指定用戶類別"
                 response["state"] = "500"
             }
-            
-        } catch(e){
-            response["error"] = "註冊失敗"
+        }
+        else{
+            response["error"] = "帳號至少要有3個字元"
             response["state"] = "500"
-            console.log(e)
         }
     }
     else{
-        response["error"] = "未指定用戶類別"
+        response["error"] = "電話號碼不符合10位數"
         response["state"] = "500"
     }
     res.json(response)

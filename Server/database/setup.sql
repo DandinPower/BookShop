@@ -137,4 +137,5 @@ create table image_list (
     foreign key(businessId)references business(id)on delete set null
 );
 
+delete from image_list;
 
