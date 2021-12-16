@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios'
 
 const AddProduct = () =>{
     const [bookName,setBookName] = useState('')
@@ -7,6 +8,7 @@ const AddProduct = () =>{
     const [status,setStatus] = useState('')
     const [category,setCategory] = useState('')
     const [imageSrc, setImageSrc] = useState('');
+    const [productId, setProductId] = useState('');
     const handleOnPreview = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -19,9 +21,49 @@ const AddProduct = () =>{
           reader.readAsDataURL(file);
         }
       };
-    const addProduct = () =>{
+
+    const uploadImage = () =>{
         const formData = new FormData();
         formData.append('image', imageSrc);
+        console.log(productId);
+        axios({
+            method: 'POST',
+            url: `http://localhost:5000/product/manage/add/image/"${productId}"`,
+            data:formData
+          }).then((response) => {
+            if(response.data.state === 200){
+                alert('圖片上傳成功')
+            }
+            else if(response.data.state === 500){
+                alert(response.data.error)
+              }
+          })
+    }
+
+    const addProduct = () =>{
+
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/product/manage/add',
+            data:{
+              userName: window.sessionStorage.getItem('userName'),
+              token: window.sessionStorage.getItem('token'),
+              description: description,
+              name: bookName,
+              price: price,
+              status: status,
+              category: category,
+            }
+          }).then((response) => {
+            if(response.data.state === 200){
+                setProductId(response.data.productId)
+                alert('上傳成功請上傳圖片')
+            }
+            else if(response.data.state === 500){
+                alert(response.data.error)
+              }
+          })
+       
     };
     return(<div>
                 <div>
@@ -47,6 +89,7 @@ const AddProduct = () =>{
                 <div>
                     <p>圖片: <input type="file" accept="image/*"onChange={handleOnPreview}></input></p>
                     <img src={imageSrc} alt="" />
+                    <button onClick={uploadImage}>上傳圖片</button>
                 </div>
                 <button onClick={addProduct}>新增商品</button>
            </div>)

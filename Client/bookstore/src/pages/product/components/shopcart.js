@@ -87,7 +87,7 @@ const ShopCart = () => {
         if(data.image !== undefined){
             return (
                 <div>
-                    <img src={require(`./${data.image}`).default}  alt={data.description}></img>
+                    <img src={`data:image/png;base64,${data.image}`}  alt={data.description}></img>
                     <div>{data.name}</div>
                     <label>數量:</label>
                     <input type='text' value={data.quantity} onChange={e=>changeQuantity(data.productId,e.target.value)}></input>

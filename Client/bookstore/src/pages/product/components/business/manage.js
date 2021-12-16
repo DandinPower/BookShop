@@ -23,9 +23,12 @@ const Manage = () =>{
       if(data.image !== undefined){
           return(
               <div>
+                  <img src={`data:image/png;base64,${data.image}`}  alt={data.description}></img>
                   <div>書名:{data.name}</div>
                   <div>簡述:{data.description}</div>
                   <div>價格:{data.price}</div>
+                  <div>id:{data.productId}</div>
+                  <div></div>
               </div>)
       }
       else{
