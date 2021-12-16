@@ -228,7 +228,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
         console.log(customerId)
         try{
             let response = []
-            var sqlSearch = `select P.price,P.name,O.quantity,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
+            var sqlSearch = `select P.price,P.name,O.quantity,O.orderNo,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
             console.log(sqlSearch)
             var result = await database.sqlConnection(sqlSearch)
             result.forEach(function(item, index, array) {
