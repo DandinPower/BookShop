@@ -306,7 +306,7 @@ router.post('/manage/search', datatype.verifyToken,async (req, res, next)=> {
         console.log(businessId)
         if (businessId != null){
             try{
-                const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.launch,P.status,P.category,P.image,P.uploadedDate from business as B,product as P,account as A where B.id = A.id and P.businessId = ${businessId} and P.businessId = B.id;`
+                const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where B.id = ${businessId};`
                 var result = await database.sqlConnection(sqlInsert)
                 var response = []
                 console.log(result)

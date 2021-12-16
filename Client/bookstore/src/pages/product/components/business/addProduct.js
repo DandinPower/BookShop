@@ -27,9 +27,10 @@ const AddProduct = () =>{
         const formData = new FormData();
         formData.append('image', imageFile);
         console.log(productId);
+        console.log(imageFile);
         axios({
             method: 'POST',
-            url: `http://localhost:5000/product/manage/add/image/"${productId}"`,
+            url: `http://localhost:5000/product/manage/add/image/${productId}`,
             data:formData
           }).then((response) => {
             if(response.data.state === 200){
