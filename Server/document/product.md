@@ -451,7 +451,7 @@
             "userName":"pname",
             "token":"sadasda",
             "productId":"1",
-            "launch":"False"
+            "launch":"1"
         }
         ```
         
