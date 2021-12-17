@@ -442,7 +442,42 @@
             "error":"",
             "state":200
         }
-        ```       
+        ```   
+
+- 賣家刪除商品
+    - POST
+    - http://localhost:5000/product/manage/delete
+    - Req
+        
+        ```json
+        {
+            "userName":"c",
+            "token":"321jdiijiqw",
+            "productId":"1"
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"",
+            "state":200
+        }
+        ```
+        
+        ```json
+        {
+            "error":"錯誤訊息",
+            "state":500
+        }
+        ```
+        
+        - error種類
+            1. 找不到該用戶
+            2. 沒有這個productId
+            3. 網路連線錯誤
+
 - 賣家上下架商品
     - POST
     - http://localhost:5000/product/manage/launch

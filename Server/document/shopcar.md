@@ -89,14 +89,25 @@
         [
             {
                 "productId":1,
-                "businessName": "Pchome24H店家",
-                "name": "電子學概論",
-                "price": 999,
-                "image": "image/product/picture3.jpg",
+                "businessName":"Pchome24H店家",
+                "name":"電子學概論",
+                "price":999,
+                "image":"ji23i13j12ijdijas",
                 "quantity":2
             }
         ]
         ```
+        
+        ```json
+        {
+            "error":"",
+            "state":500
+        }
+        ```
+        
+        - error的種類
+            1. 找不到該用戶
+            2. 網路連線錯誤
         
 - 個別刪除
     - POST

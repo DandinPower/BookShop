@@ -146,7 +146,6 @@ router.post('/delete', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
-
 router.post('/deleteall', datatype.verifyToken,async (req, res, next)=> {        
     var userName = req.body.userName;
     var id = await database.GetUserId(userName)
