@@ -5,7 +5,6 @@ insert into admin (userName,password,authority) values
 ("admin2","123","event"),
 ("admin3","123","account");
 
-
 insert into account (address,gender,phone,email,password,userName,name) value ("台南市安平區87號","0","0912345678","tom@gmail.com","123","customer1","Liaw");
 insert into customer (id) value ((select last_insert_id()));
 insert into account (address,gender,phone,email,password,userName,name) value ("台北市中正區古亭站","1","0987878787","ban@yahoo.com.tw","123","customer2","Bananachen");

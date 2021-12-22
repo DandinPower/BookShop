@@ -99,10 +99,28 @@ async function GetAdminId (userName){
     }
 }
 
+async function AddNewOrganizer(){
+    const sql = `insert into organizer()value();`
+    try{
+        var result = await sqlConnection(sql)
+        console.log(result)
+        if (result.length != 0){
+            return result["insertId"]
+        }
+        else{
+            return null
+        }
+    }catch(e){
+        console.log(e)
+        return null
+    }
+}
+
 module.exports = {
     sqlConnection,
     sqlConnectionFile,
     GetUserId,
     GetBusinessId,
-    GetAdminId
+    GetAdminId,
+    AddNewOrganizer
 }
