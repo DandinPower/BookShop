@@ -17,9 +17,9 @@ create table event (
 create table coupon (
 	code varchar(10),
     eventName varchar(20),
-    category varchar(20) not null,
     date datetime not null,
     discount double not null,
+    maxQuantity int not null,
     primary key(code,eventName),
     foreign key(eventName)references event(name) on delete cascade
 );
@@ -44,6 +44,7 @@ create table account (
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
 	name varchar(20) not null,
+    enable char(1) not null default "1",
     foreign key (adminId)references admin(id)on delete set null
 );
 

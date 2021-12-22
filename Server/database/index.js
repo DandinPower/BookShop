@@ -83,9 +83,26 @@ async function GetBusinessId (productId){
     }
 }
 
+async function GetAdminId (userName){
+    try{
+        result = await sqlConnection(`select id from admin where userName = "${userName}";`)
+        console.log(result);
+        if (result.length != 0){
+            return result[0]["id"]
+        }
+        else{
+            return null
+        }
+    }catch(e){
+        console.log(e);
+        return null
+    }
+}
+
 module.exports = {
     sqlConnection,
     sqlConnectionFile,
     GetUserId,
-    GetBusinessId
+    GetBusinessId,
+    GetAdminId
 }

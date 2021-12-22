@@ -1,9 +1,10 @@
 use dandinpo_teamproject;
 
 insert into admin (userName,password,authority) values
-("admin1","123","master"),
+("admin1","123","all"),
 ("admin2","123","event"),
 ("admin3","123","account");
+
 
 insert into account (address,gender,phone,email,password,userName,name) value ("台南市安平區87號","0","0912345678","tom@gmail.com","123","customer1","Liaw");
 insert into customer (id) value ((select last_insert_id()));
