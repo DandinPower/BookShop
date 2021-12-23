@@ -62,8 +62,6 @@ create table have (
     foreign key(couponCode)references coupon(code)on delete cascade
 );
 
-
-
 create table business (
 	id int primary key,
     organizerId int,
