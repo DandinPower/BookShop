@@ -7,7 +7,7 @@ create table organizer (
 
 create table event (
 	organizerId int,
-    name varchar(20) unique,
+    name varchar(20),
     discount double not null,
     date Datetime not null,
     primary key(organizerId,name),
@@ -20,8 +20,7 @@ create table coupon (
     date datetime not null,
     discount double not null,
     maxQuantity int not null,
-    primary key(code,eventName),
-    foreign key(eventName)references event(name) on delete cascade
+    primary key(code,eventName)
 );
 
 create table admin (
@@ -62,6 +61,8 @@ create table have (
     foreign key(customerId)references customer(id)on delete cascade,
     foreign key(couponCode)references coupon(code)on delete cascade
 );
+
+
 
 create table business (
 	id int primary key,

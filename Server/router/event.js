@@ -41,76 +41,33 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     if (state){
         var userId = 0
         var sqlUpdate = ``
-        if (type == 'business'){
-            try{
-                userId = await database.GetBusinessId(userName)
-                console.log(userId)
-                try{
-                    var organizerId = await database.AddNewOrganizer()
-                    sqlUpdate = `update business set organizerId = ${organizerId} where id = ${userId}`
-                    try{
-                        let result = await database.sqlConnection(sqlUpdate)
-                        console.log(result)
-                        try{
-                            var insertResult = await database.sqlConnection(`insert into event(organizerId,name,discount,date)value(${organizerId},"${name}",${discount},"${date}");`)
-                            console.log(insertResult)
-                            response["state"] = 200
-                        }catch(e){
-                            response["error"] = "活動名不符合限制"
-                            response["state"] = 500
-                            state = false
-                            console.log(e)
-                        }
-                    }catch(e){
-                        response["error"] = "網路連線錯誤"
-                        response["state"] = 500
-                        state = false
-                        console.log(e)
-                    }
-                }catch(e){
-                    response["error"] = "網路連線錯誤"
-                    response["state"] = 500
-                    state = false
-                    console.log(e)
-                }
-            }catch(e){
-                response["error"] = "網路連線錯誤"
-                response["state"] = 500
-                state = false
-                console.log(e)
-            }  
-        }
-        else if (type == 'admin'){
-            try{
+        try{
+            if (type == 'business'){
+                userId = await database.GetUserId(userName)
+            }
+            else if (type == 'admin'){
                 userId = await database.GetAdminId(userName)
-                console.log(userId)
-                try{
-                    var organizerId = await database.AddNewOrganizer()
-                    sqlUpdate = `update admin set organizerId = ${organizerId} where id = ${userId}`
+            }
+            console.log(userId)
+            try{
+                var organizerId = await database.GetOrganizerId(type,userId)
+                console.log(organizerId)
+                if (organizerId != null){
                     try{
-                        let result = await database.sqlConnection(sqlUpdate)
-                        console.log(result)
-                        try{
-                            var insertResult = await database.sqlConnection(`insert into event(organizerId,name,discount,date)value(${organizerId},"${name}",${discount},"${date}");`)
-                            console.log(insertResult)
-                            response["state"] = 200
-                        }catch(e){
-                            response["error"] = "活動名不符合限制"
-                            response["state"] = 500
-                            state = false
-                            console.log(e)
-                        }
+                        var insertResult = await database.sqlConnection(`insert into event(organizerId,name,discount,date)value(${organizerId},"${name}",${discount},"${date}");`)
+                        console.log(insertResult)
+                        response["state"] = 200
                     }catch(e){
-                        response["error"] = "網路連線錯誤"
+                        response["error"] = "活動名不符合限制"
                         response["state"] = 500
                         state = false
                         console.log(e)
                     }
-                }catch(e){
+                }
+                else{
                     response["error"] = "網路連線錯誤"
                     response["state"] = 500
                     state = false
-                    console.log(e)
                 }
             }catch(e){
                 response["error"] = "網路連線錯誤"
@@ -118,7 +75,12 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
                 state = false
                 console.log(e)
             }
-        }
+        }catch(e){
+            response["error"] = "網路連線錯誤"
+            response["state"] = 500
+            state = false
+            console.log(e)
+        }  
     }
     res.json(response)
 })

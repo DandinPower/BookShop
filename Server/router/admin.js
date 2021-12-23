@@ -1,4 +1,3 @@
-const e = require('express')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const database = require('../database/index')
