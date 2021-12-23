@@ -96,7 +96,7 @@ router.post('/login', async (req, res, next)=> {
     try{
         var userId = await database.GetUserId(loginData["userName"])
         console.log(userId)
-        const sql = `select a.userName,a.password,a.name,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = ${userId} union select a.userName,a.password,a.name,b.logo as info from account as a,business as b where a.id = b.id and a.id = ${userId};`
+        const sql = `select a.userName,a.password,a.name,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = ${userId} union select a.userName,a.password,a.name,b.description as info from account as a,business as b where a.id = b.id and a.id = ${userId};`
         console.log(sql)
         try {
             result = await database.sqlConnection(sql);

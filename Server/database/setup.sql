@@ -1,3 +1,4 @@
+create database dandinpo_teamproject;
 use dandinpo_teamproject;
 
 create table organizer (
@@ -66,10 +67,11 @@ create table business (
 	id int primary key,
     organizerId int,
     description varchar(100) default "",
-    logo varchar(100) default "image/1.jpg",
     foreign key(id)references account(id)on delete cascade,
     foreign key(organizerId)references organizer(organizerId) on delete set null
 );
+
+
 
 create table product (
 	no int primary key auto_increment,
@@ -136,5 +138,6 @@ create table image_list (
     foreign key(productId)references product(no)on delete set null,
     foreign key(businessId)references business(id)on delete set null
 );
+
 
 

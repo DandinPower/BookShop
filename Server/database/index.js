@@ -1,10 +1,20 @@
 const mysql = require('mysql')
 
-//測試用
+//Li本地端
 /*
 const pool = mysql.createPool({  
     connectionLimit: 10,
     password: '1234',
+    user: 'root',
+    database: 'dandinpo_teamproject',
+    host: 'localhost',
+    port: '3306'
+})*/
+//Liaw本地端
+/*
+const pool = mysql.createPool({  
+    connectionLimit: 10,
+    password: 'root',
     user: 'root',
     database: 'dandinpo_teamproject',
     host: 'localhost',

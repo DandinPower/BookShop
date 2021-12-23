@@ -18,21 +18,19 @@ insert into business (id) value ((select last_insert_id()));
 insert into account (address,gender,phone,email,password,userName,name) value ("窩不知道我住哪Peko","0","0983657256","handsome@yahoo.com","123","business3","ShenPon");
 insert into business (id) value ((select last_insert_id()));
 
-insert into product (businessId,description,name,price,status,category,image,uploadedDate)
+insert into product (businessId,description,name,price,status,category,uploadedDate)
 values 
-(4,"講述物理學歷史","你應該擁有的一本牛頓萬有引力",1099,"1","物理","image/product/picture2.jpg","2021-11-30"),
-(5,"講述電子學的知識","電子學概論",999,"1","電類","image/product/picture3.jpg","2021-11-28"),
-(5,"講述基本電學的知識","基本電學概論",890,"1","電類","image/product/picture1.jpg","2021-11-29"),
-(6,"無敵的主角","穿越異世界",890,"0","小說","image/picture4.jpg","2021-12-3");
-
-insert into product_comment(productId,customerId,orderNo,star,comment) value(11,1,9,5,"好書推薦");
+(4,"講述物理學歷史","你應該擁有的一本牛頓萬有引力",1099,"1","物理","2021-11-30"),
+(5,"講述電子學的知識","電子學概論",999,"1","電類","2021-11-28"),
+(5,"講述基本電學的知識","基本電學概論",890,"1","電類","2021-11-29"),
+(6,"無敵的主角","穿越異世界",890,"0","小說","2021-12-3");
 
 insert into product_list(customerId,productId)
 values
+(1,1),
 (1,2),
 (1,3),
-(1,4),
-(2,5);
+(2,4);
 
 insert into organizer()values
 (),
@@ -67,4 +65,6 @@ insert into manage(businessId,orderNo,productId)value(4,(select last_insert_id()
 insert into orders(customerId,orderDate,quantity)value(2,"2021-12-8",2);
 insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()),3);
 insert into orders(customerId,orderDate,quantity)value(3,"2021-12-8",1);
-insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),5);
+insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
+
+insert into product_comment(productId,customerId,orderNo,star,comment) value(4,3,3,5,"好書推薦");
