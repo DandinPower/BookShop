@@ -1,4 +1,4 @@
-create database dandinpo_teamproject;
+#create database dandinpo_teamproject;
 use dandinpo_teamproject;
 
 create table organizer (
