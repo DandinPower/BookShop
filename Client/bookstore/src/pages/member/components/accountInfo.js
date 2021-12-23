@@ -1,5 +1,7 @@
 import { useState,useEffect } from 'react'
 import axios from 'axios'
+import {Table, Container, Button} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 //未完成
 const AccountInfo =()=>{
     const [userName,setuserName] = useState('')
@@ -76,99 +78,79 @@ const AccountInfo =()=>{
 
     if (window.sessionStorage.getItem('token')!== null) {
         return(
-            <table striped bordered hover>
-            <colgroup>
-                <col width="30%"/>
-                <col width="70%"/>
-            </colgroup>
-            <tbody>
-                <tr>
-                    <th>
-                        <label>會員帳號:</label>
-                    </th>
-                    <td>
-                        <div>{userName}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>會員密碼:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>會員名稱:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={name} onChange={(e) => {setName(e.target.value)}}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>會員性別:</label>
-                    </th>
-                    <td>
-                        <input type='radio' name="Gender" value='1' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "1"}></input>
-                        <label>男</label>
-                        <input type='radio' name="Gender" value='0' onClick={(e) => {setGender(e.target.value)}} checked={gender === "0"}></input>
-                        <label>女</label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>E-mail:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>手機:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={phone} onChange={(e) => {setPhone(e.target.value)}}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>地址:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={address} onChange={(e) => {setAddress(e.target.value)}}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>paymentInfo:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={paymentInfo} onChange={(e) => {setPaymentInfo(e.target.value)}} disabled={type === 'business'}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>description:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'}></input>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label>logo:</label>
-                    </th>
-                    <td>
-                    <input type='text' value={logo} onChange={(e) => {setLogo(e.target.value)}} disabled={type === 'customer'}></input>
-                    </td>
-                </tr>
-            </tbody>
-            <button onClick={send}>更改資料</button>
-        </table>
-        
+            <Container>
+                <Table striped bordered hover>
+                    <tbody>
+                        <tr>
+                            <th width="30%">會員帳號</th>
+                            <td>{userName}</td>
+                        </tr>
+                        <tr>
+                            <th width="30%">會員密碼</th>
+                            <td>
+                            <input type='text' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">會員名稱</th>
+                            <td>
+                            <input type='text' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">會員性別</th>
+                            <td>
+                                <input type='radio' name="Gender" value='1' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "1"}></input>
+                                <label>男</label>
+                                <input type='radio' name="Gender" value='0' onClick={(e) => {setGender(e.target.value)}} checked={gender === "0"}></input>
+                                <label>女</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">E-mail</th>
+                            <td>
+                            <input type='text' value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">手機</th>
+                            <td>
+                            <input type='text' value={phone} onChange={(e) => {setPhone(e.target.value)}}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">地址</th>
+                            <td>
+                            <input type='text' value={address} onChange={(e) => {setAddress(e.target.value)}}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">Payment information</th>
+                            <td>
+                            <input type='text' value={paymentInfo} onChange={(e) => {setPaymentInfo(e.target.value)}} disabled={type === 'business'}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">Description</th>
+                            <td>
+                            <input type='text' value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'}></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="30%">Logo</th>
+                            <td>
+                            <input type='text' value={logo} onChange={(e) => {setLogo(e.target.value)}} disabled={type === 'customer'}></input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+                <div className="d-grid gap-2">
+                    <Button variant="success" size="lg" onClick={send}>
+                        更改資料
+                    </Button>
+                </div>
+            </Container>
+            
         )
     }
     else{
