@@ -1,3 +1,4 @@
+#create database dandinpo_teamproject;
 use dandinpo_teamproject;
 
 create table organizer (
@@ -7,7 +8,7 @@ create table organizer (
 
 create table event (
 	organizerId int,
-    name varchar(20) unique,
+    name varchar(20),
     discount double not null,
     date Datetime not null,
     primary key(organizerId,name),
@@ -17,11 +18,10 @@ create table event (
 create table coupon (
 	code varchar(10),
     eventName varchar(20),
-    category varchar(20) not null,
     date datetime not null,
     discount double not null,
-    primary key(code,eventName),
-    foreign key(eventName)references event(name) on delete cascade
+    maxQuantity int not null,
+    primary key(code,eventName)
 );
 
 create table admin (
@@ -44,6 +44,7 @@ create table account (
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
 	name varchar(20) not null,
+    enable char(1) not null default "1",
     foreign key (adminId)references admin(id)on delete set null
 );
 
@@ -66,10 +67,11 @@ create table business (
 	id int primary key,
     organizerId int,
     description varchar(100) default "",
-    logo varchar(100) default "image/1.jpg",
     foreign key(id)references account(id)on delete cascade,
     foreign key(organizerId)references organizer(organizerId) on delete set null
 );
+
+
 
 create table product (
 	no int primary key auto_increment,
@@ -136,5 +138,7 @@ create table image_list (
     foreign key(productId)references product(no)on delete set null,
     foreign key(businessId)references business(id)on delete set null
 );
+
+select * from account;
 
 

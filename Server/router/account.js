@@ -96,54 +96,62 @@ router.post('/login', async (req, res, next)=> {
     try{
         var userId = await database.GetUserId(loginData["userName"])
         console.log(userId)
-        const sql = `select a.userName,a.password,a.name,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = ${userId} union select a.userName,a.password,a.name,b.logo as info from account as a,business as b where a.id = b.id and a.id = ${userId};`
+        const sql = `select a.userName,a.password,a.name,a.enable,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = ${userId} union select a.userName,a.password,a.name,a.enable,b.description as info from account as a,business as b where a.id = b.id and a.id = ${userId};`
         console.log(sql)
         try {
             result = await database.sqlConnection(sql);
             console.log(result.length);
             if (result.length == 0){
-                response["error"] = "登入失敗"
+                response["error"] = "找不到該用戶"
                 response["state"] = "500"
                 res.json(response)
             }
             else{
-                var name = result[0].name
-                var password = result[0].password
-                var userName = result[0].userName
-                if (result[0].info == "現金" || result[0].info == "信用卡"){
-                    var type = "customer"
+                if (result[0].enable == '1'){
+                    var name = result[0].name
+                    var password = result[0].password
+                    var userName = result[0].userName
+                    if (result[0].info == "現金" || result[0].info == "信用卡"){
+                        var type = "customer"
+                    }
+                    else {
+                        var type = "business"
+                    }
+                    console.log(result)
+                    let setToken = {
+                        userName : result[0].userName
+                    }
+                    let token = jwt.sign(
+                        JSON.parse(JSON.stringify(setToken)), 
+                        'ThisIsSecurityMix@TPE&4255',
+                        {expiresIn: 60*6*24}
+                    )
+                    if (password != loginData.userPassword){
+                        response["error"] = "密碼錯誤"
+                        response["state"] = "500"
+                        res.json(response)
+                    }
+                    else{
+                        response["type"] = type
+                        response["name"] = name
+                        response["userName"] = userName
+                        response["token"] = token
+                        response["state"] = "200"
+                        res.json(response)
+                    }
                 }
-                else {
-                    var type = "business"
-                }
-                console.log(result)
-                let setToken = {
-                    userName : result[0].userName
-                }
-                let token = jwt.sign(
-                    JSON.parse(JSON.stringify(setToken)), 
-                    'ThisIsSecurityMix@TPE&4255',
-                    {expiresIn: 60*6*24}
-                )
-                if (password != loginData.userPassword){
-                    response["error"] = "登入失敗"
+                else{
+                    response["error"] = "已被停權"
                     response["state"] = "500"
                     res.json(response)
                 }
-                else{
-                    response["type"] = type
-                    response["name"] = name
-                    response["userName"] = userName
-                    response["token"] = token
-                    response["state"] = "200"
-                    res.json(response)
-                }
+                
             }
         } catch(e){
             console.log(e);
         }
     }catch(e){
-        response["error"] = "登入失敗"
+        response["error"] = "網路連線失敗"
         response["state"] = "500"
         res.json(response)
     }

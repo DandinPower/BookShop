@@ -579,7 +579,6 @@ router.post('/manage/add/image/:productId',file.UploadImage.single('image'),asyn
         }
         var sql = `insert into image_list(productId,content)value(${productId},?);`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
-        //response["error"] = Buffer.from(req.file.buffer).toString('base64')
         console.log(result)
     }catch(e){
         console.log(e)
@@ -607,11 +606,21 @@ router.post('/manage/update/image/:productId',file.UploadImage.single('image'),a
         }
         var sql = `update image_list set content = ? where productId = ${productId};`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
-        //response["error"] = Buffer.from(req.file.buffer).toString('base64')
         console.log(result)
         if (result["affectedRows"] ==0){
-            response["error"] = "沒有此項商品或者不存在圖片"
-            response["state"] = 500
+            try{
+                let sql = `insert into image_list(productId,content)value(${productId},?);`
+                let result = await database.sqlConnectionFile(sql,req.file.buffer)
+                console.log(result)
+                response["state"] = 200
+            }catch(e){
+                console.log(e)
+                response["error"] = "沒有此項商品"
+                response["state"] = 500
+            }
+        }
+        else{
+            response["state"] = 200
         }
         
     }catch(e){
