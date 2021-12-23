@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import axios from 'axios'
 
 const UpdateProduct = ({productInfo}) =>{
@@ -25,7 +25,7 @@ const UpdateProduct = ({productInfo}) =>{
           reader.readAsDataURL(file);
         }
       };
-
+    
     const uploadImage = () =>{
         const formData = new FormData();
         formData.append('image', imageFile);
@@ -82,8 +82,8 @@ const UpdateProduct = ({productInfo}) =>{
             }
           }).then((response) => {
             if(response.data.state === 200){
-                setProductId(response.data.productId)
                 alert('更新成功')
+                uploadImage();
             }
             else if(response.data.state === 500){
                 alert(response.data.error)
@@ -125,9 +125,8 @@ const UpdateProduct = ({productInfo}) =>{
                 <div>
                     <p>圖片: <input type="file" accept="image/*"onChange={handleOnPreview}></input></p>
                     <img src={imageSrc} alt="" />
-                    <button onClick={uploadImage}>修改圖片</button>
                 </div>
-                <button onClick={UpdateProduct}>更改商品</button>
+                <button onClick={UpdateProduct}>更改商品資訊</button>
              </div>)
         
         
