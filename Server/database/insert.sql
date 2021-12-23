@@ -1,7 +1,7 @@
 use dandinpo_teamproject;
 
 insert into admin (userName,password,authority) values
-("admin1","123","master"),
+("admin1","123","all"),
 ("admin2","123","event"),
 ("admin3","123","account");
 
@@ -49,17 +49,18 @@ values
 (2,"本館學術書籍85折",0.85,"2021-12-30"),
 (3,"同人小說跳樓折價75折",0.75,"2021-12-29");
 
-insert into coupon(code,eventName,category,date,discount)
+insert into coupon(code,eventName,date,discount,maxQuantity)
 values
-("XMAS88","聖誕節全館95折","打折","2021-12-30",0.88),
-("STUDY77","本館學術書籍85折","打折","2021-12-29",0.77),
-("HAPPY69","同人小說跳樓折價75折","打折","2021-12-28",0.69);
+("XMAS88","聖誕節全館95折","2021-12-30",0.88,2),
+("STUDY77","本館學術書籍85折","2021-12-29",0.77,2),
+("HAPPY69","同人小說跳樓折價75折","2021-12-28",0.69,3);
+
 
 insert into have(customerId,couponCode,quantity)
 values
 (1,"XMAS88",2),
-(2,"STUDY77",3),
-(3,"HAPPY69",4);
+(2,"STUDY77",2),
+(3,"HAPPY69",3);
 
 insert into orders(customerId,orderDate,quantity)value(1,"2021-12-8",3);
 insert into manage(businessId,orderNo,productId)value(4,(select last_insert_id()),2);

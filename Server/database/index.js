@@ -83,9 +83,90 @@ async function GetBusinessId (productId){
     }
 }
 
+async function GetAdminId (userName){
+    try{
+        result = await sqlConnection(`select id from admin where userName = "${userName}";`)
+        console.log(result);
+        if (result.length != 0){
+            return result[0]["id"]
+        }
+        else{
+            return null
+        }
+    }catch(e){
+        console.log(e);
+        return null
+    }
+}
+
+async function AddNewOrganizer(){
+    const sql = `insert into organizer()value();`
+    try{
+        var result = await sqlConnection(sql)
+        console.log(result)
+        if (result.length != 0){
+            return result["insertId"]
+        }
+        else{
+            return null
+        }
+    }catch(e){
+        console.log(e)
+        return null
+    }
+}
+
+async function GetOrganizerId(type,id){
+    if (type == 'business'){
+        var sql = `select organizerId from business where id = ${id};`
+    }
+    else if (type == 'admin'){
+        var sql = `select organizerId from admin where id = ${id};`
+    }
+    else {
+        return null
+    }
+    try{
+        var result = await sqlConnection(sql)
+        console.log(result)
+        if (result.length != 0){
+            if (result[0].organizerId == 'null'){
+                let returnId = AddNewOrganizer()
+                try {
+                    if (type == 'business'){
+                        var sqlUpdate = `update business set organizerId = ${organizerId} where id = ${userId}`
+                    }else{
+                        var sqlUpdate = `update admin set organizerId = ${organizerId} where id = ${userId}`
+                    }
+                    var updateResult = await sqlConnection(sqlUpdate)
+                    console.log(updateResult)
+                    return returnId
+                }
+                catch(e){
+                    console.log(e)
+                    return null
+                }                 
+            }
+            else{
+                return result[0].organizerId
+            }
+        }
+        else{
+            return null
+        }
+    }catch(e){
+        console.log(e)
+        return null
+    }
+    
+}
+
 module.exports = {
     sqlConnection,
     sqlConnectionFile,
     GetUserId,
-    GetBusinessId
+    GetBusinessId,
+    GetAdminId,
+    GetOrganizerId,
+    AddNewOrganizer
 }

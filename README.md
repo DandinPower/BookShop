@@ -37,9 +37,13 @@
     ```
     
 
-# Account
+## Account
 
 [說明文件](Server/document/account.md)
+
+## Admin
+
+[說明文件](Server/document/admin.md)
         
 ## Product
 
@@ -48,3 +52,7 @@
 ## Shopping Car
 
 [說明文件](Server/document/shopcar.md)
+
+## Event
+
+[說明文件](Server/document/event.md)

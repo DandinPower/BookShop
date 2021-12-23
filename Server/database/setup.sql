@@ -7,7 +7,7 @@ create table organizer (
 
 create table event (
 	organizerId int,
-    name varchar(20) unique,
+    name varchar(20),
     discount double not null,
     date Datetime not null,
     primary key(organizerId,name),
@@ -17,11 +17,10 @@ create table event (
 create table coupon (
 	code varchar(10),
     eventName varchar(20),
-    category varchar(20) not null,
     date datetime not null,
     discount double not null,
-    primary key(code,eventName),
-    foreign key(eventName)references event(name) on delete cascade
+    maxQuantity int not null,
+    primary key(code,eventName)
 );
 
 create table admin (
@@ -44,6 +43,7 @@ create table account (
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
 	name varchar(20) not null,
+    enable char(1) not null default "1",
     foreign key (adminId)references admin(id)on delete set null
 );
 
@@ -61,6 +61,8 @@ create table have (
     foreign key(customerId)references customer(id)on delete cascade,
     foreign key(couponCode)references coupon(code)on delete cascade
 );
+
+
 
 create table business (
 	id int primary key,
@@ -84,18 +86,6 @@ create table product (
     image varchar(100),
     uploadedDate datetime not null,
     foreign key(businessId)references business(id)on delete cascade
-);
-
-create table product_comment (
-    productId int,
-    customerId int,
-    orderNo int,
-    star int default 0 not null,
-    comment varchar(30),
-    primary key(productId,customerId,orderNo),
-    foreign key(productId)references product(no)on delete cascade,
-    foreign key(customerId)references customer(id) on delete cascade,
-    foreign key(orderNo)references orders(orderNo) on delete cascade
 );
 
 create table orders (
@@ -127,6 +117,18 @@ create table product_list (
     foreign key(productId)references product(no)on delete cascade
 );
 
+create table product_comment (
+    productId int,
+    customerId int,
+    orderNo int,
+    star int default 0 not null,
+    comment varchar(30),
+    primary key(productId,customerId,orderNo),
+    foreign key(productId)references product(no)on delete cascade,
+    foreign key(customerId)references customer(id) on delete cascade,
+    foreign key(orderNo)references orders(orderNo) on delete cascade
+);
+
 create table image_list (
 	imageId int auto_increment,
     productId int unique,
@@ -137,5 +139,4 @@ create table image_list (
     foreign key(businessId)references business(id)on delete set null
 );
 
-delete from image_list;
 
