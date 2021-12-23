@@ -139,5 +139,6 @@ create table image_list (
     foreign key(businessId)references business(id)on delete set null
 );
 
+select * from account;
 
 

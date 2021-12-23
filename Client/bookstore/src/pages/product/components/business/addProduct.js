@@ -66,8 +66,8 @@ const AddProduct = () =>{
                 alert(response.data.error)
               }
           })
-       
     };
+
     return(<div>
                 <div>
                     <p>書名: <input type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}></input></p>
