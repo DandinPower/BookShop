@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 import axios from 'axios'
-import {Table, Container, Button} from 'react-bootstrap'; 
+import {Table, Container, Button, Alert, Form} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 //未完成
 const AccountInfo =()=>{
@@ -70,7 +70,7 @@ const AccountInfo =()=>{
                 alert('更改成功')
               }
               else{
-                  alert('error')
+                alert('error')
               }
                
           })
@@ -82,23 +82,25 @@ const AccountInfo =()=>{
                 <Table striped bordered hover>
                     <tbody>
                         <tr>
-                            <th width="30%">會員帳號</th>
-                            <td>{userName}</td>
-                        </tr>
-                        <tr>
-                            <th width="30%">會員密碼</th>
+                            <th className="w-30 text-center">會員帳號</th>
                             <td>
-                            <input type='text' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+                            <Form.Control plaintext readOnly defaultValue={userName}/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">會員名稱</th>
+                            <th className="w-30 text-center">會員密碼</th>
                             <td>
-                            <input type='text' value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+                            <Form.Control type="text" value={password} onChange={(e) => {setPassword(e.target.value)}}/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">會員性別</th>
+                            <th className="w-30 text-center">會員名稱</th>
+                            <td>
+                            <Form.Control type="text" value={name} onChange={(e) => {setName(e.target.value)}}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th className="w-30 text-center">會員性別</th>
                             <td>
                                 <input type='radio' name="Gender" value='1' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "1"}></input>
                                 <label>男</label>
@@ -107,39 +109,39 @@ const AccountInfo =()=>{
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">E-mail</th>
+                            <th className="w-30 text-center">E-mail</th>
                             <td>
-                            <input type='text' value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
+                            <Form.Control type="email" value={email} onChange={(e) => {setEmail(e.target.value)}} placeholder='example@gmail.com'/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">手機</th>
+                            <th className="w-30 text-center">手機</th>
                             <td>
-                            <input type='text' value={phone} onChange={(e) => {setPhone(e.target.value)}}></input>
+                            <Form.Control type="number" value={phone} onChange={(e) => {setPhone(e.target.value)}} placeholder='ex:091234567'/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">地址</th>
+                            <th className="w-30 text-center">地址</th>
                             <td>
-                            <input type='text' value={address} onChange={(e) => {setAddress(e.target.value)}}></input>
+                            <Form.Control type="text" value={address} onChange={(e) => {setAddress(e.target.value)}} placehodler='xx市oo區..'/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">Payment information</th>
+                            <th className="w-30 text-center">Payment information</th>
                             <td>
-                            <input type='text' value={paymentInfo} onChange={(e) => {setPaymentInfo(e.target.value)}} disabled={type === 'business'}></input>
+                            <Form.Control type="text" value={paymentInfo} onChange={(e) => {setPaymentInfo(e.target.value)}} disabled={type === 'business'} placehodler='現金'/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">Description</th>
+                            <th className="w-30 text-center">Description</th>
                             <td>
-                            <input type='text' value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'}></input>
+                            <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'} placehodler='請在此打上你的介紹'/>
                             </td>
                         </tr>
                         <tr>
-                            <th width="30%">Logo</th>
+                            <th className="w-30 text-center">Logo</th>
                             <td>
-                            <input type='text' value={logo} onChange={(e) => {setLogo(e.target.value)}} disabled={type === 'customer'}></input>
+                            <Form.Control type="text" value={logo} onChange={(e) => {setLogo(e.target.value)}} disabled={type === 'customer'}/>
                             </td>
                         </tr>
                     </tbody>
@@ -149,12 +151,17 @@ const AccountInfo =()=>{
                         更改資料
                     </Button>
                 </div>
-            </Container>
-            
+            </Container>         
         )
     }
     else{
-        return(<h1>尚未登入</h1>)
+        return(<Alert variant="danger">
+        <Alert.Heading>個人資料查詢失敗</Alert.Heading>
+        <hr/>
+        <p>
+          請先檢查是否有登入成功，確認登入後再重新提交查詢個人資料請求
+        </p>
+      </Alert>)
     }
 }
 export default AccountInfo
