@@ -168,9 +168,7 @@ async function GetOrganizerId(type,id){
         console.log(e)
         return null
     }
-    
 }
-
 module.exports = {
     sqlConnection,
     sqlConnectionFile,
