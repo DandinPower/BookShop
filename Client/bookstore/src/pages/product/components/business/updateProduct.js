@@ -1,5 +1,7 @@
 import { useState} from 'react'
 import axios from 'axios'
+import {Container, Form, Col, Row,Table, Button, ButtonGroup} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const UpdateProduct = ({productInfo}) =>{
     const [bookName,setBookName] = useState(productInfo.name)
@@ -92,7 +94,80 @@ const UpdateProduct = ({productInfo}) =>{
        
     };
 
-    return(<div>
+    return(
+        <Container>
+            <Form>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">書名</Form.Label>
+                    <Col xs={10}>
+                        <Form.Control type="text" value={bookName} onChange={(e) => {setBookName(e.target.value)}}/>
+                    </Col> 
+                </Form.Group>
+
+                <br size="sm"/>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">商品敘述</Form.Label>
+                    <Col xs={10}>
+                        <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}}/>
+                    </Col> 
+                </Form.Group>
+
+                <br size="sm"/>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">價格</Form.Label>
+                    <Col xs={10}>
+                        <Form.Control type='text' value={price} onChange={(e) => {setPrice(e.target.value)}}/>
+                    </Col> 
+                </Form.Group>
+                
+                <br size="sm"/>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">商品分類</Form.Label>
+                    <Col xs={10}>
+                        <Form.Control type='text' value={category} onChange={(e) => {setCategory(e.target.value)}}/>
+                    </Col> 
+                </Form.Group>
+
+                <br size="sm"/>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">是否有庫存</Form.Label>
+                    <Col xs={10}>
+                        <Form.Check inline label="是" type="radio" name="status" value='1' onClick={(e) => {setStatus(e.target.value)}} checked={status === '1'}/>
+                        <Form.Check inline label="否" type="radio" name="status" value='0' onClick={(e) => {setStatus(e.target.value)}} checked={status === '0'}/>
+                    </Col>
+                </Form.Group>
+                
+                <br size="sm"/>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">上下架</Form.Label>
+                    <Col xs={10}>
+                        <Form.Check inline label="上架" type="radio" name="launch" value='1' onClick={(e) => {setLaunch(e.target.value)}} checked={launch === '1'}/>
+                        <Form.Check inline label="下架" type="radio" name="launch" value='0' onClick={(e) => {setLaunch(e.target.value)}} checked={launch === '0'}/>
+                        <Button size="sm" onClick={UpdateLaunch}>修改狀態</Button>
+                    </Col>
+                </Form.Group>
+                
+                <br size="sm"/>
+                <Form.Group as={Row} controlId="formFile" className="mb-3">
+                    <Form.Label column className="text-center">商品圖片</Form.Label>
+                    <Col xs={10}>
+                        <Form.Control type="file" accept="image/*"onChange={handleOnPreview}/>
+												<img src={imageSrc} alt="" />
+                    </Col> 
+                </Form.Group>
+            </Form>
+            
+            <div className="d-grid gap-2">
+                <Button variant="success" size="lg" onClick={UpdateProduct}>
+                  	更改商品資訊
+                </Button>
+            </div>
+        </Container>
+    )   
+}
+export default UpdateProduct
+/*
+<div>
                 <div>
                     <p>書名: <input type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}></input></p>
                 </div>
@@ -127,8 +202,5 @@ const UpdateProduct = ({productInfo}) =>{
                     <img src={imageSrc} alt="" />
                 </div>
                 <button onClick={UpdateProduct}>更改商品資訊</button>
-             </div>)
-        
-        
-}
-export default UpdateProduct
+             </div>
+*/ 

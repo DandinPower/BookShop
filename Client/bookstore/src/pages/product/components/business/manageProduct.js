@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import {Container, Row, Col, Table, Card, Button, ButtonGroup} from 'react-bootstrap'; 
+import {Container, Col, Table, Button, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const ManageProduct = ({setProductInfo}) =>{
@@ -46,7 +46,13 @@ const ManageProduct = ({setProductInfo}) =>{
                   <td>{status}</td>
                   <td>{launch}</td>
                   <ButtonGroup vertical>
-                    <Button variant="outline-success" href="/Products/business/updateproduct" onClick={e => setProductInfo(data)}>Update</Button>
+
+                  <Link to="/Products/business/updateproduct">
+                    <Button variant="outline-success" onClick={e => setProductInfo(data)}>
+                      Update
+                    </Button>
+                  </Link>
+                    <br/>
                     <Button variant="outline-danger">Delete</Button>
                   </ButtonGroup>
                 </tr>
@@ -80,7 +86,6 @@ const ManageProduct = ({setProductInfo}) =>{
               新增商品
             </Button>
           </Container>
-          
         )
 }
 export default ManageProduct
@@ -100,4 +105,6 @@ export default ManageProduct
     </Card.Body>
   </Card>
 </Col>
+
+ <Link to="/Products/business/updateproduct"><img src={`data:image/png;base64,${data.image}`}  alt={data.description} onClick={e => setProductInfo(data)}></img></Link>
  */ 
