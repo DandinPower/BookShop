@@ -170,24 +170,33 @@ router.post('/search', datatype.verifyToken, async(req,res,next)=>{
     }
     try{
         var organizerId = await database.GetOrganizerId(type,userId)
-        try{
-            var result = await database.sqlConnection(`select * from event where organizerId = ${organizerId}`)
-            var response = []
-            result.forEach(function(item, index, array) {
-                let event = datatype.json2json(item)
-                console.log(event)
-                response.push(event)
-            });
-            res.json(response)
-        }catch(e){
-            console.log(e)
+        if (organizerId != null){
+            try{
+                var result = await database.sqlConnection(`select * from event where organizerId = ${organizerId}`)
+                var response = []
+                result.forEach(function(item, index, array) {
+                    let event = datatype.json2json(item)
+                    console.log(event)
+                    response.push(event)
+                });
+                res.json(response)
+            }catch(e){
+                console.log(e)
+                let response = {
+                    "error":"網路連線失敗",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }
+        else{
             let response = {
-                "error":"網路連線失敗",
+                "error":"未辦過活動",
                 "state":500
             }
             res.json(response)
-    
         }
+        
     }catch(e){
         console.log(e)
         let response = {
@@ -323,4 +332,107 @@ router.post('/update', datatype.verifyToken, async(req,res,next)=>{
     }
 })
 
+router.post('/delete', datatype.verifyToken, async(req,res,next)=>{
+    var type = req.body.type 
+    var userName = req.body.userName
+    if (type == 'business'){
+        try{
+            var userId = await database.GetUserId(userName)
+            if (userId == null){
+                let response = {
+                    "error":"找不到該用戶",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }catch(e){
+            console.log(e)
+            let response = {
+                "error":"網路連線失敗",
+                "state":500
+            }
+            res.json(response)
+        }
+    }
+    else if (type == 'admin'){
+        try{
+            var userId = await database.GetAdminId(userName)
+            if (userId != null){
+                var adminResult = await database.sqlConnection(`select authority from admin where id = ${userId}`)
+                if (adminResult[0].authority != 'all' & adminResult[0].authority != 'event'){
+                    let response = {
+                        "error":"管理員沒有該權限",
+                        "state":500
+                    }
+                    res.json(response)
+                }
+            }
+            else{
+                let response = {
+                    "error":"找不到該用戶",
+                    "state":500
+                }
+                res.json(response)
+            }
+            
+        }catch(e){
+            let response = {
+                "error":"網路連線失敗",
+                "state":500
+            }
+            res.json(response)
+        }  
+    }
+    else{
+        let response = {
+            "error":"不是business或admin",
+            "state":500
+        }
+        res.json(response)
+    }
+    var name = req.body.name 
+    try{
+        var organizerId = await database.GetOrganizerId(type,userId)
+        console.log(organizerId)
+        if (organizerId != null){
+            const sqlDelete = `delete from event where organizerId = ${organizerId} and name = "${name}";`
+            try{
+                var result = await database.sqlConnection(sqlDelete)
+                if (result["affectedRows"] != 0){
+                    let response = {
+                        "error": "",
+                        "state":200
+                    }
+                    res.json(response)
+                }    
+                else{
+                    let response = {
+                        "error": "找不到該活動",
+                        "state":500
+                    }
+                    res.json(response)
+                }
+            }catch(e){
+                let response = {
+                    "error": "網路連線失敗",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }else{
+            let response = {
+                "error": "找不到該活動",
+                "state":500
+            }
+            res.json(response)
+        }
+    }catch(e){
+        let response = {
+            "error": "網路連線失敗",
+            "state":500
+        }
+        res.json(response)
+    }
+    
+})
 module.exports = router

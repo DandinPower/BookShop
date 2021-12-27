@@ -131,7 +131,6 @@
             "type":"business",   //要是business或admin
             "userName":"kevin",
             "token":"jiadjdijqduncndasvnj",
-            "organizerId":2,
             "name":"全站88"
         }
         ```
