@@ -1,4 +1,5 @@
 import { Carousel, Container, Row, Col, Table, ListGroup, Card, Button} from 'react-bootstrap'; 
+import React, { useEffect, useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';        
 import carouselImg1 from './../../image/getImage.jpg';
 import carouselImg2 from './../../image/getImage2.jpg';
@@ -11,8 +12,23 @@ import book4 from './../../image/book4.jpg';
 import book5 from './../../image/book5.jpg';
 import book6 from './../../image/book6.jpg';
 import './home.css';
+import axios from 'axios'
 
 const HomeContent = () =>{
+    const [bookData, setBookData] = useState([""]);
+    useEffect(
+        ()=>{
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/product/all'
+              })
+                .then((result) => {
+                  setBookData(result.data)
+                })
+              .catch((err) => { console.error(err) })
+        }
+    ,[])
+
     return (
     <Table striped bordered hover>
         <tbody>

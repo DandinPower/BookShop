@@ -102,10 +102,8 @@ const AccountInfo =()=>{
                         <tr>
                             <th className="w-30 text-center">會員性別</th>
                             <td>
-                                <input type='radio' name="Gender" value='1' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "1"}></input>
-                                <label>男</label>
-                                <input type='radio' name="Gender" value='0' onClick={(e) => {setGender(e.target.value)}} checked={gender === "0"}></input>
-                                <label>女</label>
+                            <Form.Check inline label="男" type="radio" name="Gender" value='1' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "1"}/>
+                            <Form.Check inline label="女" type="radio" name="Gender" value='0' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "0"}/>
                             </td>
                         </tr>
                         <tr>
@@ -165,3 +163,8 @@ const AccountInfo =()=>{
     }
 }
 export default AccountInfo
+/*
+<input type='radio' name="Gender" value='1' onClick={(e) => {setGender(e.target.value)}}  checked={gender === "1"}></input>
+                                <label>男</label>
+                                <input type='radio' name="Gender" value='0' onClick={(e) => {setGender(e.target.value)}} checked={gender === "0"}></input>
+                                <label>女</label>*/
