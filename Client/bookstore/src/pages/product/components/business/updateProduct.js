@@ -152,6 +152,7 @@ const UpdateProduct = ({productInfo}) =>{
                     <Form.Label column className="text-center">商品圖片</Form.Label>
                     <Col xs={10}>
                         <Form.Control type="file" accept="image/*"onChange={handleOnPreview}/>
+												<br size="sm"/>
 												<img src={imageSrc} alt="" />
                     </Col> 
                 </Form.Group>
