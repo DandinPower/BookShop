@@ -37,21 +37,19 @@ const ManageProduct = ({setProductInfo}) =>{
           launch = '下架';
         }
           return(
-                <Col>
-                    <Card style={{ width: '15rem' }}>
-                        <Card.Img variant="top" src={`data:image/png;base64,${data.image}`} />
-                        <Card.Body>
-                            <Card.Title className="text-center">{data.name}</Card.Title>
-                            <Card.Text>價格:{data.price}</Card.Text>
-                            <Card.Text>簡述:{data.description}</Card.Text>
-                            <Card.Text>id:{data.productId}</Card.Text>
-                            <Card.Text>分類:{data.category}</Card.Text>
-                            <Card.Text>庫存:{status}</Card.Text>
-                            <Card.Text>上下架:{launch}</Card.Text>
-                            <Button variant="outline-success">商品更新</Button>
-                        </Card.Body>
-                    </Card>
-                </Col>
+                <tr>
+                  <td>{data.productId}</td>
+                  <td>{data.name}</td>
+                  <td>{data.price}</td>
+                  <td>{data.description}</td>
+                  <td>{data.category}</td> 
+                  <td>{status}</td>
+                  <td>{launch}</td>
+                  <ButtonGroup vertical>
+                    <Button variant="outline-success" href="/Products/business/updateproduct" onClick={e => setProductInfo(data)}>Update</Button>
+                    <Button variant="outline-danger">Delete</Button>
+                  </ButtonGroup>
+                </tr>
               )
       }
       else{
@@ -61,9 +59,6 @@ const ManageProduct = ({setProductInfo}) =>{
 
   return( 
           <Container >
-            <Row>
-              {listBooks}
-            </Row>
             <Table bordered className="text-center align-middle">
               <thead>
                 <tr>
@@ -78,22 +73,31 @@ const ManageProduct = ({setProductInfo}) =>{
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>6</td>
-                  <td>閣樓房間</td>
-                  <td>100</td>
-                  <td>超級作家最新力作</td>
-                  <td>奇幻童話</td>
-                  <td>有</td>
-                  <td>上架中</td>
-                  <ButtonGroup vertical>
-                    <Button variant="outline-success">Update</Button>
-                    <Button variant="outline-danger">Delete</Button>
-                  </ButtonGroup>
-                </tr>
+                {listBooks}
               </tbody>
             </Table>
+            <Button variant='success' href="/Products/business/addproduct">
+              新增商品
+            </Button>
           </Container>
+          
         )
 }
 export default ManageProduct
+/*
+<Col>
+  <Card style={{ width: '15rem' }}>
+    <Card.Img variant="top" src={`data:image/png;base64,${data.image}`} />
+    <Card.Body>
+      <Card.Title className="text-center">{data.name}</Card.Title>
+      <Card.Text>價格:{data.price}</Card.Text>
+      <Card.Text>簡述:{data.description}</Card.Text>
+      <Card.Text>id:{data.productId}</Card.Text>
+      <Card.Text>分類:{data.category}</Card.Text>
+      <Card.Text>庫存:{status}</Card.Text>
+      <Card.Text>上下架:{launch}</Card.Text>
+      <Button variant="outline-success">商品更新</Button>
+    </Card.Body>
+  </Card>
+</Col>
+ */ 

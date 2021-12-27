@@ -33,7 +33,8 @@ const AddProduct = () =>{
             data:formData
           }).then((response) => {
             if(response.data.state === 200){
-                alert('圖片上傳成功')
+                alert('上傳成功')
+                window.location.href = `/Products/business/manage`
             }
             else if(response.data.state === 500){
                 alert(response.data.error)
@@ -58,7 +59,6 @@ const AddProduct = () =>{
             }).then((response) => {
               if(response.data.state === 200){
                   setProductId(response.data.productId)
-                  alert('上傳成功請上傳圖片')
               }
               else if(response.data.state === 500){
                   alert(response.data.error)
