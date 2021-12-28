@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //未完成
 const AccountInfo =()=>{
     const [userName,setuserName] = useState('')
+    const [id,setId] = useState('')
     const [type,setType] = useState('')
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
@@ -29,6 +30,7 @@ const AccountInfo =()=>{
               }).then((response) => {
                   if(response.data.state === 200){
                     setuserName(response.data.userName)
+                    setId(response.data.id)
                     setPassword(response.data.userPassword)
                     setName(response.data.name)
                     setGender(response.data.gender)
@@ -71,7 +73,7 @@ const AccountInfo =()=>{
         if(imageFile !== undefined && firstLogo){
             axios({
                 method: 'POST',
-                url: `http://localhost:5000/account/logo/add/${userName}`,
+                url: `http://localhost:5000/account/logo/add/${id}`,
                 data:formData
             }).then((response) => {
                 if(response.data.state === 200){
@@ -86,7 +88,7 @@ const AccountInfo =()=>{
         else if(imageFile !== undefined){
             axios({
                 method: 'POST',
-                url: `http://localhost:5000/account/logo/update/${userName}`,
+                url: `http://localhost:5000/account/logo/update/${id}`,
                 data:formData
             }).then((response) => {
                 if(response.data.state === 200){
