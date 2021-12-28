@@ -779,7 +779,7 @@ router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
 router.post('/coupon/customer/search', async(req,res,next)=>{
     var organizerId = req.body.organizerId
     var name = req.body.name 
-    const sqlSearch = `select code,eventName as name,discount,date,maxQuantity from coupon where organizerId = ${organizerId} and eventName = "${name}";`
+    const sqlSearch = `select organizerId,code,eventName as name,discount,date,maxQuantity from coupon where organizerId = ${organizerId} and eventName = "${name}";`
     try{
         let response = []
         var result = await database.sqlConnection(sqlSearch)
