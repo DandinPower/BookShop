@@ -97,12 +97,12 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                       </Col>
 
                       <Col>
+                        <Row>
+                          <Button variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') === 'business'}>加入購物車</Button>
+                        </Row>
                         <br/>
                         <Row>
-                          <ButtonGroup vertical>
-                            <Button variant="outline-success" onClick={addShopCart}>加入購物車</Button>
-                            <Link to="/Products/orderInfo"><Button variant="success" onClick={postBook}>直接購買</Button></Link>
-                          </ButtonGroup>
+                       <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') === 'business'}><Link to="/Products/orderInfo">直接購買</Link></Button>
                         </Row>
                       </Col>
                     </Row>
