@@ -167,7 +167,6 @@
             "type":"business",   //只能為business或admin
             "userName":"business1",
             "token":"213131sdadsD",
-            "organizerId":1,
             "name":"全站88",  
             "code":"32DE",   //不得超過10碼或空白 同一個活動不得重複
             "date":"2021-12-25",   //不得早於現在或晚於活動到期日
@@ -212,7 +211,6 @@
             "type":"admin",   //只能為admin或business
             "userName":"business1",
             "token":"213131sdadsD",
-            "organizerId":1,
             "name":"全站88"
         }
         ```

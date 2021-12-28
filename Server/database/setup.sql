@@ -17,11 +17,12 @@ create table event (
 
 create table coupon (
 	code varchar(10),
+    organizerId int,
     eventName varchar(20),
     date datetime not null,
     discount double not null,
     maxQuantity int not null,
-    primary key(code,eventName)
+    primary key(code,eventName,organizerId)
 );
 
 create table admin (

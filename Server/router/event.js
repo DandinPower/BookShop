@@ -4,6 +4,7 @@ const database = require('../database/index')
 const datatype = require('../function/datatype')
 const file = require('../function/file')
 const router = express.Router()
+const Coupon = require('../class/event/coupon')
 
 router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     var type = req.body.type 
@@ -437,160 +438,153 @@ router.post('/delete', datatype.verifyToken, async(req,res,next)=>{
 })
 
 router.post('/coupon/add', datatype.verifyToken, async(req,res,next)=>{
-    var type = req.body.type 
-    var userName = req.body.userName
-    var name = req.body.name
-    var code = req.body.code
-    var date = req.body.date 
-    var _date = new Date(date) 
-    var currentDate = Date.now()
-    var discount = req.body.discount 
-    var maxQuantity = req.body.maxQuantity
-    if (type != 'business' & type != 'admin'){
+    var coupon = new Coupon(req)
+    var state = true
+    if (state){
+        var result = coupon.checkAll()
+    }
+    if (result == false){
+        state = false
         let response = {
-            "error":"不是business或admin",
-            "state":500
+            "error":coupon.errorMessage,
+            "state":coupon.state
         }
         res.json(response)
     }
-    if (code.length >= 10 | code.length <= 0){
-        let response = {
-            "error":"優惠碼不符合限制",
-            "state":500
+    if (coupon.type == 'business'){
+        if (state){
+            result = await coupon.getBusinessId()
         }
-        res.json(response)
-    }
-    if (_date < currentDate){
-        let response = {
-            "error":"到期日不符合限制",
-            "state":500
-        }
-        res.json(response)
-    }
-    if (discount <= 0 | discount >1){
-        let response = {
-            "error":"折扣不符合限制",
-            "state":500
-        }
-        res.json(response)
-    }
-    if (maxQuantity <= 0){
-        let response = {
-            "error":"最大數量不符合限制",
-            "state":500
-        }
-        res.json(response)
-    }
-    if (type == 'business'){
-        try{
-            var userId = await database.GetUserId(userName)
-            if (userId == null){
-                let response = {
-                    "error":"找不到該用戶",
-                    "state":500
-                }
-                res.json(response)
-            }
-        }catch(e){
-            console.log(e)
+        if (result == false){
+            state = false
             let response = {
-                "error":"網路連線失敗",
-                "state":500
+                "error":coupon.errorMessage,
+                "state":coupon.state
             }
             res.json(response)
         }
     }
-    else if (type == 'admin'){
-        try{
-            var userId = await database.GetAdminId(userName)
-            if (userId != null){
-                var adminResult = await database.sqlConnection(`select authority from admin where id = ${userId}`)
-                if (adminResult[0].authority != 'all' & adminResult[0].authority != 'event'){
-                    let response = {
-                        "error":"管理員沒有該權限",
-                        "state":500
-                    }
-                    res.json(response)
-                }
-            }
-            else{
-                let response = {
-                    "error":"找不到該用戶",
-                    "state":500
-                }
-                res.json(response)
-            }
-            
-        }catch(e){
+    else if (coupon.type == 'admin'){
+        if (state){
+            result = await coupon.getAdminId()
+        }   
+        if (result == false){
+            state = false
             let response = {
-                "error":"網路連線失敗",
-                "state":500
+                "error":coupon.errorMessage,
+                "state":coupon.state
             }
             res.json(response)
-        }  
+        }
     }
-    try{
-        var organizerId = await database.GetOrganizerId(type,userId)
-        console.log(organizerId)
-        if (organizerId != null){
-            try{
-                var nameResult = await database.sqlConnection(`select name from event where organizerId = ${organizerId};`)
-                nameResult = datatype.packet2list(nameResult,"name")
-                console.log(nameResult)      
-                if (nameResult.includes(name)){
-                    const sqlInsert = `insert into coupon(code,eventName,date,discount,maxQuantity)value("${code}","${name}","${date}",${discount},${maxQuantity});`       
-                    console.log(sqlInsert)
-                    try{
-                        var result = await database.sqlConnection(sqlInsert)
-                        console.log(result)
-                        let response = {
-                            "error":"",
-                            "state":200
-                        }
-                        res.json(response)
-                    }catch(e){
-                        console.log(e)
-                        let response = {
-                            "error":"活動名不符合限制",
-                            "state":500
-                        }
-                        res.json(response)
-                    }
-                }
-                else{
-                    let response = {
-                        "error":"找不到該活動",
-                        "state":500
-                    }
-                    res.json(response)
-                }
-            }catch(e){
-                console.log(e)
-                let response = {
-                    "error":"網路連線失敗",
-                    "state":500
-                }
-                res.json(response)
-            }
-        }
-        else{
-            let response = {
-                "error":"找不到該活動",
-                "state":500
-            }
-            res.json(response)
-        }
-    }catch(e){
+    if (state){
+        result = await coupon.getOrganizerId()
+    }
+    if (result == false){
+        state = false
         let response = {
-            "error":"網路連線失敗",
-            "state":500
+            "error":coupon.errorMessage,
+            "state":coupon.state
         }
         res.json(response)
     }
+    if (state){
+        result = await coupon.checkNameAvailable()
+    }
+    if (result == false){
+        state = false
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.addNewCoupon()
+    }
+    let response = {
+        "error":coupon.errorMessage,
+        "state":coupon.state
+    }
+    res.json(response)
 })
 
 router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
-
+    var coupon = new Coupon(req)
+    var state = true
+    if (state){
+        var result = coupon.checkType()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (coupon.type == 'business'){
+        if (state){
+            result = await coupon.getBusinessId()
+        }
+        if (result == false){
+            state = false 
+            let response = {
+                "error":coupon.errorMessage,
+                "state":coupon.state
+            }
+            res.json(response)
+        }
+    }
+    else if (coupon.type == 'admin'){
+        if (state){
+            result = await coupon.getAdminId()
+        }
+        if (result == false){
+            state = false 
+            let response = {
+                "error":coupon.errorMessage,
+                "state":coupon.state
+            }
+            res.json(response)
+        }
+    }
+    if (state){
+        result = await coupon.getOrganizerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkNameAvailable()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.searchCoupon()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    else{
+        res.json(result)
+    }
+    
 })
 
 router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
@@ -600,4 +594,6 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
 router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
 
 })
+
+
 module.exports = router
