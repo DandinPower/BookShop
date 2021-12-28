@@ -66,7 +66,7 @@ const HomeContent = () =>{
                           <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
                           <Card.Text className="fw-light fs-6">{data.description}</Card.Text>
                           <Link to="/Products/product"  className="mt-auto"  >
-                                <Button variant="outline-success" className="w-100">馬上購買</Button>
+                                <Button variant="outline-success" className="w-100" >馬上購買</Button>
                           </Link>
                       </Card.Body>
               </Card>

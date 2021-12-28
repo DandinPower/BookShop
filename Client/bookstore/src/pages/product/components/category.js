@@ -37,7 +37,7 @@ const Category = ({setBookInfo}) =>{
               .catch((err) => { console.error(err) })
         }
     ,[selectCate,url])
-    
+
     const listCategory = category.map((data)=>{
         return <ListGroup.Item action onClick={(e => {setSelectCate(e.target.innerHTML)})}>{data}</ListGroup.Item>
     })
@@ -55,7 +55,6 @@ const Category = ({setBookInfo}) =>{
                             <Link to="/Products/product"  className="mt-auto"  >
                                 <Button variant="outline-success" className="w-100" onClick={e => setBookInfo(data)}>馬上購買</Button>
                             </Link>
-                            
                         </Card.Body>
                 </Card>
                 </Col>
