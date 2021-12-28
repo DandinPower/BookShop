@@ -300,6 +300,7 @@
             "type":"admin",  //只能為business或admin
             "userName":"banana",
             "token":"231dijijj2ji13",
+            "name":"活動名",
             "code":"HAPPY69"
         }
         ```

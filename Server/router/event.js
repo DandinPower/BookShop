@@ -680,7 +680,75 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
 })
 
 router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
-
+    var coupon = new Coupon(req)
+    var state = true
+    if (state){
+        var result = coupon.checkType()
+        if (result == false){
+            state = false
+            let response = {
+                "error":coupon.errorMessage,
+                "state":coupon.state
+            }
+            res.json(response)
+        }
+    }
+    if (coupon.type == 'business'){
+        if (state){
+            result = await coupon.getBusinessId()
+        }
+        if (result == false){
+            state = false
+            let response = {
+                "error":coupon.errorMessage,
+                "state":coupon.state
+            }
+            res.json(response)
+        }
+    }
+    else if (coupon.type == 'admin'){
+        if (state){
+            result = await coupon.getAdminId()
+        }   
+        if (result == false){
+            state = false
+            let response = {
+                "error":coupon.errorMessage,
+                "state":coupon.state
+            }
+            res.json(response)
+        }
+    }
+    if (state){
+        result = await coupon.getOrganizerId()
+    }
+    if (result == false){
+        state = false
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkNameAvailable()
+    }
+    if (result == false){
+        state = false
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.deleteCoupon()
+    }
+    let response = {
+        "error":coupon.errorMessage,
+        "state":coupon.state
+    }
+    res.json(response)
 })
 
 
