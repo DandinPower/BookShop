@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, {useState,useEffect} from 'react'
+import { Container, Row, Col, ButtonGroup, Button, ButtonToolbar} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const Product = ({bookInfo}) =>{
     const [comments, setComments] = useState(['']);
@@ -69,7 +71,50 @@ const Product = ({bookInfo}) =>{
     })
 
     return(
-        <div>
+              <Container className="border">
+                <Row aria-label="product">
+                  <Col>
+                    <img src={`data:image/png;base64,${bookInfo.image}`}  alt={bookInfo.description} width="500" height="600"></img>
+                  </Col>
+
+                  <Col aria-label="productInfo">
+                    <br size="lg"/>
+                    <Row className="text-center">
+                      <h3>{bookInfo.name}</h3>
+                    </Row>
+                    <hr/>
+                    <Row>
+                      <p>價格: {bookInfo.price}</p>
+                    </Row>
+                    <Row>
+                      <p>商家名稱: {bookInfo.businessName}</p>
+                    </Row>
+                    <Row>
+                      <p>產品敘述: {bookInfo.description}</p>
+                    </Row>
+                    <Row inline>
+                        <Button variant="outline-success" onClick={addShopCart}>加入購物車</Button>
+                        <Button variant="success" onClick={postBook}>直接購買</Button>
+                    </Row>
+                    
+                    <br size="lg"/>
+                    <Row>
+                      <Col className="w-30">
+                        <Button onClick={leave}>瀏覽其他商品</Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+
+                <Row>
+                  暫無評論
+                  {listComments}
+                </Row>
+              </Container>   
+    )
+}
+export default Product
+/*<div>
             <img src={`data:image/png;base64,${bookInfo.image}`}  alt={bookInfo.description}></img>
             <div>書名: {bookInfo.name}</div>
             <div>產品代號: {bookInfo.productId}</div>
@@ -80,7 +125,4 @@ const Product = ({bookInfo}) =>{
             <button onClick={postBook}>直接購買</button>
             <button onClick = {leave}>瀏覽其他商品</button>
             <div>{listComments}</div>
-        </div>
-    )
-}
-export default Product
+        </div>*/ 

@@ -47,17 +47,16 @@ const Category = ({setBookInfo}) =>{
         if(data.image !== undefined){
             return(
                 <Col>
-                <Card style={{ width: '10rem' }} className="h-100">
-                        <Card.Img variant="top" src={`data:image/png;base64,${data.image}`}  alt={data.description}/>
-                        <Card.Body className="d-flex flex-column">
-                            <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
-                            <Card.Text className="fw-light fs-6">{data.description}</Card.Text>
-                            <Link to="/Products/product"  className="mt-auto"  >
-                                <Button variant="outline-success" className="w-100" onClick={e => setBookInfo(data)}>馬上購買</Button>
-                            </Link>
-                            
-                        </Card.Body>
-                </Card>
+                    <Card style={{ width: '10rem' }} className="h-100">
+                            <Card.Img variant="top" src={`data:image/png;base64,${data.image}`}  alt={data.description}/>
+                            <Card.Body className="d-flex flex-column">
+                                <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
+                                <Card.Text className="fw-light fs-6">{data.description}</Card.Text>
+                                <Link to="/Products/product"  className="mt-auto"  >
+                                    <Button variant="outline-success" className="w-100" onClick={e => setBookInfo(data)}>馬上購買</Button>
+                                </Link>            
+                            </Card.Body>
+                    </Card>
                 </Col>
                 )
         }
@@ -72,6 +71,7 @@ const Category = ({setBookInfo}) =>{
             <tr>   
                 <td>
                     <ListGroup variant = 'flush'>
+                        <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
                         {listCategory}
                     </ListGroup>
                 </td>

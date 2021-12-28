@@ -25,9 +25,12 @@ const Home = () => {
         <BrowserRouter>
         <div>
             <Header/>
+            <br size="lg"/>
+            <br size="lg"/>
+            <br size="lg"/>
         </div>
         <Routes>
-            <Route path="/" element={<HomeContent/>}/>
+            <Route path="/" element={<HomeContent setBookInfo={setBookInfo}/>}/>
             <Route path="/member/login" element={<Login/>}/>
             <Route path="/member/register" element={<Register/>}/>
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
