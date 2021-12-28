@@ -45,12 +45,10 @@ const ManageProduct = ({setProductInfo}) =>{
                   <td>{data.category}</td> 
                   <td>{status}</td>
                   <td>{launch}</td>
+                  
                   <ButtonGroup vertical>
-
-                  <Link to="/Products/business/updateproduct">
-                    <Button variant="outline-success" onClick={e => setProductInfo(data)}>
-                      Update
-                    </Button>
+                  <Link to="/Products/business/updateproduct" onClick={e => setProductInfo(data)}>
+                    <Button variant="outline-success" >Update</Button>
                   </Link>
                     <br/>
                     <Button variant="outline-danger">Delete</Button>

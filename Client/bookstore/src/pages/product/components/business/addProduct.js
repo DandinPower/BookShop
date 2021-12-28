@@ -72,7 +72,7 @@ const AddProduct = () =>{
     };
 
     return(
-        <Container>
+        <Container className='border'>
           <br/>
           <Form>
             <Form.Group as={Row}>

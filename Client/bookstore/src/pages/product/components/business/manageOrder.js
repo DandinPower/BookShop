@@ -34,17 +34,15 @@ const ManageOrder = ({setOrderInfo})=>{
                   <td>{data.customerId}</td> 
                   <td>{data.price}</td> 
                   
-
                   <ButtonGroup vertical>
-
-                  <Link to="/Products/business/updateorder">
-                    <Button variant="outline-success" onClick={e => setOrderInfo(data)}>
-                      Update
-                    </Button>
-                  </Link>
-                    <br/>
-                    <Button variant="outline-danger">Delete</Button>
-                  </ButtonGroup>
+                    <Link to="/Products/business/updateorder">
+                      <Button variant="outline-success" onClick={e => setOrderInfo(data)}>
+                        Update
+                      </Button>
+                    </Link>
+                      <br/>
+                      <Button variant="outline-danger">Delete</Button>
+                    </ButtonGroup>
                 </tr>
            )
       })

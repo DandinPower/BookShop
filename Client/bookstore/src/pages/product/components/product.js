@@ -94,6 +94,9 @@ const Product = ({bookInfo}) =>{
                         <Row>
                           <p>產品敘述: {bookInfo.description}</p>
                         </Row>
+                        <Row>
+                          <p>庫存狀態: {bookInfo.status}</p>
+                        </Row>
                       </Col>
 
                       <Col>

@@ -28,7 +28,7 @@ const UpdataOrder = ({orderInfo})=>{
     }
 
     return(
-        <Container>
+        <Container className='border'>
           <Form>
             <Form.Group as={Row}>
                 <Form.Label column className="text-center">訂單編號</Form.Label>
