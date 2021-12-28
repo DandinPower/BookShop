@@ -13,7 +13,7 @@ const OrderInfo = ({checkOrderInfo})=>{
 
 
     function changeQuantity(BID,newQ){
-        if(newQ > 0)
+        if(newQ > 0 || newQ ==='')
         {
             setBooks(function (prev){
                     return prev.map((book)=>{
@@ -48,6 +48,25 @@ const OrderInfo = ({checkOrderInfo})=>{
         return(bookInfo);
     })
 
+    const deleteall=()=>{
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/shopcar/deleteall',
+            data:
+            {
+              userName: window.sessionStorage.getItem('userName'),
+              token: window.sessionStorage.getItem('token'),
+            }
+          }).then((response) => {
+            if(response.data.state === 200){
+                setBooks([''])
+            }
+            else if (response.data.state === 500){
+                alert(response.data.error)
+              }
+          })
+    }
+
     const OrderBooks = ()=>{
         axios({
             method: 'POST',
@@ -56,6 +75,7 @@ const OrderInfo = ({checkOrderInfo})=>{
           }).then((response) => {
             if(response.data.state === 200){
                 alert('成功')
+                deleteall()
                 window.location.href = '/member/order'
             }
             else if (response.data.state === 500){
