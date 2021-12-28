@@ -776,5 +776,27 @@ router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
     res.json(response)
 })
 
+router.post('/coupon/customer/search', async(req,res,next)=>{
+    var organizerId = req.body.organizerId
+    var name = req.body.name 
+    const sqlSearch = `select code,eventName as name,discount,date,maxQuantity from coupon where organizerId = ${organizerId} and eventName = "${name}";`
+    try{
+        let response = []
+        var result = await database.sqlConnection(sqlSearch)
+        result.forEach(function(item, index, array) {
+            let coupon = datatype.json2json(item)
+            console.log(coupon)
+            response.push(coupon)
+        });
+        res.json(response)
+    }catch(e){
+        console.log(e)
+        let response = {
+            "error":"網路連線失敗",
+            "state":500
+        }
+        res.json(response)
+    }
+})
 
 module.exports = router
