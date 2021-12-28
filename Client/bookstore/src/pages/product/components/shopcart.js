@@ -43,25 +43,26 @@ const ShopCart = ({setCheckOrderInfo}) => {
                 return(book)
             })
         })
-        if(newQ >0){
-          axios({
-            method: 'POST',
-            url: 'http://localhost:5000/shopcar/update',
-            data:
-            {
-              userName: window.sessionStorage.getItem('userName'),
-              token: window.sessionStorage.getItem('token'),
-              productId:BID,
-              quantity:newQ
-            }
-          }).then((response) => {
-            if(response.data.state === 200){
-                alert('更改成功')
-            }
-            else if(response.data.state === 500){
-                alert(response.data.error)
+        if(newQ >0 || newQ === ''){
+          if(newQ >0){
+            axios({
+              method: 'POST',
+              url: 'http://localhost:5000/shopcar/update',
+              data:
+              {
+                userName: window.sessionStorage.getItem('userName'),
+                token: window.sessionStorage.getItem('token'),
+                productId:BID,
+                quantity:newQ
               }
-          })
+            }).then((response) => {
+              if(response.data.state === 200){
+              }
+              else if(response.data.state === 500){
+                  alert(response.data.error)
+                }
+            })
+          }
         }
         else{
           alert('請輸入大於0的數字')
@@ -131,7 +132,6 @@ const ShopCart = ({setCheckOrderInfo}) => {
 
     const OrderBooks =()=>{
       setCheckOrderInfo(books)
-      deleteall()
     }
 
     return(<Container >
