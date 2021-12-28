@@ -207,6 +207,36 @@ class Coupon {
         }
     }
 
+    //檢查優惠券日期是否超過活動日期
+    async checkDateAvailable(){
+        try{
+            var eventDate = await database.sqlConnection(`select date from event where name = "${this.name}" and organizerId = ${this.organizerId};`)
+            eventDate = eventDate[0]["date"]
+            if (eventDate != null){
+                eventDate = new Date(eventDate)
+                console.log(eventDate)
+                console.log(this._date)
+                if (this._date > eventDate){
+                    this.errorMessage = "到期日不符合限制"
+                    this.state = 500
+                    return false
+                }
+                else{
+                    return true
+                }
+            }
+            else{
+                this.errorMessage = "找不到該活動"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
     //檢查完畢後新增優惠券
     async addNewCoupon() {
         const sqlInsert = `insert into coupon(code,eventName,organizerId,date,discount,maxQuantity)value("${this.code}","${this.name}",${this.organizerId},"${this.date}",${this.discount},${this.maxQuantity});`       
@@ -242,6 +272,32 @@ class Coupon {
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //檢查完後更新優惠券
+    async updateCoupon() {
+        const sqlUpdate = `update coupon set date = "${this.date}",discount = "${this.discount}",maxQuantity = ${this.maxQuantity} where organizerId = ${this.organizerId} and eventName = "${this.name}" and code = "${this.code}";`
+        console.log(sqlUpdate)
+        try{
+            var result = await database.sqlConnection(sqlUpdate)
+            console.log(result)
+            if (result["affectedRows"] != 0){
+                this.errorMessage = ""
+                this.state = 200
+                return true
+            }
+            else{
+                console.log(e)
+                this.errorMessage = "找不到該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "找不到該優惠券"
             this.state = 500
             return false
         }
