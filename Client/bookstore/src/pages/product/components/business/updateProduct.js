@@ -1,6 +1,6 @@
 import { useState} from 'react'
 import axios from 'axios'
-import {Container, Form, Col, Row,Table, Button, ButtonGroup} from 'react-bootstrap'; 
+import {Container, Form, Col, Row, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const UpdateProduct = ({productInfo}) =>{

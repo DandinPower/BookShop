@@ -8,6 +8,15 @@ function json2json(json){
     });
     return result;
 }
+
+function packet2list(packet,column){
+  var result = [];
+  packet.forEach(function(item,index,array){
+      result.push(item[column])
+  });
+  return result;
+}
+
 function verifyToken(req,res,next){
     let token = req.body.token || req.query.token || req["token"];
     console.log("verify Token" , token);
@@ -65,6 +74,7 @@ function verifyTokenByList(req,res,next){
 
 module.exports = {
     json2json,
+    packet2list,
     verifyToken,
     verifyTokenByList
 }

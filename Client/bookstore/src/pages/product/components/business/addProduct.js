@@ -1,5 +1,6 @@
 import { useState,useEffect } from 'react'
 import axios from 'axios'
+import {Container, Form, Col, Row, Button} from 'react-bootstrap'; 
 
 const AddProduct = () =>{
     const [bookName,setBookName] = useState('')
@@ -70,7 +71,72 @@ const AddProduct = () =>{
         }
     };
 
-    return(<div>
+    return(
+        <Container>
+          <br/>
+          <Form>
+            <Form.Group as={Row}>
+                <Form.Label column className="text-center">書名</Form.Label>
+                <Col xs={10}>
+                    <Form.Control type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}/>
+                </Col> 
+            </Form.Group>
+
+            <br size="sm"/>
+            <Form.Group as={Row}>
+                <Form.Label column className="text-center">商品敘述</Form.Label>
+                <Col xs={10}>
+                    <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}}/>
+                </Col> 
+            </Form.Group>
+
+            <br size="sm"/>
+            <Form.Group as={Row}>
+                <Form.Label column className="text-center">價格</Form.Label>
+                <Col xs={10}>
+                    <Form.Control type='text' value={price} onChange={(e) => {setPrice(e.target.value)}}/>
+                </Col> 
+            </Form.Group>
+            
+            <br size="sm"/>
+            <Form.Group as={Row}>
+                <Form.Label column className="text-center">商品分類</Form.Label>
+                <Col xs={10}>
+                    <Form.Control type='text' value={category} onChange={(e) => {setCategory(e.target.value)}}/>
+                </Col> 
+            </Form.Group>
+
+            <br size="sm"/>
+            <Form.Group as={Row}>
+                <Form.Label column className="text-center">是否有庫存</Form.Label>
+                <Col xs={10}>
+                    <Form.Check inline label="是" type="radio" name="status" value='1' onClick={(e) => {setStatus(e.target.value)}} checked={status === '1'}/>
+                    <Form.Check inline label="否" type="radio" name="status" value='0' onClick={(e) => {setStatus(e.target.value)}} checked={status === '0'}/>
+                </Col>
+            </Form.Group>            
+            
+            <br size="sm"/>
+            <Form.Group as={Row} controlId="formFile" className="mb-3">
+                <Form.Label column className="text-center">商品圖片</Form.Label>
+                <Col xs={10}>
+                    <Form.Control type="file" accept="image/*"onChange={handleOnPreview}/>
+                    <br size="sm"/>
+                    <img src={imageSrc} alt="" />
+                </Col> 
+            </Form.Group>
+          </Form>
+          
+          <div className="d-grid gap-2">
+              <Button variant="success" size="lg" onClick={addProduct}>
+                  新增商品
+              </Button>
+          </div>
+        </Container>
+
+    )
+}
+export default AddProduct
+/*<div>
                 <div>
                     <p>書名: <input type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}></input></p>
                 </div>
@@ -96,6 +162,4 @@ const AddProduct = () =>{
                     <img src={imageSrc} alt="" />
                 </div>
                 <button onClick={addProduct}>新增商品</button>
-           </div>)
-}
-export default AddProduct
+           </div>*/

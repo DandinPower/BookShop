@@ -29,7 +29,7 @@ create table admin (
 	organizerId int,
     userName varchar(20) unique not null,
     password varchar(20) not null,
-    authority varchar(10) not null default "master",
+    authority varchar(10) not null default "all",
     foreign key(organizerId)references organizer(organizerId) on delete set null
 );
 
@@ -139,6 +139,4 @@ create table image_list (
     foreign key(businessId)references business(id)on delete set null
 );
 
-select * from account;
-
-
+select name from event where orgnaizerId = 9;

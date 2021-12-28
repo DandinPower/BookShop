@@ -89,9 +89,8 @@
         
         ```json
         {
-        "type":"business",		//只能為business或admin
+            "type":"business",		//只能為business或admin
             "userName":"",    
-            "organizerId":1,
             "name":"全站77",   //不能修改僅拿來查找
             "discount":0.77,   //0<discount<=1
             "date":"2021-12-25"   //不能早於現在
@@ -118,9 +117,10 @@
             1. 不是business或admin
             2. 管理員沒有該權限
             3. 找不到該用戶
-            4. 折扣不符合限制
-            5. 到期日不符合限制
-            6. 網路連線錯誤
+            4. 找不到該活動
+            5. 折扣不符合限制
+            6. 到期日不符合限制
+            7. 網路連線錯誤
 - 賣家或管理員刪除活動
     - POST
     - [http://localhost:5000/event/delete](http://localhost:5000/event/delete/)
@@ -131,7 +131,6 @@
             "type":"business",   //要是business或admin
             "userName":"kevin",
             "token":"jiadjdijqduncndasvnj",
-            "organizerId":2,
             "name":"全站88"
         }
         ```

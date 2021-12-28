@@ -4,15 +4,15 @@ const mysql = require('mysql')
 
 const pool = mysql.createPool({  
     connectionLimit: 10,
-    password: '1234',
+    password: 'ELEfox650',
     user: 'root',
     database: 'dandinpo_teamproject',
     host: 'localhost',
     port: '3306'
 })
 //Liaw本地端
-/*
-const pool = mysql.createPool({  
+
+/*const pool = mysql.createPool({  
     connectionLimit: 10,
     password: 'root',
     user: 'root',
@@ -20,8 +20,8 @@ const pool = mysql.createPool({
     host: 'localhost',
     port: '3306'
 })*/
-
-/*const pool = mysql.createPool({  
+/*
+const pool = mysql.createPool({  
     connectionLimit: 10,
     password: 'admin',
     user: 'dandinpo_admin',
@@ -137,34 +137,31 @@ async function GetOrganizerId(type,id){
         return null
     }
     try{
+        console.log(sql)
         var result = await sqlConnection(sql)
-        console.log(result)
-        if (result.length != 0){
-            if (result[0].organizerId == 'null'){
-                let returnId = AddNewOrganizer()
-                try {
-                    if (type == 'business'){
-                        var sqlUpdate = `update business set organizerId = ${organizerId} where id = ${userId}`
-                    }else{
-                        var sqlUpdate = `update admin set organizerId = ${organizerId} where id = ${userId}`
-                    }
-                    var updateResult = await sqlConnection(sqlUpdate)
-                    console.log(updateResult)
-                    return returnId
+        if (result[0].organizerId == null){
+            let returnId = await AddNewOrganizer()
+            console.log(`returnId:${returnId}`)
+            try {
+                if (type == 'business'){
+                    var sqlUpdate = `update business set organizerId = ${returnId} where id = ${id}`
+                }else{
+                    var sqlUpdate = `update admin set organizerId = ${returnId} where id = ${id}`
                 }
-                catch(e){
-                    console.log(e)
-                    return null
-                }                 
+                console.log(sqlUpdate)
+                var updateResult = await sqlConnection(sqlUpdate)
+                console.log(updateResult)
+                return returnId
             }
-            else{
-                return result[0].organizerId
-            }
+            catch(e){
+                console.log(e)
+                return null
+            }                 
         }
         else{
-            return null
+            return result[0].organizerId
         }
-    }catch(e){
+        }catch(e){
         console.log(e)
         return null
     }
