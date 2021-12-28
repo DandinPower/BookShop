@@ -302,6 +302,32 @@ class Coupon {
             return false
         }
     }
+
+    //檢查完畢後刪除優惠券
+    async deleteCoupon() {
+        const sqlDelete = `delete from coupon where code = "${this.code}" and eventName = "${this.name}" and organizerId = ${this.organizerId};`
+        console.log(sqlDelete)
+        try{
+            var result = await database.sqlConnection(sqlDelete)
+            console.log(result)
+            if (result["affectedRows"] != 0){
+                this.errorMessage = ""
+                this.state = 200
+                return true
+            }
+            else{
+                console.log(e)
+                this.errorMessage = "找不到該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "找不到該優惠券"
+            this.state = 500
+            return false
+        }
+    }
 }
 
 module.exports = Coupon
