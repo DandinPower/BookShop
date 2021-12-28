@@ -500,6 +500,16 @@ router.post('/coupon/add', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
+        result = await coupon.checkDateAvailable()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
         result = await coupon.addNewCoupon()
     }
     let response = {
@@ -643,6 +653,16 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
     }
     if (result == false){
         state = false
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkDateAvailable()
+    }
+    if (result == false){
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state

@@ -214,12 +214,26 @@ class Coupon {
             eventDate = eventDate[0]["date"]
             if (eventDate != null){
                 eventDate = new Date(eventDate)
+                console.log(eventDate)
+                console.log(this._date)
+                if (this._date > eventDate){
+                    this.errorMessage = "到期日不符合限制"
+                    this.state = 500
+                    return false
+                }
+                else{
+                    return true
+                }
             }
             else{
-
+                this.errorMessage = "找不到該活動"
+                this.state = 500
+                return false
             }
         }catch(e){
-
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
         }
     }
 
