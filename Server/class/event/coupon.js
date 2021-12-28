@@ -5,9 +5,9 @@ const datatype = require('../../function/datatype')
 const file = require('../../function/file')
 const router = express.Router()
 
-
-
 class Coupon {
+    
+    //constructor
     constructor(req) {
         this.type = req.body.type
         this.userName = req.body.userName 

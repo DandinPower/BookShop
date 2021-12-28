@@ -139,3 +139,6 @@ create table image_list (
     foreign key(productId)references product(no)on delete set null,
     foreign key(businessId)references business(id)on delete set null
 );
+
+select E.organizerId,A.name as organizerName,E.name,E.discount,E.date from event as E join organizer as O on E.organizerId = O.organizerId left join business as B on B.organizerId = O.organizerId left join account as A on A.id = B.id;
+select * from event;

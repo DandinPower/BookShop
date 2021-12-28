@@ -5,6 +5,7 @@ const datatype = require('../function/datatype')
 const file = require('../function/file')
 const router = express.Router()
 const Coupon = require('../class/event/coupon')
+const Event = require('../class/event/event')
 
 router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     var type = req.body.type 
@@ -435,6 +436,30 @@ router.post('/delete', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     
+})
+
+router.get('/all', async(req,res,next)=>{ 
+    var event = new Event(req)
+    try{
+        var result = await event.getAllEvent()
+        if (result == false){
+            let response = {
+                "error":event.errorMessage,
+                "state":event.state
+            }
+            res.json(response)
+        }
+        else{
+            res.json(result)
+        }
+    }catch(e){
+        console.log(e)
+        let response = {
+            "error":event.errorMessage,
+            "state":event.state
+        }
+        res.json(response)
+    }
 })
 
 router.post('/coupon/add', datatype.verifyToken, async(req,res,next)=>{
