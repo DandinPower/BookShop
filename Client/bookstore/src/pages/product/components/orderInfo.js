@@ -3,12 +3,14 @@ import axios from 'axios'
 
 const OrderInfo = ({checkOrderInfo})=>{
     const [books, setBooks] = useState(checkOrderInfo);
-    
+    const [price, setPrice] = useState();
+
     function deleteBook (BID){
         setBooks(function (prev){
             return prev.filter(book => book.productId !== BID)
         })
     }
+
 
     function changeQuantity(BID,newQ){
         if(newQ > 0)
@@ -26,6 +28,14 @@ const OrderInfo = ({checkOrderInfo})=>{
             alert('請輸入大於0的數字')
         }
     }
+
+    useEffect(()=>{
+        let sum = 0;
+        books.forEach(function(book){
+            sum += book.price * parseInt(book.quantity);
+        })
+        setPrice(sum)
+    },[books])
 
     const postBooks = books.map((book)=>{
         var bookInfo = 
@@ -69,6 +79,7 @@ const OrderInfo = ({checkOrderInfo})=>{
             <div>{listBooks}</div>
             <div>付款方式</div>
             <div>配送地址</div>
+            <div>產品總價格:{price}</div>
             <div><button onClick={OrderBooks}>下訂</button></div>
            </div>)
 }
