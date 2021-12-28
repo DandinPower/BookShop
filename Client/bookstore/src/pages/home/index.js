@@ -14,6 +14,7 @@ import UpdateProduct from "../product/components/business/updateProduct";
 import ManageOrder from "../product/components/business/manageOrder";
 import UpdataOrder from "../product/components/business/updateOrder";
 import OrderComment from "../product/components/orderComment";
+import OrderInfo from "../product/components/orderInfo";
 import React, {useState} from 'react';
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
     const [productInfo, setProductInfo] = useState(['']);
     const [orderInfo, setOrderInfo] = useState(['']);
     const [clientOrderInfo,setClientOrderInfo] = useState(['']);
+    const [checkOrderInfo,setCheckOrderInfo] = useState(['']);
     return (
         <BrowserRouter>
         <div>
@@ -35,8 +37,9 @@ const Home = () => {
             <Route path="/member/register" element={<Register/>}/>
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>
-            <Route path="/Products/product" element={<Product bookInfo={bookInfo}/>}/>
-            <Route path="/Products/shopcart" element={<ShopCart/>}/>
+            <Route path="/Products/product" element={<Product bookInfo={bookInfo} setCheckOrderInfo={setCheckOrderInfo}/>}/>
+            <Route path="/Products/shopcart" element={<ShopCart setCheckOrderInfo={setCheckOrderInfo}/>}/>
+            <Route path="/Products/orderInfo" element={<OrderInfo checkOrderInfo={checkOrderInfo}/>}/>
             <Route path="/member/order" element={<Order setClientOrderInfo={setClientOrderInfo}/>}/>
             <Route path="/Products/business/manage" element={<ManageProduct setProductInfo={setProductInfo}/>}/>
             <Route path="/Products/business/addproduct" element={<AddProduct/>}/>

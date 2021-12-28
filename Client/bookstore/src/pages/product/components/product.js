@@ -2,8 +2,9 @@ import axios from 'axios'
 import React, {useState,useEffect} from 'react'
 import { Container, Row, Col, ButtonGroup, Button, ButtonToolbar} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import {Link} from 'react-router-dom'
 
-const Product = ({bookInfo}) =>{
+const Product = ({bookInfo,setCheckOrderInfo}) =>{
     const [comments, setComments] = useState(['']);
     function leave(){
         window.location.href = '/Products/category'
@@ -43,23 +44,19 @@ const Product = ({bookInfo}) =>{
 
 
     const postBook=()=>{
-        axios({
-            method: 'POST',
-            url: 'http://localhost:5000/product/add',
-            data:[{
-                "userName": window.sessionStorage.getItem('userName'),
-                "token": window.sessionStorage.getItem('token'),
-                "productId":bookInfo.productId,
-                "quantity":1
-            }]
-          }).then((response) => {
-            if(response.data.state === 200){
-                alert('下單成功')
-            }
-            else if(response.data.state === 500){
-                alert(response.data.error)
-              }
-          })
+        var book = 
+        [
+          {
+            'productId': bookInfo.productId,
+            'businessName':  bookInfo.businessName ,
+            'name':  bookInfo.name ,
+            'price':  bookInfo.price ,
+            'image':  bookInfo.image ,
+            'quantity': '1' ,
+          }
+        ]
+        
+        setCheckOrderInfo(book);
     }
     const listComments = comments.map((data)=>{
         return(
@@ -105,7 +102,7 @@ const Product = ({bookInfo}) =>{
                         </Row>
                         <br/>
                         <Row>
-                          <Button variant="success" onClick={postBook}>直接購買</Button>
+                        <Link to="/Products/orderInfo"><Button variant="success" onClick={postBook}>直接購買</Button></Link>
                         </Row>
                       </Col>
                     </Row>

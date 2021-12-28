@@ -14,7 +14,7 @@ const Header = () => {
         window.sessionStorage.clear()
         window.location.href = `/member/login`
     }
-
+    
     return(
         <Navbar bg="dark" expand="lg" variant="dark">
             <Container fluid>
