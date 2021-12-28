@@ -425,14 +425,24 @@
             2. 找不到該優惠券
             3. 已領取過該優惠券
             4. 網路連線失敗
-- 買家查詢該商品能使用的優惠券
-    - GET
+- 買家查詢該商品自己能使用的優惠券
+    - POST
     - http://localhost:5000/event/coupon/產品ID
+    - Req
+        
+        ```json
+        {
+            "userName":"customer1",
+            "token":"123ji1dsiasjjdaiwjda"
+        }
+        ```
+        
     - Res
         
         ```json
         [
             {
+                "organizerId":1,
                 "name":"全站69",
                 "code":"SEX69",
                 "discount":0.66,
@@ -449,5 +459,37 @@
         ```
         
         - error的種類
-            1. 找不到該產品
-            2. 網路連線錯誤
+            1. 找不到該用戶
+            2. 找不到該產品
+            3. 找不到該優惠券
+            4. 網路連線錯誤
+- 買家使用優惠券
+    - POST
+    - [http://localhost:5000/event/coupon/use](http://localhost:5000/event/coupon/use)
+    - Req
+        
+        ```json
+        {
+            "userName":"customer1",
+            "token":"123132sadaswwa",
+            "organizerId":1,
+            "name":"聖誕節愛愛",
+            "code":"SEX69"
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        {
+            "error":"",
+            "state":500
+        }
+        ```
+        
+        - error的種類
+            1. 找不到該用戶
+            2. 找不到該優惠券
+            3. 該優惠券不能在此商家使用
+            4. 該優惠券已使用完畢
+            5. 網路連線錯誤
