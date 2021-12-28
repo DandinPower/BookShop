@@ -58,10 +58,11 @@ create table customer (
 create table have (
 	customerId int,
     couponCode varchar(10),
+    organizerId int,
+    eventName varchar(20),
     quantity int not null,
-    primary key(customerId,couponCode),
-    foreign key(customerId)references customer(id)on delete cascade,
-    foreign key(couponCode)references coupon(code)on delete cascade
+    primary key(customerId,couponCode,organizerId,eventName),
+    foreign key(customerId)references customer(id)on delete cascade
 );
 
 create table business (
@@ -71,8 +72,6 @@ create table business (
     foreign key(id)references account(id)on delete cascade,
     foreign key(organizerId)references organizer(organizerId) on delete set null
 );
-
-
 
 create table product (
 	no int primary key auto_increment,

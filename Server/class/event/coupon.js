@@ -116,6 +116,26 @@ class Coupon {
         return true
     }
 
+    //取得customerId
+    async getCustomerId() {
+        try{
+            this.userId = await database.GetUserId(this.userName)
+            if (this.userId == null){
+                this.errorMessage = "找不到該用戶"
+                this.state = 500
+                return false
+            }
+            else{
+                return true
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
     //如果type是business則透過此function取得userId
     async getBusinessId() {
         try{
