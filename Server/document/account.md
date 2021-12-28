@@ -136,6 +136,7 @@
         ```json
         {
             "type":"customer",
+            "id":1,
             "userName":"test",
             "userPassword": "admin",
             "name":"test",
@@ -156,6 +157,7 @@
         ```json
         {
             "type":"business",
+            "id":1,
             "userName":"test",
             "userPassword": "admin",
             "name":"test",

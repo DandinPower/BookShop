@@ -170,6 +170,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
     var userName = req.body.userName;
     var response = {
         "type":"",
+        "id":0,
         "userName": userName,
 		"userPassword": "",
 		"name":"",
@@ -193,6 +194,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 console.log(result)
                 if (result.length != 0){
                     response["type"] = "customer"
+                    response["id"] = userId
                     response["userPassword"] = result[0]["userPassword"]
                     response["name"] = result[0]["name"]
                     response["gender"] = result[0]["gender"]
@@ -217,6 +219,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
                 console.log(result)
                 if (result.length != 0){
                     response["type"] = "business"
+                    response["id"] = userId
                     response["userPassword"] = result[0]["userPassword"]
                     response["name"] = result[0]["name"]
                     response["gender"] = result[0]["gender"]
@@ -382,9 +385,8 @@ router.post('/logo/add/:businessId',file.UploadImage.single('image'),async (req,
         var sql = `insert into image_list(businessId,content)value(${req.params.businessId},?);`
         let result = await database.sqlConnectionFile(sql,req.file.buffer)
         console.log(result)
-        
-        
     }catch(e){
+        console.log(e)
         response["error"] = "已存在圖片"
         response["state"] = 500
     }

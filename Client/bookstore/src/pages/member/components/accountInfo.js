@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //未完成
 const AccountInfo =()=>{
     const [userName,setuserName] = useState('')
+    const [id,setId] = useState('')
     const [type,setType] = useState('')
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
@@ -13,9 +14,10 @@ const AccountInfo =()=>{
     const [phone,setPhone] = useState('')
     const [address,setAddress] = useState('')
     const [paymentInfo,setPaymentInfo] = useState('')
-    const [logo,setLogo] = useState('')
+    const [logo,setLogo] = useState()
     const [description,setDescription] = useState('')
-
+    const [imageFile, setImageFile] = useState();
+    const [firstLogo, setFirstLogo] = useState(false);
     useEffect(()=>{
         if(window.sessionStorage.getItem('token')!== null){
             axios({
@@ -28,6 +30,7 @@ const AccountInfo =()=>{
               }).then((response) => {
                   if(response.data.state === 200){
                     setuserName(response.data.userName)
+                    setId(response.data.id)
                     setPassword(response.data.userPassword)
                     setName(response.data.name)
                     setGender(response.data.gender)
@@ -36,7 +39,10 @@ const AccountInfo =()=>{
                     setAddress(response.data.address)
                     setPaymentInfo(response.data.paymentInfo)
                     setDescription(response.data.description)
-                    setLogo(response.data.logo)
+                    if(response.data.logo === ''){
+                        setFirstLogo(true)
+                    }
+                    setLogo(`data:image/png;base64,${response.data.logo}`)
                     setType(response.data.type)
                   }
                   else{
@@ -47,33 +53,96 @@ const AccountInfo =()=>{
         }
     },[])
 
+    const handleOnPreview = (event) => {
+        const file = event.target.files[0];
+        setImageFile(file)
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+          // convert image file to base64 string
+          setLogo(reader.result)
+        }, false);
+    
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      };
+    
+    const UploadImg =()=>{
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        if(imageFile !== undefined && firstLogo){
+            axios({
+                method: 'POST',
+                url: `http://localhost:5000/account/logo/add/${id}`,
+                data:formData
+            }).then((response) => {
+                if(response.data.state === 200){
+                    alert('圖片成功')
+                }
+                else{
+                    alert(response.data.error)
+                }
+                
+            })
+        }
+        else if(imageFile !== undefined){
+            axios({
+                method: 'POST',
+                url: `http://localhost:5000/account/logo/update/${id}`,
+                data:formData
+            }).then((response) => {
+                if(response.data.state === 200){
+                    alert('圖片成功')
+                }
+                else{
+                    alert(response.data.error)
+                }
+                
+            })
+        }
+    }
+    
     const send=()=>{
-        axios({
-            method: 'POST',
-            url: 'http://localhost:5000/account/update',
-            data:
-            {
-                userName: window.sessionStorage.getItem('userName'),
-                token: window.sessionStorage.getItem('token'),
-                userPassword: password,
-                name:name,
-                gender:gender,
-                email:email,
-                phone:phone,
-                address:address,
-                paymentInfo:paymentInfo,
-                description:description,
-                logo:logo
-            }
-          }).then((response) => {
-              if(response.data.state === 200){
-                alert('更改成功')
-              }
-              else{
-                alert('error')
-              }
-               
-          })
+        
+        if(phone.length !== 10){
+            alert('電話號碼請等於10位數')
+        }
+        else if(userName.length < 3){
+            alert('帳號長度要大於3')
+        }
+        else if(password.length < 3){
+            alert('密碼長度要大於3')
+        }
+        else
+        {
+            axios({
+                method: 'POST',
+                url: 'http://localhost:5000/account/update',
+                data:
+                {
+                    userName: window.sessionStorage.getItem('userName'),
+                    token: window.sessionStorage.getItem('token'),
+                    userPassword: password,
+                    name:name,
+                    gender:gender,
+                    email:email,
+                    phone:phone,
+                    address:address,
+                    paymentInfo:paymentInfo,
+                    description:description,
+                    logo:logo
+                }
+            }).then((response) => {
+                if(response.data.state === 200){
+                    alert('更改成功')
+                    UploadImg()
+                }
+                else{
+                    alert('error')
+                }
+                
+            })
+        }
     }
 
     if (window.sessionStorage.getItem('token')!== null) {
@@ -139,7 +208,8 @@ const AccountInfo =()=>{
                         <tr>
                             <th className="w-30 text-center">Logo</th>
                             <td>
-                            <Form.Control type="text" value={logo} onChange={(e) => {setLogo(e.target.value)}} disabled={type === 'customer'}/>
+                            <Form.Control type="file" accept="image/*" onChange={handleOnPreview} disabled={type === 'customer'}/>
+                            <img src={logo} alt="" />
                             </td>
                         </tr>
                     </tbody>

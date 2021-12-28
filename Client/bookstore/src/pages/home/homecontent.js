@@ -9,7 +9,7 @@ import carouselImg4 from './../../image/getImage4.jpg';
 import './home.css';
 import axios from 'axios'
 
-const HomeContent = () =>{
+const HomeContent = ({setBookInfo}) =>{
     const [bookData, setBookData] = useState([""]);
     const [category,setCategory] = useState(['']);
     const [selectCate,setSelectCate] = useState('all');
@@ -66,7 +66,7 @@ const HomeContent = () =>{
                           <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
                           <Card.Text className="fw-light fs-6">{data.description}</Card.Text>
                           <Link to="/Products/product"  className="mt-auto"  >
-                                <Button variant="outline-success" className="w-100" >馬上購買</Button>
+                                <Button variant="outline-success" className="w-100" onClick={e => setBookInfo(data)}>馬上購買</Button>
                           </Link>
                       </Card.Body>
               </Card>
@@ -85,6 +85,7 @@ const HomeContent = () =>{
             <tr>   
                 <td>
                     <ListGroup variant = 'flush'>
+                        <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
                         {listCategory}
                     </ListGroup>
                 </td>
@@ -111,7 +112,8 @@ const HomeContent = () =>{
                     </Container>
                     <Container>
                       <Row>
-                          {listBooks}
+                        
+                        {listBooks}
                       </Row>
                     </Container>
                 </td>

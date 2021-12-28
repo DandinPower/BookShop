@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import { useState,useEffect} from 'react'
 import axios from 'axios'
 import {Container, Form, Col, Row, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
@@ -13,6 +13,10 @@ const UpdateProduct = ({productInfo}) =>{
     const [imageFile, setImageFile] = useState();
     const [productId, setProductId] = useState(productInfo.productId);
     const [launch, setLaunch] = useState(productInfo.launch);
+    
+    useEffect(()=>{
+        setImageSrc(`data:image/png;base64,${productInfo.image}`)
+    },[productInfo.image])
 
     const handleOnPreview = (event) => {
         const file = event.target.files[0];
@@ -20,7 +24,7 @@ const UpdateProduct = ({productInfo}) =>{
         const reader = new FileReader();
         reader.addEventListener("load", function () {
           // convert image file to base64 string
-          setImageSrc(reader.result)
+        setImageSrc(reader.result)
         }, false);
     
         if (file) {
@@ -31,9 +35,9 @@ const UpdateProduct = ({productInfo}) =>{
     const uploadImage = () =>{
         const formData = new FormData();
         formData.append('image', imageFile);
-        console.log(productId);
-        console.log(imageFile);
-        axios({
+        //未更改圖片 不需要post
+        if(imageFile !== undefined){
+            axios({
             method: 'POST',
             url: `http://localhost:5000/product/manage/update/image/${productId}`,
             data:formData
@@ -45,6 +49,8 @@ const UpdateProduct = ({productInfo}) =>{
                 alert(response.data.error)
               }
           })
+        }
+        
     }
 
     const UpdateLaunch = () =>{
@@ -159,16 +165,17 @@ const UpdateProduct = ({productInfo}) =>{
             </Form>
             
             <div className="d-grid gap-2">
-                <Button variant="success" size="lg" onClick={UpdateProduct}>
-                  	更改商品資訊
-                </Button>
+                <Button variant="success" size="lg" onClick={UpdateProduct}>更改商品資訊</Button>
             </div>
         </Container>
     )   
 }
 export default UpdateProduct
 /*
-<div>
+
+                <img src={imageSrc} alt="" />
+                <img src={`data:image/png;base64,${bookInfo.image}`}  alt={bookInfo.description} width="500" height="600"></img>
+					<div>
                 <div>
                     <p>書名: <input type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}></input></p>
                 </div>
