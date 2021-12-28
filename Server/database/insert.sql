@@ -54,11 +54,11 @@ values
 ("HAPPY69","同人小說跳樓折價75折",3,"2021-12-28",0.69,3);
 
 
-insert into have(customerId,couponCode,quantity)
+insert into have(customerId,couponCode,organizerId,eventName,quantity)
 values
-(1,"XMAS88",2),
-(2,"STUDY77",2),
-(3,"HAPPY69",3);
+(1,"XMAS88",1,"聖誕節全館95折",2),
+(2,"STUDY77",2,"本館學術書籍85折",2),
+(3,"HAPPY69",3,"同人小說跳樓折價75折",3);
 
 insert into orders(customerId,orderDate,quantity)value(1,"2021-12-8",3);
 insert into manage(businessId,orderNo,productId)value(4,(select last_insert_id()),2);

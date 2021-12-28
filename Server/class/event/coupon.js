@@ -204,6 +204,11 @@ class Coupon {
         }
     }
 
+    //設置organizerId
+    setOrganizerId(organizerId){
+        this.organizerId = organizerId
+    }
+
     //根據organizerId檢查是否有相符的活動名稱
     async checkNameAvailable() {
         try{
@@ -216,6 +221,29 @@ class Coupon {
             }
             else{
                 this.errorMessage = "找不到該活動"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //根據organizerId跟活動名稱檢查是否有相符的優惠券
+    async checkCodeAvailable() {
+        try{
+            var codeResult = await database.sqlConnection(`select code from coupon where organizerId = ${this.organizerId} and eventName = "${this.name}";`)
+            codeResult = datatype.packet2list(codeResult,"code")
+            console.log(codeResult) 
+            console.log(this.code)   
+            if (codeResult.includes(this.code)){
+                return true
+            }
+            else{
+                this.errorMessage = "找不到該優惠券"
                 this.state = 500
                 return false
             }
@@ -344,6 +372,45 @@ class Coupon {
         }catch(e){
             console.log(e)
             this.errorMessage = "找不到該優惠券"
+            this.state = 500
+            return false
+        }
+    }
+
+    //取得最大數量限制
+    async getMaxQuantity() {
+        try{
+            var result = await database.sqlConnection(`select maxQuantity from coupon where organizerId = ${this.organizerId} and eventName = "${this.name}" and code = "${this.code}";`)
+            console.log(result)
+            if (result.length != 0){
+                this.maxQuantity = result[0]["maxQuantity"]
+            }
+            else{
+                this.errorMessage = "找不到該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //檢查完畢領取優惠券
+    async receiveCoupon() {
+        const sqlInsert = `insert into have(customerId,couponCode,organizerId,eventName,quantity)value(${this.userId},"${this.code}",${this.organizerId},"${this.name}",${this.maxQuantity});`
+        console.log(sqlInsert)
+        try{
+            var result = await database.sqlConnection(sqlInsert)
+            console.log(result)
+            this.errorMessage = ""
+            this.state = 200
+            return true
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "已領取過該優惠券"
             this.state = 500
             return false
         }

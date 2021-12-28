@@ -13,3 +13,9 @@ values
 alter table have add column organizerId int;
 alter table have add column eventName varchar(20);
 alter table have drop primary key,add primary key(customerId,couponCode,organizerId,eventName);
+
+delete from have;
+insert into have(customerId,couponCode,organizerId,eventName,quantity)
+values
+(1,"XMAS88",1,"聖誕節全館95折",2),
+(3,"HAPPY69",3,"同人小說跳樓折價75折",3);

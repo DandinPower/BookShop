@@ -799,4 +799,61 @@ router.post('/coupon/customer/search', async(req,res,next)=>{
     }
 })
 
+router.post('/coupon/customer/receive', datatype.verifyToken, async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    if (state){
+        var result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    coupon.setOrganizerId(req.body.organizerId)
+    if (state){
+        result = await coupon.checkNameAvailable()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkCodeAvailable()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.getMaxQuantity()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.receiveCoupon()
+    }
+    let response = {
+        "error":coupon.errorMessage,
+        "state":coupon.state
+    }
+    res.json(response)
+})
 module.exports = router

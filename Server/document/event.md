@@ -398,6 +398,7 @@
         {
             "userName":"customer1",
             "token":"hudh17h21h321uuu8312",
+            "organizerId":1,
             "name":"全站88",
             "code":"HAPPY69"
         }
@@ -422,9 +423,8 @@
         - error的種類
             1. 找不到該用戶
             2. 找不到該優惠券
-            3. 優惠券超過上限
-            4. 已領取過該優惠券
-            5. 網路連線失敗
+            3. 已領取過該優惠券
+            4. 網路連線失敗
 - 買家查詢該商品能使用的優惠券
     - GET
     - http://localhost:5000/event/coupon/產品ID
