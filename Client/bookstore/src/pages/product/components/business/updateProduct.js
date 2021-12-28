@@ -159,16 +159,14 @@ const UpdateProduct = ({productInfo}) =>{
             </Form>
             
             <div className="d-grid gap-2">
-                <Button variant="success" size="lg" onClick={UpdateProduct}>
-                  	更改商品資訊
-                </Button>
+                <Button variant="success" size="lg" onClick={UpdateProduct}>更改商品資訊</Button>
             </div>
         </Container>
     )   
 }
 export default UpdateProduct
 /*
-<div>
+					<div>
                 <div>
                     <p>書名: <input type='text' value={bookName} onChange={(e) => {setBookName(e.target.value)}}></input></p>
                 </div>
