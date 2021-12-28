@@ -379,6 +379,60 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
+router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
+    var userName = req.body.userName
+    var productId = req.body.productId
+    try{
+        var businessId = await database.GetUserId(userName)
+        if (businessId != null){
+            const sql = `delete from product where no = ${productId};`
+            try{
+                var result = await database.sqlConnection(sql)
+                console.log(result)
+                if (result["affectedRows"] != 0){
+                    let response = {
+                        "error":"",
+                        "state":200
+                    }
+                    res.json(response)
+                }else{
+                    //沒有這個productId
+                    let response = {
+                        "error":"沒有這個productId",
+                        "state":500
+                    }
+                    res.json(response)
+                }
+
+            }catch(e){
+                console.log(e)
+                //網路連線錯誤
+                let response = {
+                    "error":"網路連線錯誤",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }else{
+            //找不到該用戶
+            let response = {
+                "error":"找不到該用戶",
+                "state":500
+            }
+            res.json(response)
+        }
+    
+    }catch(e){
+        console.log(e)
+        //網路連線錯誤
+        let response = {
+            "error":"網路連線錯誤",
+            "state":500
+        }
+        res.json(response)
+    }
+})
+
 router.post('/manage/launch', datatype.verifyToken,async (req, res, next)=> {        
     var userName = req.body.userName
     var productId = req.body.productId
