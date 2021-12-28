@@ -71,7 +71,7 @@ const Product = ({bookInfo}) =>{
     })
 
     return(
-              <Container className="border">
+              <Container className="border" >
                 <Row aria-label="product">
                   <Col>
                     <img src={`data:image/png;base64,${bookInfo.image}`}  alt={bookInfo.description} width="500" height="600"></img>
@@ -84,19 +84,29 @@ const Product = ({bookInfo}) =>{
                     </Row>
                     <hr/>
                     <Row>
-                      <p>價格: {bookInfo.price}</p>
+                      <Col>
+                        <Row>
+                          <p>價格: {bookInfo.price}</p>
+                        </Row>
+                        <Row>
+                          <p>商家名稱: {bookInfo.businessName}</p>
+                        </Row>
+                        <Row>
+                          <p>產品敘述: {bookInfo.description}</p>
+                        </Row>
+                      </Col>
+
+                      <Col>
+                        <Row>
+                          <Button variant="outline-success" onClick={addShopCart}>加入購物車</Button>
+                        </Row>
+                        <br/>
+                        <Row>
+                          <Button variant="success" onClick={postBook}>直接購買</Button>
+                        </Row>
+                      </Col>
                     </Row>
-                    <Row>
-                      <p>商家名稱: {bookInfo.businessName}</p>
-                    </Row>
-                    <Row>
-                      <p>產品敘述: {bookInfo.description}</p>
-                    </Row>
-                    <Row inline>
-                        <Button variant="outline-success" onClick={addShopCart}>加入購物車</Button>
-                        <Button variant="success" onClick={postBook}>直接購買</Button>
-                    </Row>
-                    
+
                     <br size="lg"/>
                     <Row>
                       <Col className="w-30">
