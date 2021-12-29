@@ -34,6 +34,8 @@ const Header = () => {
                     <Nav.Link href="/member/order" disabled={userType !== 'customer'}>order</Nav.Link>
                     <Nav.Link href="/Products/business/manage" disabled={userType !== 'business'}>管理商品</Nav.Link>
                     <Nav.Link href="/Products/business/manageorder" disabled={userType !== 'business'}>管理訂單</Nav.Link>
+                    <Nav.Link href="/member/adminlogin" >管理員登入</Nav.Link>
+                    <Nav.Link href="/member/admin/manageCenter" >管理中心</Nav.Link>
                 </Nav>
                 <Form className="d-flex">
                     <FormControl

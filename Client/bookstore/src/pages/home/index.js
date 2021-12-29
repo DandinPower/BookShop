@@ -15,6 +15,11 @@ import ManageOrder from "../product/components/business/manageOrder";
 import UpdataOrder from "../product/components/business/updateOrder";
 import OrderComment from "../product/components/orderComment";
 import OrderInfo from "../product/components/orderInfo";
+import AdminLogin from "../member/components/admin/adminLogin";
+import ManageAccountCenter from "../member/components/admin/manageAccountCenter";
+import ManageBusinessAccount from "../member/components/admin/manageBusinessAccount";
+import ManageCustomerAccount from "../member/components/admin/manageCustomerAccount";
+import ManageAccount from "../member/components/admin/manageAccount";
 import React, {useState} from 'react';
 
 const Home = () => {
@@ -23,6 +28,7 @@ const Home = () => {
     const [orderInfo, setOrderInfo] = useState(['']);
     const [clientOrderInfo,setClientOrderInfo] = useState(['']);
     const [checkOrderInfo,setCheckOrderInfo] = useState(['']);
+    const [accountInfo,setAccountInfo] = useState(['']);
     return (
         <BrowserRouter>
         <div>
@@ -34,6 +40,11 @@ const Home = () => {
         <Routes>
             <Route path="/" element={<HomeContent setBookInfo={setBookInfo}/>}/>
             <Route path="/member/login" element={<Login/>}/>
+            <Route path="/member/adminlogin" element={<AdminLogin/>}/>
+            <Route path="/member/admin/manageCenter" element={<ManageAccountCenter/>}/>
+            <Route path="/member/admin/manageBusiness" element={<ManageBusinessAccount setAccountInfo={setAccountInfo}/>}/>
+            <Route path="/member/admin/manageCustomer" element={<ManageCustomerAccount setAccountInfo={setAccountInfo}/>}/>
+            <Route path="/member/admin/manageAccount" element={<ManageAccount accountInfo={accountInfo}/>}/>
             <Route path="/member/register" element={<Register/>}/>
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>
