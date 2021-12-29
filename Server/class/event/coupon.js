@@ -350,6 +350,28 @@ class Coupon {
         }
     }
 
+    //搜尋所有買家有的優惠券
+    async searchAllCustomerHave(){
+        const sqlSearch = `select C.organizerId,C.eventName as name,C.code,C.discount,C.date,H.quantity from coupon as C join have as H on C.code = H.couponCode and C.eventName = H.eventName and C.organizerId = H.organizerId where H.customerId = ${this.userId};`
+        console.log(sqlSearch)
+        try{
+            var result = await database.sqlConnection(sqlSearch)
+            console.log(result)
+            let response = []
+            result.forEach(function(item, index, array) {
+                let coupon = datatype.json2json(item)
+                console.log(coupon)
+                response.push(coupon)
+            });
+            return response
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
     //檢查完畢後使用優惠券(quantity -= 1)
     async useCoupon(){
         try{
