@@ -19,4 +19,3 @@ insert into have(customerId,couponCode,organizerId,eventName,quantity)
 values
 (1,"XMAS88",1,"聖誕節全館95折",2),
 (3,"HAPPY69",3,"同人小說跳樓折價75折",3);
-

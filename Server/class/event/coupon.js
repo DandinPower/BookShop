@@ -312,6 +312,68 @@ class Coupon {
         }
     }
 
+    //查詢用戶的擁有的優惠券裡有無欲使用的這張
+    async checkCustomerHaveCoupon() {
+        try{
+            var result = await database.sqlConnection(`select * from have where customerId = ${this.userId} and couponCode = "${this.code}" and organizerId = ${this.organizerId} and eventName = "${this.name}";`)
+            if (result.length != 0){
+                return true
+            }else{
+                this.errorMessage = "未領取該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //檢查用戶的優惠券quantity還夠不夠
+    async checkCouponQuantity() {
+        try{
+            var result = await database.sqlConnection(`select quantity from have where customerId = ${this.userId} and couponCode = "${this.code}" and organizerId = ${this.organizerId} and eventName = "${this.name}";`)
+            if (result[0]["quantity"] > 0){
+                return true
+            }else{
+                this.errorMessage = "該優惠券已使用完畢"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //檢查完畢後使用優惠券(quantity -= 1)
+    async useCoupon(){
+        try{
+            const sql = `update have set quantity = quantity - 1 where customerId = ${this.userId} and couponCode = "${this.code}" and organizerId = ${this.organizerId} and eventName = "${this.name}";`
+            console.log(sql)
+            var result = await database.sqlConnection(sql)
+            console.log(result)
+            if (result["affectedRows"] != 0){
+                this.state = 200
+                return true
+            }
+            else{
+                this.errorMessage = "未領取該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
     //檢查優惠券日期是否超過活動日期
     async checkDateAvailable(){
         try{
