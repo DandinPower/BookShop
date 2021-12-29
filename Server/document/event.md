@@ -452,6 +452,38 @@
         - error的種類
             1. 找不到該產品
             2. 網路連線錯誤
+- 買家查詢擁有的優惠券
+    - POST
+    - [http://localhost:5000/event/coupon/customer/](http://localhost:5000/event/coupon/use)have
+    - Req
+        
+        ```json
+        {
+            "userName":"customer1",
+            "token":"123132sadaswwa"
+        }
+        ```
+        
+    - Res
+        
+        ```json
+        [
+            {
+                "organizerId":1,
+                "name":"全站69",
+                "code":"SEX69",
+                "discount":0.66,
+                "date":"2021-12-25"
+            }
+        ]
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":500
+        }
+        ```
 - 買家使用優惠券
     - POST
     - [http://localhost:5000/event/coupon/customer/use](http://localhost:5000/event/coupon/customer/use)
