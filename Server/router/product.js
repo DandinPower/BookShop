@@ -396,7 +396,6 @@ router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
                     }
                     res.json(response)
                 }else{
-                    //沒有這個productId
                     let response = {
                         "error":"沒有這個productId",
                         "state":500
@@ -406,7 +405,6 @@ router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
 
             }catch(e){
                 console.log(e)
-                //網路連線錯誤
                 let response = {
                     "error":"網路連線錯誤",
                     "state":500
@@ -414,7 +412,6 @@ router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
                 res.json(response)
             }
         }else{
-            //找不到該用戶
             let response = {
                 "error":"找不到該用戶",
                 "state":500
@@ -424,7 +421,6 @@ router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
     
     }catch(e){
         console.log(e)
-        //網路連線錯誤
         let response = {
             "error":"網路連線錯誤",
             "state":500

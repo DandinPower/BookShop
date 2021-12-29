@@ -856,4 +856,34 @@ router.post('/coupon/customer/receive', datatype.verifyToken, async(req,res,next
     }
     res.json(response)
 })
+
+router.get('/coupon/customer/:productId', async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    var result = null
+    if (state){
+        result = await coupon.setProductId(req.params.productId)
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.searchCouponByProductId()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    else{
+        res.json(result)
+    }
+})
 module.exports = router

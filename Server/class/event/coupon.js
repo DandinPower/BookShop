@@ -33,6 +33,7 @@ class Coupon {
         this.state = 0
         this.userId = null
         this.organizerId = null
+        this.productId = null
     }
 
     //在新增或修改時檢查輸入的type
@@ -134,6 +135,62 @@ class Coupon {
             this.state = 500
             return false
         }
+    }
+
+    //設置買家欲查詢的商品id
+    async setProductId(productId){
+        const sql = `select * from product where no = ${productId};`
+        console.log(sql)
+        try{
+            var result = await database.sqlConnection(sql)
+            if (result.length != 0){
+                this.productId = productId
+                return true 
+            }
+            else{
+                this.errorMessage = "找不到該產品"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //根據參數查找符合的優惠券
+    async searchCouponByProductId() {
+        const sql = `select C.organizerId,C.eventName as name,C.code,C.discount,C.date \
+                        from coupon as C \
+                        join organizer as O on O.organizerId = C.organizerId \
+                        join business as B on B.organizerId = O.organizerId \
+                        join product as P on P.businessId = B.id \
+                        where P.no = ${this.productId} \
+                        union \
+                        select C.organizerId,C.eventName as name,C.code,C.discount,C.date \
+                        from coupon as C \
+                        join organizer as O on O.organizerId = C.organizerId \
+                        join admin as A on A.organizerId = O.organizerId;`
+        console.log(sql)
+        try{
+            var result = await database.sqlConnection(sql)
+            console.log(result)
+            let response = []
+            result.forEach(function(item, index, array) {
+                let coupon = datatype.json2json(item)
+                console.log(coupon)
+                response.push(coupon)
+            });
+            return response
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+
     }
 
     //如果type是business則透過此function取得userId

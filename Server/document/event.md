@@ -425,18 +425,9 @@
             2. 找不到該優惠券
             3. 已領取過該優惠券
             4. 網路連線失敗
-- 買家查詢該商品自己能使用的優惠券
-    - POST
-    - http://localhost:5000/event/coupon/產品ID
-    - Req
-        
-        ```json
-        {
-            "userName":"customer1",
-            "token":"123ji1dsiasjjdaiwjda"
-        }
-        ```
-        
+- 買家查詢該商品能使用的優惠券
+    - GET
+    - http://localhost:5000/event/coupon/customer/產品ID 
     - Res
         
         ```json
@@ -459,13 +450,11 @@
         ```
         
         - error的種類
-            1. 找不到該用戶
-            2. 找不到該產品
-            3. 找不到該優惠券
-            4. 網路連線錯誤
+            1. 找不到該產品
+            2. 網路連線錯誤
 - 買家使用優惠券
     - POST
-    - [http://localhost:5000/event/coupon/use](http://localhost:5000/event/coupon/use)
+    - [http://localhost:5000/event/coupon/customer/use](http://localhost:5000/event/coupon/customer/use)
     - Req
         
         ```json
