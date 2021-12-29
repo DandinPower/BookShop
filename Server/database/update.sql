@@ -20,17 +20,3 @@ values
 (1,"XMAS88",1,"聖誕節全館95折",2),
 (3,"HAPPY69",3,"同人小說跳樓折價75折",3);
 
-
-
-
-select C.organizerId,C.eventName as name,C.code,C.discount,C.date 
-from coupon as C 
-join organizer as O on O.organizerId = C.organizerId 
-join business as B on B.organizerId = O.organizerId
-join product as P on P.businessId = B.id
-where P.no = 2
-union
-select C.organizerId,C.eventName as name,C.code,C.discount,C.date
-from coupon as C
-join organizer as O on O.organizerId = C.organizerId
-join admin as A on A.organizerId = O.organizerId;
