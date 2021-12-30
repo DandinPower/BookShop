@@ -416,18 +416,27 @@
             3. 已領取過該優惠券
             4. 網路連線失敗
 - 買家查詢該商品能使用的優惠券
-    - GET
-    - http://localhost:5000/event/coupon/customer/產品ID 
+    - POST
+    - http://localhost:5000/event/coupon/customer/product 
+    - Req
+
+        ```json
+        {
+            "userName":"customer1",
+            "token":"hudh17h21h321uuu8312",
+            "productId":1
+        }
+        ```
+
     - Res
         
         ```json
         [
             {
-                "organizerId":1,
-                "name":"全站69",
                 "code":"SEX69",
                 "discount":0.66,
-                "date":"2021-12-25"
+                "date":"2021-12-25",
+                "quantity":2
             }
         ]
         ```

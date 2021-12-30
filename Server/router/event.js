@@ -821,12 +821,23 @@ router.post('/coupon/customer/receive', datatype.verifyToken, async(req,res,next
     res.json(response)
 })
 
-router.get('/coupon/customer/:productId', async(req,res,next)=>{
+router.post('/coupon/customer/product', async(req,res,next)=>{
     var coupon = new Coupon(req)
     var state = true 
     var result = null
     if (state){
-        result = await coupon.setProductId(req.params.productId)
+        result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.setProductId(req.body.productId)
     }
     if (result == false){
         state = false 
@@ -842,8 +853,6 @@ router.get('/coupon/customer/:productId', async(req,res,next)=>{
     if (result == false){
         let response = {
             "error":coupon.errorMessage,
-
-
             "state":coupon.state
         }
         res.json(response)

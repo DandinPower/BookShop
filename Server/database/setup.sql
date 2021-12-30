@@ -136,3 +136,5 @@ create table image_list (
     foreign key(productId)references product(no)on delete set null,
     foreign key(businessId)references business(id)on delete set null
 );
+
+select * from product;

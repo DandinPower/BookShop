@@ -162,17 +162,15 @@ class Coupon {
 
     //根據參數查找符合的優惠券
     async searchCouponByProductId() {
-        const sql = `select C.organizerId,C.eventName as name,C.code,C.discount,C.date \
+        const sql = `select C.code,C.discount,C.date,H.quantity\
                         from coupon as C \
-                        join organizer as O on O.organizerId = C.organizerId \
+                        join event as E on E.name = C.eventName \
+                        join organizer as O on O.organizerId = E.organizerId \
                         join business as B on B.organizerId = O.organizerId \
                         join product as P on P.businessId = B.id \
+                        join have as H on H.couponCode = C.code \
                         where P.no = ${this.productId} \
-                        union \
-                        select C.organizerId,C.eventName as name,C.code,C.discount,C.date \
-                        from coupon as C \
-                        join organizer as O on O.organizerId = C.organizerId \
-                        join admin as A on A.organizerId = O.organizerId;`
+                        and H.customerId = ${this.userId};`
         console.log(sql)
         try{
             var result = await database.sqlConnection(sql)
