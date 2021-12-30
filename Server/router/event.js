@@ -511,9 +511,10 @@ router.post('/coupon/add', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkDateAvailable()
+        result = await coupon.checkDateAvailableByName()
     }
     if (result == false){
+        state = false;
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state
@@ -649,9 +650,10 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkNameAvailable()
+        result = await coupon.checkOrganizerHaveCoupon()
     }
     if (result == false){
+        state = false
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state
@@ -662,6 +664,7 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
         result = await coupon.checkDateAvailable()
     }
     if (result == false){
+        state = false
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state
@@ -730,7 +733,7 @@ router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkNameAvailable()
+        result = await coupon.checkOrganizerHaveCoupon()
     }
     if (result == false){
         state = false

@@ -289,6 +289,27 @@ class Coupon {
         }
     }
 
+    //檢查organizer有無此優惠券
+    async checkOrganizerHaveCoupon(){
+        try{
+            var result = await database.sqlConnection(`select * from coupon as C join event as E on C.eventName = E.name where E.organizerId = ${this.organizerId} and C.code = "${this.code}";`)
+            console.log(result)
+            if (result.length != 0){
+                return true
+            }
+            else{
+                this.errorMessage = "找不到該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
     //根據organizerId跟活動名稱檢查是否有相符的優惠券
     async checkCodeAvailable() {
         try{
@@ -397,9 +418,10 @@ class Coupon {
     }
 
     //檢查優惠券日期是否超過活動日期
-    async checkDateAvailable(){
+    async checkDateAvailableByName(){
         try{
-            var eventDate = await database.sqlConnection(`select date from event where name = "${this.name}" and organizerId = ${this.organizerId};`)
+            var eventDate = await database.sqlConnection(`select date from event where event.name = "${this.name}";`)
+            console.log(eventDate)
             eventDate = eventDate[0]["date"]
             if (eventDate != null){
                 eventDate = new Date(eventDate)
@@ -420,6 +442,39 @@ class Coupon {
                 return false
             }
         }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
+    //檢查優惠券日期是否超過活動日期
+    async checkDateAvailable(){
+        try{
+            var eventDate = await database.sqlConnection(`select E.date as date from event as E join coupon as C on E.name = C.eventName where C.code = "${this.code}"`)
+            console.log(eventDate)
+            eventDate = eventDate[0]["date"]
+            if (eventDate != null){
+                eventDate = new Date(eventDate)
+                console.log(eventDate)
+                console.log(this._date)
+                if (this._date > eventDate){
+                    this.errorMessage = "到期日不符合限制"
+                    this.state = 500
+                    return false
+                }
+                else{
+                    return true
+                }
+            }
+            else{
+                this.errorMessage = "找不到該活動"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
             this.errorMessage = "網路連線失敗"
             this.state = 500
             return false
@@ -494,7 +549,7 @@ class Coupon {
 
     //檢查完畢後刪除優惠券
     async deleteCoupon() {
-        const sqlDelete = `delete from coupon where code = "${this.code}" and eventName = "${this.name}" and organizerId = ${this.organizerId};`
+        const sqlDelete = `delete from coupon where code = "${this.code}";`
         console.log(sqlDelete)
         try{
             var result = await database.sqlConnection(sqlDelete)

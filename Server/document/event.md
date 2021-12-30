@@ -254,7 +254,6 @@
             "type":"admin",    //只能為business或admin
             "userName":"business1",
             "token":"13ji2jinfdadus87",
-            "name":"炫泡活動",
             "code":"32DE",   //不得修改僅拿來尋找該優惠券
             "date":"2021-12-25",    //不得早於現在或晚於活動到期日
             "discount":0.88, //0<discount<=1
@@ -297,7 +296,6 @@
             "type":"admin",  //只能為business或admin
             "userName":"banana",
             "token":"231dijijj2ji13",
-            "name":"活動名",
             "code":"HAPPY69"
         }
         ```
