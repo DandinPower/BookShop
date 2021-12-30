@@ -263,17 +263,9 @@ router.post('/update', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     var name = req.body.name 
-    var discount = req.body.discount
     var date = req.body.date
     var _date = new Date(date) 
     var currentDate = Date.now()
-    if (discount <= 0 | discount > 1){
-        let response = {
-            "error":"折扣不符合限制",
-            "state":500
-        }
-        res.json(response)
-    }
     if(_date < currentDate){
         let response = {
             "error":"到期日不符合限制",
@@ -285,7 +277,7 @@ router.post('/update', datatype.verifyToken, async(req,res,next)=>{
         var organizerId = await database.GetOrganizerId(type,userId)
         console.log(organizerId)
         if (organizerId != null){
-            const sql = `update event set discount = ${discount},date = "${date}" where organizerId = ${organizerId} and name = "${name}";`
+            const sql = `update event set date = "${date}" where organizerId = ${organizerId} and name = "${name}";`
             console.log(sql)
             try{
                 var result = await database.sqlConnection(sql)
