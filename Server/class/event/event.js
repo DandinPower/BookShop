@@ -24,6 +24,7 @@ class Event {
         this.state = 0
         this.userId = null
         this.organizerId = null
+        this.productId = null
     }
 
     //在新增或修改時檢查輸入的type
@@ -207,7 +208,6 @@ class Event {
             return false
         }
     }
-
 }
 
 module.exports = Event
