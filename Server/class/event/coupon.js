@@ -333,6 +333,26 @@ class Coupon {
         }
     }
 
+    //檢查是否有相符的優惠券
+    async checkCodeAvailableByNothing() {
+        try{
+            var codeResult = await database.sqlConnection(`select * from coupon where code = "${this.code}";`)
+            if (codeResult.length != 0){
+                return true
+            }
+            else{
+                this.errorMessage = "找不到該優惠券"
+                this.state = 500
+                return false
+            }
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
+    }
+
     //查詢用戶的擁有的優惠券裡有無欲使用的這張
     async checkCustomerHaveCoupon() {
         try{
@@ -576,7 +596,7 @@ class Coupon {
     //取得最大數量限制
     async getMaxQuantity() {
         try{
-            var result = await database.sqlConnection(`select maxQuantity from coupon where organizerId = ${this.organizerId} and eventName = "${this.name}" and code = "${this.code}";`)
+            var result = await database.sqlConnection(`select maxQuantity from coupon where code = "${this.code}";`)
             console.log(result)
             if (result.length != 0){
                 this.maxQuantity = result[0]["maxQuantity"]
@@ -596,7 +616,7 @@ class Coupon {
 
     //檢查完畢領取優惠券
     async receiveCoupon() {
-        const sqlInsert = `insert into have(customerId,couponCode,organizerId,eventName,quantity)value(${this.userId},"${this.code}",${this.organizerId},"${this.name}",${this.maxQuantity});`
+        const sqlInsert = `insert into have(customerId,couponCode,quantity)value(${this.userId},"${this.code}",${this.maxQuantity});`
         console.log(sqlInsert)
         try{
             var result = await database.sqlConnection(sqlInsert)

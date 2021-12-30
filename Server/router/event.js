@@ -789,20 +789,8 @@ router.post('/coupon/customer/receive', datatype.verifyToken, async(req,res,next
         }
         res.json(response)
     }
-    coupon.setOrganizerId(req.body.organizerId)
     if (state){
-        result = await coupon.checkNameAvailable()
-    }
-    if (result == false){
-        state = false 
-        let response = {
-            "error":coupon.errorMessage,
-            "state":coupon.state
-        }
-        res.json(response)
-    }
-    if (state){
-        result = await coupon.checkCodeAvailable()
+        result = await coupon.checkCodeAvailableByNothing()
     }
     if (result == false){
         state = false 
