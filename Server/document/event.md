@@ -37,7 +37,7 @@
             3. 找不到該用戶
             4. 活動名不符合限制
             5. 到期日不符合限制
-            6. 網路連線錯誤
+            6. 網路連線失敗
 - 賣家或管理員查詢活動
     - POST
     - [http://localhost:5000/event/search](http://localhost:5000/event/business/search)
@@ -77,7 +77,7 @@
             1. 不是business或admin
             2. 管理員沒有該權限 //authority要為event
             3. 找不到該用戶
-            4. 網路連線錯誤
+            4. 網路連線失敗
 - 賣家或管理員修改活動
     - POST
     - http:localhost:5000/event/update
@@ -115,7 +115,7 @@
             3. 找不到該用戶
             4. 找不到該活動
             5. 到期日不符合限制
-            6. 網路連線錯誤
+            6. 網路連線失敗
 - 賣家或管理員刪除活動
     - POST
     - [http://localhost:5000/event/delete](http://localhost:5000/event/delete/)
@@ -151,7 +151,7 @@
             2. 管理員沒有該權限
             3. 找不到該用戶
             4. 找不到該活動
-            5. 網路連線錯誤
+            5. 網路連線失敗
 - 賣家或管理員新增優惠券
     - POST
     - http://localhost:5000/event/coupon/add
@@ -196,7 +196,7 @@
             6. 折扣不符合限制
             7. 到期日不符合限制
             8. 最大數量不符合限制
-            9. 網路連線錯誤
+            9. 網路連線失敗
 - 賣家或管理員查詢擁有的優惠券
     - POST
     - http://localhost:5000/event/coupon/search
@@ -243,7 +243,7 @@
             2. 管理員沒有該權限
             3. 找不到該用戶
             4. 找不到該活動
-            5. 網路連線錯誤
+            5. 網路連線失敗
 - 賣家或管理員修改優惠券
     - POST
     - http://localhost:5000/event/coupon/update
@@ -285,7 +285,7 @@
             5. 到期日不符合限制
             6. 折扣不符合限制
             7. 最大數量不符合限制
-            8. 網路連線錯誤
+            8. 網路連線失敗
 - 賣家或管理員刪除優惠券
     - POST
     - http://localhost:5000/event/coupon/delete
@@ -319,7 +319,7 @@
             2. 管理員沒有該權限
             3. 找不到該用戶
             4. 找不到該優惠券
-            5. 網路連線錯誤
+            5. 網路連線失敗
 - 買家查詢活動
     - GET
     - [http://localhost:5000/event/all](http://localhost:5000/event/all)
@@ -344,7 +344,7 @@
         ```
         
         - error種類
-            1. 網路連線錯誤
+            1. 網路連線失敗
 - 買家根據活動查詢優惠券
     - POST
     - [http://localhost:5000/event/](http://localhost:5000/event/all)coupon/customer/search
@@ -380,7 +380,7 @@
         
         - error種類
             1. 找不到該活動
-            2. 網路連線錯誤
+            2. 網路連線失敗
 - 買家領取優惠券
     - POST
     - http://localhost:5000/event/coupon/customer/receive
@@ -450,7 +450,7 @@
         
         - error的種類
             1. 找不到該產品
-            2. 網路連線錯誤
+            2. 網路連線失敗
 - 買家查詢擁有的優惠券
     - POST
     - [http://localhost:5000/event/coupon/customer/](http://localhost:5000/event/coupon/use)have
@@ -482,6 +482,9 @@
             "state":500
         }
         ```
+        - error的種類
+            1. 網路連線失敗
+
 - 買家使用優惠券
     - POST
     - [http://localhost:5000/event/coupon/customer/use](http://localhost:5000/event/coupon/customer/use)
@@ -509,4 +512,30 @@
             2. 找不到該優惠券
             3. 未領取該優惠券
             4. 該優惠券已使用完畢
-            5. 網路連線錯誤
+            5. 網路連線失敗
+
+- 買家查詢全站能用的優惠券 not git not done
+    - GET
+    - http://localhost:5000/event/coupon/customer/all
+    - Res
+        
+        ```json
+        [
+            {
+                "code":"SEX69",
+                "discount":0.66,
+                "date":"2021-12-25",
+                "quantity":2
+            }
+        ]
+        ```
+        
+        ```json
+        {
+            "error":"",
+            "state":500
+        }
+        ```
+        
+        - error的種類
+            1. 網路連線失敗

@@ -188,7 +188,34 @@ class Coupon {
             this.state = 500
             return false
         }
+    }
 
+    //搜尋管理員開的所有優惠券
+    async searchCouponByAdmin() {
+        const sql = `select C.code,C.discount,C.date,H.quantity\
+                        from coupon as C \
+                        join event as E on E.name = C.eventName \
+                        join organizer as O on O.organizerId = E.organizerId \
+                        join admin as A on A.organizerId = O.organizerId \
+                        join have as H on H.couponCode = C.code \
+                        where H.customerId = ${this.userId};`
+        console.log(sql)
+        try{
+            var result = await database.sqlConnection(sql)
+            console.log(result)
+            let response = []
+            result.forEach(function(item, index, array) {
+                let coupon = datatype.json2json(item)
+                console.log(coupon)
+                response.push(coupon)
+            });
+            return response
+        }catch(e){
+            console.log(e)
+            this.errorMessage = "網路連線失敗"
+            this.state = 500
+            return false
+        }
     }
 
     //如果type是business則透過此function取得userId

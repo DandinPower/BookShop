@@ -862,6 +862,36 @@ router.post('/coupon/customer/product', async(req,res,next)=>{
     }
 })
 
+router.get('/coupon/customer/all', async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    var result = null
+    if (state){
+        result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.searchCouponByAdmin()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    else{
+        res.json(result)
+    }
+})
+
 router.post('/coupon/customer/have', datatype.verifyToken, async(req,res,next)=>{
     var coupon = new Coupon(req)
     var state = true 
