@@ -4,6 +4,13 @@ import axios from 'axios'
 const OrderInfo = ({checkOrderInfo})=>{
     const [books, setBooks] = useState(checkOrderInfo);
     const [price, setPrice] = useState();
+    //取得商家名稱
+    var businessNames = [];
+    books.forEach(book => {
+        if(businessNames.find(e => e === book.businessName) === undefined){
+            businessNames.push(book.businessName)
+        }
+    })
 
     function deleteBook (BID){
         setBooks(function (prev){
@@ -84,19 +91,35 @@ const OrderInfo = ({checkOrderInfo})=>{
           })
     }
 
-    const listBooks = books.map((data)=>{
-        return (
+    const FilterNameBooks = businessNames.map((businessName)=>{
+       return books.filter(book => book.businessName === businessName)
+    })
+    
+    const ListBooks = (books)=>{
+        return(books.map((data)=>{
+            return(<div>
+                <div>商品id: {data.productId}</div>
+                <div>產品名稱: {data.name}</div>
+                <div>產品數量: <input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></div>
+                <div>產品總價格: {data.price * parseInt(data.quantity)}</div>
+                <div><button onClick={e => deleteBook(data.productId)}>刪除</button></div>
+                <br/>
+              </div>)
+        }))
+    }
+
+    const ListBooksByBusinessName = FilterNameBooks.map((books)=>{
+        return(
             <div>
-              <div>商品id: {data.productId}</div>
-              <div>產品名稱: {data.name}</div>
-              <div>產品數量: <input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></div>
-              <div>產品總價格: {data.price * parseInt(data.quantity)}</div>
-              <div><button onClick={e => deleteBook(data.productId)}>刪除</button></div>
+                <div>商店名稱: {books[0].businessName}</div>
+                {ListBooks(books)}
+                <br/>
             </div>
         )
     })
+
     return(<div>
-            <div>{listBooks}</div>
+            <div>{ListBooksByBusinessName}</div>
             <div>付款方式</div>
             <div>配送地址</div>
             <div>產品總價格:{price}</div>
@@ -104,3 +127,16 @@ const OrderInfo = ({checkOrderInfo})=>{
            </div>)
 }
 export default OrderInfo
+/*
+const listBooks = books.map((data)=>{
+    return (
+        <div>
+          <div>商品id: {data.productId}</div>
+          <div>產品名稱: {data.name}</div>
+          <div>產品數量: <input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></div>
+          <div>產品總價格: {data.price * parseInt(data.quantity)}</div>
+          <div><button onClick={e => deleteBook(data.productId)}>刪除</button></div>
+        </div>
+    )
+})
+*/
