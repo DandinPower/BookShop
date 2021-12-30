@@ -582,17 +582,6 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkNameAvailable()
-    }
-    if (result == false){
-        state = false 
-        let response = {
-            "error":coupon.errorMessage,
-            "state":coupon.state
-        }
-        res.json(response)
-    }
-    if (state){
         result = await coupon.searchCoupon()
     }
     if (result == false){

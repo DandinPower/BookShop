@@ -206,8 +206,7 @@
         {
             "type":"admin",   //只能為admin或business
             "userName":"business1",
-            "token":"213131sdadsD",
-            "name":"全站88"
+            "token":"213131sdadsD"
         }
         ```
         
@@ -219,13 +218,15 @@
                 "code":"32DE",
                 "date":"2021-12-25",
                 "discount":0.88,
-                "maxQuantity":2
+                "maxQuantity":2,
+                "name":"全站88"
             },
             {
                 "code":"32DEA",
                 "date":"2021-12-25",
                 "discount":0.88,
-                "maxQuantity":1
+                "maxQuantity":1,
+                "name":"全站88"
             }
         ]
         ```
