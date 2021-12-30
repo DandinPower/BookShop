@@ -331,7 +331,6 @@
                 "organizerId":1,
                 "organizerName":"busin123",     //businessName或者是"管理員"
                 "name":"全網88",
-                "discount":0.88,
                 "date":"2021-12-25"
             }
         ]

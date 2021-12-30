@@ -186,7 +186,7 @@ class Event {
 
     //查詢所有活動
     async getAllEvent() {
-        const sqlSearch = `select E.organizerId,A.name as organizerName,E.name,E.discount,E.date from event as E join organizer as O on E.organizerId = O.organizerId left join business as B on B.organizerId = O.organizerId left join account as A on A.id = B.id;`
+        const sqlSearch = `select E.organizerId,A.name as organizerName,E.name,E.date from event as E join organizer as O on E.organizerId = O.organizerId left join business as B on B.organizerId = O.organizerId left join account as A on A.id = B.id;`
         console.log(sqlSearch)
         try{
             var result = await database.sqlConnection(sqlSearch)
