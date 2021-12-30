@@ -393,7 +393,7 @@ class Coupon {
 
     //搜尋所有買家有的優惠券
     async searchAllCustomerHave(){
-        const sqlSearch = `select C.organizerId,C.eventName as name,C.code,C.discount,C.date,H.quantity from coupon as C join have as H on C.code = H.couponCode and C.eventName = H.eventName and C.organizerId = H.organizerId where H.customerId = ${this.userId};`
+        const sqlSearch = `select C.code,C.discount,C.date,H.quantity from coupon as C join have as H on C.code = H.couponCode where H.customerId = ${this.userId};`
         console.log(sqlSearch)
         try{
             var result = await database.sqlConnection(sqlSearch)

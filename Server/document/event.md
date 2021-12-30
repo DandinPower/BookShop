@@ -459,11 +459,10 @@
         ```json
         [
             {
-                "organizerId":1,
-                "name":"全站69",
                 "code":"SEX69",
                 "discount":0.66,
-                "date":"2021-12-25"
+                "date":"2021-12-25",
+                "quantity":2
             }
         ]
         ```
