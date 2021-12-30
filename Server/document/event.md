@@ -11,7 +11,6 @@
             "userName":"hsfdhuhuhuhd", 
             "token":"123uihdhwauh213y72h23u1hh388h2`hu12`",
             "name":"88折",    //同一個廠商或管理員不能重複,不能空白
-            "discount":0.88,    //不能為0,<=1
             "date":"2021-12-25"   //不能小於現在
         }
         ```
@@ -37,9 +36,8 @@
             2. 管理員沒有該權限 //authority要為event
             3. 找不到該用戶
             4. 活動名不符合限制
-            5. 折扣不符合限制
-            6. 到期日不符合限制
-            7. 網路連線錯誤
+            5. 到期日不符合限制
+            6. 網路連線錯誤
 - 賣家或管理員查詢活動
     - POST
     - [http://localhost:5000/event/search](http://localhost:5000/event/business/search)

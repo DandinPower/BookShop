@@ -11,7 +11,6 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     var type = req.body.type 
     var userName = req.body.userName
     var name = req.body.name
-    var discount = req.body.discount
     var date = req.body.date
     var _date = new Date(date) 
     var currentDate = Date.now()
@@ -27,11 +26,6 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     }
     if (name == ''){
         response["error"] = "活動名不符合限制"
-        response["state"] = 500
-        state = false
-    }
-    if (discount <= 0 | discount > 1){
-        response["error"] = "折扣不符合限制"
         response["state"] = 500
         state = false
     }
@@ -80,7 +74,7 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
                 console.log(organizerId)
                 if (organizerId != null){
                     try{
-                        var insertResult = await database.sqlConnection(`insert into event(organizerId,name,discount,date)value(${organizerId},"${name}",${discount},"${date}");`)
+                        var insertResult = await database.sqlConnection(`insert into event(organizerId,name,date)value(${organizerId},"${name}","${date}");`)
                         console.log(insertResult)
                         response["state"] = 200
                     }catch(e){
