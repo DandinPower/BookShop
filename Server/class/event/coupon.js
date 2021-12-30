@@ -428,7 +428,7 @@ class Coupon {
 
     //檢查完畢後新增優惠券
     async addNewCoupon() {
-        const sqlInsert = `insert into coupon(code,eventName,organizerId,date,discount,maxQuantity)value("${this.code}","${this.name}",${this.organizerId},"${this.date}",${this.discount},${this.maxQuantity});`       
+        const sqlInsert = `insert into coupon(code,eventName,date,discount,maxQuantity)value("${this.code}","${this.name}","${this.date}",${this.discount},${this.maxQuantity});`       
         console.log(sqlInsert)
         try{
             var result = await database.sqlConnection(sqlInsert)
@@ -438,7 +438,7 @@ class Coupon {
             return true
         }catch(e){
             console.log(e)
-            this.errorMessage = "活動名不符合限制"
+            this.errorMessage = "優惠碼重複"
             this.state = 500
             return false
         }
