@@ -652,7 +652,6 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
         result = await coupon.checkNameAvailable()
     }
     if (result == false){
-        state = false
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state
