@@ -56,13 +56,11 @@
             {
                 "organizerId":1,
                 "name":"全站88折",
-                "discount":0.88,
                 "date":"2021-12-25"
             },
             {
                 "organizerId":3,
                 "name":"全站98折",
-                "discount":0.88,
                 "date":"2021-12-25"
             }
         ]
