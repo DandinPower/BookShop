@@ -352,8 +352,7 @@
         
         ```json
         
-        {
-            "organizerId":1,		
+        {		
             "name":"全站88"
         }
         ```
@@ -363,7 +362,6 @@
         ```json
         [
             {
-                "organizerId":1,
                 "code":"HAPPY68",
                 "name":"全網88",    //活動名稱
                 "discount":0.88,
