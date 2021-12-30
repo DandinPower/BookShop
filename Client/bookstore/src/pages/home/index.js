@@ -20,6 +20,7 @@ import ManageAccountCenter from "../member/components/admin/manageAccountCenter"
 import ManageBusinessAccount from "../member/components/admin/manageBusinessAccount";
 import ManageCustomerAccount from "../member/components/admin/manageCustomerAccount";
 import ManageAccount from "../member/components/admin/manageAccount";
+import EventCenter from "../member/components/event/eventCenter";
 import React, {useState} from 'react';
 
 const Home = () => {
@@ -45,6 +46,7 @@ const Home = () => {
             <Route path="/member/admin/manageBusiness" element={<ManageBusinessAccount setAccountInfo={setAccountInfo}/>}/>
             <Route path="/member/admin/manageCustomer" element={<ManageCustomerAccount setAccountInfo={setAccountInfo}/>}/>
             <Route path="/member/admin/manageAccount" element={<ManageAccount accountInfo={accountInfo}/>}/>
+            <Route path="/member/event/center" element={<EventCenter/>}/>
             <Route path="/member/register" element={<Register/>}/>
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>
