@@ -4,31 +4,12 @@ import axios from 'axios'
 const OrderInfo = ({checkOrderInfo})=>{
     const [books, setBooks] = useState(checkOrderInfo);
     const [price, setPrice] = useState();
-    const [fullSiteCoupon, setFullSiteCoupon] = useState(['']);
     //取得商家名稱
     var businessNames = [];
     books.forEach(book => {
         if(businessNames.find(e => e === book.businessName) === undefined){
             businessNames.push(book.businessName)
         }
-    })
-
-    useEffect(()=>{
-        axios({
-            method: 'GET',
-            url: 'http://localhost:5000/event/coupon/customer/all'
-          }).then((response) => {
-            if(response.data.state !== 500){
-                setFullSiteCoupon(response.data)
-            }
-            else{
-                alert(response.data.error)
-              }
-          })
-    },[])
-    
-    const ListFullSiteCoupon = fullSiteCoupon.map((coupon)=>{
-        return(<option value={coupon.discount}>{coupon.code}</option>);
     })
 
     function deleteBook (BID){
@@ -131,22 +112,14 @@ const OrderInfo = ({checkOrderInfo})=>{
         return(
             <div>
                 <div>商店名稱: {books[0].businessName}</div>
-                <label>優惠碼: </label>
-                <select>
-                    <option value=''>不使用</option>
-                </select>
                 {ListBooks(books)}
+                <br/>
             </div>
         )
     })
 
     return(<div>
             <div>{ListBooksByBusinessName}</div>
-            <label>全站優惠碼: </label>
-            <select>
-                <option value=''>不使用</option>
-                {ListFullSiteCoupon}
-            </select>
             <div>付款方式</div>
             <div>配送地址</div>
             <div>產品總價格:{price}</div>
