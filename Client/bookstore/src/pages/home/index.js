@@ -25,6 +25,11 @@ import ManageEvent from "../member/components/event/manageEvent";
 import AddEvent from "../member/components/event/addEvent";
 import UpdateEvent from "../member/components/event/updateEvent";
 import ManageCoupon from "../member/components/event/coupon/manageCoupon";
+import AddCoupon from "../member/components/event/coupon/addCoupon";
+import UpdateCoupon from "../member/components/event/coupon/updateCoupon";
+import ViewEvent from "../member/components/event/viewEvent";
+import ViewCoupon from "../member/components/event/coupon/viewCoupon";
+import ViewMyCoupon from "../member/components/event/coupon/viewMyCoupon";
 import React, {useState} from 'react';
 
 const Home = () => {
@@ -35,6 +40,8 @@ const Home = () => {
     const [checkOrderInfo,setCheckOrderInfo] = useState(['']);
     const [accountInfo,setAccountInfo] = useState(['']);
     const [eventInfo,setEventInfo] = useState(['']);
+    const [couponInfo,setCouponInfo] = useState(['']);
+    const [eventName,setEventName] = useState('');
     return (
         <BrowserRouter>
         <div>
@@ -55,7 +62,12 @@ const Home = () => {
             <Route path="/member/event/manageEvent" element={<ManageEvent setEventInfo={setEventInfo}/>}/>
             <Route path="/member/event/updateEvent" element={<UpdateEvent eventInfo={eventInfo}/>}/>
             <Route path="/member/event/AddEvent" element={<AddEvent/>}/>
-            <Route path="/member/event/manageCoupon" element={<ManageCoupon/>}/>
+            <Route path="/member/event/manageCoupon" element={<ManageCoupon setCouponInfo={setCouponInfo}/>}/>
+            <Route path="/member/event/addCoupon" element={<AddCoupon eventInfo={eventInfo}/>}/>
+            <Route path="/member/event/updateCoupon" element={<UpdateCoupon couponInfo={couponInfo}/>}/>
+            <Route path="/member/event/viewEvent" element={<ViewEvent setEventName={setEventName}/>}/>
+            <Route path="/member/event/ViewCoupon" element={<ViewCoupon eventName={eventName}/>}/>
+            <Route path="/member/event/ViewMyCoupon" element={<ViewMyCoupon/>}/>
             <Route path="/member/register" element={<Register/>}/>
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>

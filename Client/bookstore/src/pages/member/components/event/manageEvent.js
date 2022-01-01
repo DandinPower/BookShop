@@ -18,6 +18,7 @@ const ManageEvent = ({setEventInfo})=>{
           }).then((response) => {
             if(response.data.state !== 500){
                 setEvents(response.data)
+                console.log(response.data);
             }
             else{
                 alert(response.data.error)
@@ -54,7 +55,7 @@ const ManageEvent = ({setEventInfo})=>{
              <div>活動到期日: {event.date}</div>
              <Link to = '/member/event/updateEvent'><button onClick={e => setEventInfo(event)}>修改活動</button></Link>
              <button onClick={e => deleteEvent(event.name)}>刪除活動</button>
-             <Link to = ''><button>新增優惠券</button></Link>
+             <Link to = '/member/event/addCoupon'><button onClick={e => setEventInfo(event)}>新增優惠券</button></Link>
              <br/>
              </div>)
   })
