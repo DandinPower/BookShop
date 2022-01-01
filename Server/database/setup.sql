@@ -35,7 +35,6 @@ create table admin (
 
 create table account ( 
 	id int primary key auto_increment,
-	adminId int,
 	address varchar(50) not null,
 	gender char(1) not null,
 	rating int default 0,
@@ -44,8 +43,7 @@ create table account (
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
 	name varchar(20) not null,
-    enable char(1) not null default "1",
-    foreign key (adminId)references admin(id)on delete set null
+    enable char(1) not null default "1"
 );
 
 create table customer (

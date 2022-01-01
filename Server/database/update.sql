@@ -71,3 +71,5 @@ values
 (3,"HAPPY69",3);
 
 alter table product drop column image;
+alter table account drop foreign key account_ibfk_1;
+alter table account drop column adminId;
