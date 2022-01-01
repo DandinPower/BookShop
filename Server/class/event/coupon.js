@@ -181,7 +181,12 @@ class Coupon {
                 console.log(coupon)
                 response.push(coupon)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"
@@ -209,7 +214,12 @@ class Coupon {
                 console.log(coupon)
                 response.push(coupon)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"
@@ -557,7 +567,12 @@ class Coupon {
                 console.log(coupon)
                 response.push(coupon)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"

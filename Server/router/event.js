@@ -435,6 +435,9 @@ router.get('/all', async(req,res,next)=>{
             }
             res.json(response)
         }
+        else if (result == true){
+            res.json(new Array())
+        }
         else{
             res.json(result)
         }
@@ -584,6 +587,7 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
     }
     if (state){
         result = await coupon.searchCoupon()
+        console.log(result)
     }
     if (result == false){
         let response = {
@@ -591,6 +595,9 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
             "state":coupon.state
         }
         res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
     }
     else{
         res.json(result)
@@ -857,6 +864,9 @@ router.post('/coupon/customer/product', async(req,res,next)=>{
         }
         res.json(response)
     }
+    else if (result == true){
+        res.json(new Array())
+    }
     else{
         res.json(result)
     }
@@ -887,6 +897,9 @@ router.get('/coupon/customer/all', async(req,res,next)=>{
         }
         res.json(response)
     }
+    else if (result == true){
+        res.json(new Array())
+    }
     else{
         res.json(result)
     }
@@ -916,6 +929,9 @@ router.post('/coupon/customer/have', datatype.verifyToken, async(req,res,next)=>
             "state":coupon.state
         }
         res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
     }
     else{
         res.json(result)

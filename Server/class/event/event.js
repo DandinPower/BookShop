@@ -200,7 +200,12 @@ class Event {
                 console.log(event)
                 response.push(event)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"

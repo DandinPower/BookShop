@@ -514,7 +514,7 @@
             4. 該優惠券已使用完畢
             5. 網路連線失敗
 
-- 買家查詢全站能用的優惠券 not git not done
+- 買家查詢全站能用的優惠券
     - GET
     - http://localhost:5000/event/coupon/customer/all
     - Res
