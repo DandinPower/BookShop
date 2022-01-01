@@ -872,7 +872,7 @@ router.post('/coupon/customer/product', async(req,res,next)=>{
     }
 })
 
-router.get('/coupon/customer/all', async(req,res,next)=>{
+router.post('/coupon/customer/all', async(req,res,next)=>{
     var coupon = new Coupon(req)
     var state = true 
     var result = null

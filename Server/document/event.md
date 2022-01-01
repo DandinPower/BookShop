@@ -515,8 +515,16 @@
             5. 網路連線失敗
 
 - 買家查詢全站能用的優惠券
-    - GET
+    - POST
     - http://localhost:5000/event/coupon/customer/all
+    - Req
+        
+        ```json
+        {
+            "userName":"customer1",
+            "userPassword":"123"
+        }
+        ```
     - Res
         
         ```json
