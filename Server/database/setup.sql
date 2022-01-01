@@ -81,7 +81,6 @@ create table product (
     status char(1) not null,
     category varchar(20) not null,
     rating int default 0,
-    image varchar(100),
     uploadedDate datetime not null,
     foreign key(businessId)references business(id)on delete cascade
 );
@@ -136,5 +135,3 @@ create table image_list (
     foreign key(productId)references product(no)on delete set null,
     foreign key(businessId)references business(id)on delete set null
 );
-
-select * from product;

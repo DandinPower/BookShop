@@ -69,3 +69,5 @@ values
 (1,"XMAS88",2),
 (2,"STUDY77",2),
 (3,"HAPPY69",3);
+
+alter table product drop column image;
