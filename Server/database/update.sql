@@ -73,3 +73,5 @@ values
 alter table product drop column image;
 alter table account drop foreign key account_ibfk_1;
 alter table account drop column adminId;
+
+alter table orders add column discount double;

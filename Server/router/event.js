@@ -169,6 +169,7 @@ router.post('/search', datatype.verifyToken, async(req,res,next)=>{
         if (organizerId != null){
             try{
                 var result = await database.sqlConnection(`select * from event where organizerId = ${organizerId}`)
+                console.log(result)
                 var response = []
                 result.forEach(function(item, index, array) {
                     let event = datatype.json2json(item)
