@@ -88,7 +88,7 @@ create table orders (
      customerId int,
      orderDate datetime not null,
      arrivalDate datetime,
-     discount double,
+     discount double default 1 not null,
      quantity int not null,
      status varchar(20) not null default "未出貨",
      foreign key (customerId) references account(id) on delete cascade
