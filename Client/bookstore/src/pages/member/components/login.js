@@ -22,6 +22,7 @@ const Login = () => {
                 window.sessionStorage.setItem('userName',response.data.userName)
                 window.sessionStorage.setItem('token',response.data.token)
                 window.sessionStorage.setItem('type',response.data.type)
+                window.sessionStorage.setItem('password',password)
                 window.location.href = `${window.location.origin}`
                 alert('登入成功')
             }

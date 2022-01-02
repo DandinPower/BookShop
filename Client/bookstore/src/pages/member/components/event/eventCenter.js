@@ -6,14 +6,17 @@ const EventCenter = () =>{
     const DecideView = (AccountUserType,AccountAuthority)=>{
         if(AccountUserType ==='customer'){
             return(<div>
-                   <div>我是顧客</div>
-                   <Link to=''>查看目前活動</Link>
+                   <h1>顧客活動中心</h1>
+                   <Link to='/member/event/viewEvent'>查看目前活動</Link>
+                   <br/>
+                   <Link to='/member/event/ViewMyCoupon'>查看我的優惠券</Link>
+                   <br/>
                    </div>
         )}
         else if(AccountUserType ==='business' || AccountAuthority === 'all' || AccountAuthority === 'event'){
             console.log(1);
             return(<div>
-                   <div>我是商家或是管理員</div>
+                   <h1>管理活動中心</h1>
                    <Link to='/member/event/manageEvent'>查看目前活動</Link>
                    <br/>
                    <Link to='/member/event/manageCoupon'>查看目前優惠券</Link>
