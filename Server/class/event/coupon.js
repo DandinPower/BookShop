@@ -164,7 +164,7 @@ class Coupon {
 
     //根據參數查找符合的優惠券
     async searchCouponByProductId() {
-        const sql = `select C.code,C.discount,C.date,H.quantity\
+        const sql = `select C.code,C.discount,C.date,H.quantity,C.description\
                         from coupon as C \
                         join event as E on E.name = C.eventName \
                         join organizer as O on O.organizerId = E.organizerId \

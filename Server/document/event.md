@@ -389,7 +389,8 @@
         "code": "SEX69",
         "discount": 0.66,
         "date": "2021-12-25",
-        "quantity": 2
+        "quantity": 2,
+        "description": "2132131ssdasda"
       }
     ]
     ```
