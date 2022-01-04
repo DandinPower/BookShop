@@ -17,6 +17,8 @@ class Coupon {
         this._date = new Date(this.date)
         this.discount = req.body.discount 
         this.maxQuantity = req.body.maxQuantity
+        this.description = null
+        this.description = req.body.description
         this.initialize()
     }
     /*
@@ -539,7 +541,7 @@ class Coupon {
 
     //檢查完畢後新增優惠券
     async addNewCoupon() {
-        const sqlInsert = `insert into coupon(code,eventName,date,discount,maxQuantity)value("${this.code}","${this.name}","${this.date}",${this.discount},${this.maxQuantity});`       
+        const sqlInsert = `insert into coupon(code,eventName,date,discount,maxQuantity,description)value("${this.code}","${this.name}","${this.date}",${this.discount},${this.maxQuantity},"${this.description}");`       
         console.log(sqlInsert)
         try{
             var result = await database.sqlConnection(sqlInsert)
