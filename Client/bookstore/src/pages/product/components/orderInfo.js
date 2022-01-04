@@ -1,5 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import axios from 'axios'
+import {Container,Table, Form, Col, Row, Button} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';   
+
 
 const OrderInfo = ({checkOrderInfo})=>{
     const [books, setBooks] = useState(checkOrderInfo);
@@ -75,9 +78,9 @@ const OrderInfo = ({checkOrderInfo})=>{
         return(couponById.map((coupon)=>{
            return(coupon.data.map((couponInfo)=>{
             return(
-            <label>{couponInfo.code}
-            <input type='radio' disabled={coupon.quantity !== 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
-            </input></label>)
+              <label>{couponInfo.code}
+              <input type='radio' disabled={coupon.quantity !== 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
+              </input></label>)
            }))
         }))
     }
@@ -241,6 +244,7 @@ const OrderInfo = ({checkOrderInfo})=>{
         
     }
     
+
     const ListBooks = (books)=>{
         return(books.map((data)=>{
             let Coupon = useCoupons.find(e=>e.businessName === data.businessName)
@@ -250,39 +254,49 @@ const OrderInfo = ({checkOrderInfo})=>{
             }
             catch(error){
             }
-            return(<div>
-                <div>商品id: {data.productId}</div>
-                <div>產品名稱: {data.name}</div>
-                <div>產品數量: <input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></div>
-                <div>產品總價格: {data.price * parseInt(data.quantity)*(discount)}</div>
-                <div><button onClick={e => deleteBook(data.productId)}>刪除</button></div>
-                <br/>
-              </div>)
+            return(
+              <Row>
+
+                
+                <Col className="w-20"></Col>
+                <Col className="w-20">{data.name}</Col>
+                <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
+                <Col>{data.price * parseInt(data.quantity)*(discount)}</Col>
+                <Col><Button variant="outline-danger" onClick={e => deleteBook(data.productId)}>Delete</Button></Col>  
+              </Row>              
+                )
         }))
     }
 
     const ListBooksByBusinessName = FilterNameBooks.map((books)=>{  
-        return(
-            <div>
-                <div>商店名稱: {books[0].businessName}</div>
-                <label>優惠碼: </label>
-                <label>不使用<input type='radio' value={1} name={books[0].productId} onClick={e=> UseCoupon(books[0].productId,'',e.target.value)}></input></label>
-                {ListCoupon(books[0].productId)}
-                {ListBooks(books)}
-            </div>
-        )
+      return(
+        <Container bordered>
+          <br size="lg"/>
+          <br size="lg"/>
+          {ListBooks(books)}
+          <Row className="bg-dark p-2 text-dark bg-opacity-10">
+            
+            <Col className="w-20">商店名稱: {books[0].businessName}</Col>
+            <Col className="w-20">優惠碼: {ListCoupon(books[0].productId)}</Col>
+            <Col className="w-20">不使用<input type='radio' value={1} name={books[0].productId} onClick={e=> UseCoupon(books[0].productId,'',e.target.value)}></input></Col>
+            
+          </Row>
+          <hr></hr>
+          
+        </Container>
+        
+      )
     })
 
-    return(<div>
-            <div>{ListBooksByBusinessName}</div>
-            <label>全站優惠碼: </label>
-            <label>不使用<input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input></label>
-            {ListFullSiteCoupon}
-            <div>付款方式</div>
-            <div>配送地址</div>
-            <div>產品總價格:{price}</div>
-            <div><button onClick={OrderBooks}>下訂</button></div>
-           </div>)
+    
+    return(
+    <Container>
+      <hr/>
+   
+      {ListBooksByBusinessName}
+        
+
+    </Container>)
 }
 export default OrderInfo
 /*
@@ -297,4 +311,23 @@ const listBooks = books.map((data)=>{
         </div>
     )
 })
+
+<div>
+                    <div>商品id: {data.productId}</div>
+                    <div>產品名稱: {data.name}</div>
+                    <div>產品數量: <input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></div>
+                    <div>產品總價格: {data.price * parseInt(data.quantity)*(discount)}</div>
+                    <div><button onClick={e => deleteBook(data.productId)}>刪除</button></div>
+                    <br/>
+                </div>
 */
+/*<Container>
+            <div>{ListBooksByBusinessName}</div>
+            <label>全站優惠碼: </label>
+            <input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input><label>不使用</label>
+            {ListFullSiteCoupon}
+            <div>付款方式</div>
+            <div>配送地址</div>
+            <div>產品總價格:{price}</div>
+            <div><button onClick={OrderBooks}>下訂</button></div>
+           </Container> */

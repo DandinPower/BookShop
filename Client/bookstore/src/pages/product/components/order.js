@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
-import {Container, Col, Table, Button, ButtonGroup} from 'react-bootstrap'; 
+import {Container, Table, Button, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const Order =({setClientOrderInfo})=>{
