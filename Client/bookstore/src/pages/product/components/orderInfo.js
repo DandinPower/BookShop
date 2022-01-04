@@ -305,21 +305,18 @@ const listBooks = books.map((data)=>{
 })
 
 <div>
-                    <div>商品id: {data.productId}</div>
-                    <div>產品名稱: {data.name}</div>
-                    <div>產品數量: <input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></div>
-                    <div>產品總價格: {data.price * parseInt(data.quantity)*(discount)}</div>
-                    <div><button onClick={e => deleteBook(data.productId)}>刪除</button></div>
-                    <br/>
-                </div>
+                <div>商店名稱: {books[0].businessName}</div>
+                <label>優惠碼: </label>
+                <label>不使用<input type='radio' value={1} name={books[0].productId} onClick={e=> UseCoupon(books[0].productId,'',e.target.value)}></input></label>
+                {ListCoupon(books[0].productId)}
+                <label>不使用<input type='radio' value={1} name={books[0].businessName} onClick={e=> UseCoupon(books[0].businessName,'',e.target.value)}></input></label>
+                {ListCoupon(books[0].businessName)}
+                {ListBooks(books)}
+            </div>
 */
-/*<Container>
+/*<div>
+            <h1>優惠券使用說明:要先領取該商家的優惠券才能夠使用</h1>
             <div>{ListBooksByBusinessName}</div>
             <label>全站優惠碼: </label>
-            <input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input><label>不使用</label>
-            {ListFullSiteCoupon}
-            <div>付款方式</div>
-            <div>配送地址</div>
-            <div>產品總價格:{price}</div>
-            <div><button onClick={OrderBooks}>下訂</button></div>
-           </Container> */
+            <label>不使用<input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input></label>
+ */
