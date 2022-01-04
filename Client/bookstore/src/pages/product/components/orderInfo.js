@@ -23,7 +23,7 @@ const OrderInfo = ({checkOrderInfo})=>{
         return books.filter(book => book.businessName === businessName)
      })
 
-     const getCoupons =(id)=>{
+     const getCoupons =(id,bname)=>{
         axios({
             method: 'POST',
             url: 'http://localhost:5000/event/coupon/customer/product',
@@ -37,10 +37,10 @@ const OrderInfo = ({checkOrderInfo})=>{
                 let newarray = 
                 {
                     'data':response.data,
-                    'productId':id
+                    'businessName':bname
                 }
                 setCoupons(prevArray => [newarray, ...prevArray])
-                UseCoupon(id,'',1)
+                UseCoupon(bname,'',1)
             }
             else{
                 alert(response.data.error)
@@ -65,51 +65,49 @@ const OrderInfo = ({checkOrderInfo})=>{
               }
           })
         FilterNameBooks.forEach(book => {
-            getCoupons(book[0].productId)
+            getCoupons(book[0].productId,book[0].businessName)
         })
         UseCoupon(-1,'',1)
     },[])
 
     console.log(coupons);
     
-    const ListCoupon =(id)=>{
-        let couponById = coupons.filter(coupon => coupon.productId === id);
+    const ListCoupon =(bname)=>{
+        let couponById = coupons.filter(coupon => coupon.businessName === bname);
         
         return(couponById.map((coupon)=>{
            return(coupon.data.map((couponInfo)=>{
             return(
-              <label>{couponInfo.code}
-              <input type='radio' disabled={coupon.quantity !== 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
-              </input></label>)
+            <label>{couponInfo.code}
+            <input type='radio' disabled={coupon.quantity === 0} value={couponInfo.discount} name={bname} id={couponInfo.code} onClick={e=> UseCoupon(bname,e.target.id,e.target.value)}>
+            </input></label>)
            }))
         }))
     }
 
-    const UseCoupon =(id,code,discount)=>{
-        if(id === -1){
+    const UseCoupon =(bname,code,discount)=>{
+        if(bname === -1){
             let newArray =
             {
-            'id':id,
             "businessName":'admin',
             'code':code,
             'discount':discount,
             }
-            if(useCoupons.find(e => e.id === id) !== undefined){
-                setUseCoupons(prevArray => prevArray.filter(e => e.id !== id))
+            if(useCoupons.find(e => e.businessName === bname) !== undefined){
+                setUseCoupons(prevArray => prevArray.filter(e => e.businessName !== bname))
             }
             setUseCoupons(prevArray => [newArray, ...prevArray])
         }
         else{
-            let book = books.find(e=>e.productId ===id)
+            let book = books.find(e=>e.businessName ===bname)
             let newArray =
             {
-                'id':id,
                 "businessName":book.businessName,
                 'code':code,
                 'discount':discount,
             }
-            if(useCoupons.find(e => e.id === id) !== undefined){
-                setUseCoupons(prevArray => prevArray.filter(e => e.id !== id))
+            if(useCoupons.find(e => e.businessName === bname) !== undefined){
+                setUseCoupons(prevArray => prevArray.filter(e => e.businessName !== bname))
             }
             setUseCoupons(prevArray => [newArray, ...prevArray])
         }
@@ -125,14 +123,17 @@ const OrderInfo = ({checkOrderInfo})=>{
                 sum += book.price * parseInt(book.quantity) * parseFloat(Coupon.discount)* parseFloat(FullSiteCoupon.discount);
                 setPrice(sum)
             }catch (error) {
+            }
+        })
+        if(books.length === 0){
+            setPrice(0)
         }
-    })
     },[books,useCoupons])
     
    
     const ListFullSiteCoupon = fullSiteCoupon.map((coupon)=>{
         return(<label>{coupon.code}
-            <input type='radio' value={coupon.discount} name={-1} id={coupon.code} onClick={e=> UseCoupon(-1,e.target.id,e.target.value)}></input></label>)
+            <input type='radio' disabled={coupon.quantity === 0} value={coupon.discount} name={-1} id={coupon.code} onClick={e=> UseCoupon(-1,e.target.id,e.target.value)}></input></label>)
     })
 
     function deleteBook (BID){
@@ -256,8 +257,6 @@ const OrderInfo = ({checkOrderInfo})=>{
             }
             return(
               <Row>
-
-                
                 <Col className="w-20"></Col>
                 <Col className="w-20">{data.name}</Col>
                 <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
@@ -269,33 +268,26 @@ const OrderInfo = ({checkOrderInfo})=>{
     }
 
     const ListBooksByBusinessName = FilterNameBooks.map((books)=>{  
-      return(
-        <Container bordered>
-          <br size="lg"/>
-          <br size="lg"/>
-          {ListBooks(books)}
-          <Row className="bg-dark p-2 text-dark bg-opacity-10">
-            
+        return(
+          <Container bordered>
+            <br size="lg"/>
+            <br size="lg"/>
+            {ListBooks(books)}
+            <Row className="bg-dark p-2 text-dark bg-opacity-10">  
             <Col className="w-20">商店名稱: {books[0].businessName}</Col>
-            <Col className="w-20">優惠碼: {ListCoupon(books[0].productId)}</Col>
-            <Col className="w-20">不使用<input type='radio' value={1} name={books[0].productId} onClick={e=> UseCoupon(books[0].productId,'',e.target.value)}></input></Col>
-            
-          </Row>
-          <hr></hr>
+            <Col className="w-20">優惠碼: {ListCoupon(books[0].businessName)}</Col>
+            <Col className="w-20">不使用<input type='radio' value={1} name={books[0].businessName} onClick={e=> UseCoupon(books[0].businessName,'',e.target.value)}></input></Col>
+            </Row>
+            <hr></hr>
           
-        </Container>
-        
-      )
+          </Container>
+        )
     })
 
-    
     return(
     <Container>
-      <hr/>
-   
+      <hr/>  
       {ListBooksByBusinessName}
-        
-
     </Container>)
 }
 export default OrderInfo
