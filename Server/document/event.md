@@ -230,7 +230,8 @@
       "code": "32DE", //不得修改僅拿來尋找該優惠券
       "date": "2021-12-25", //不得早於現在或晚於活動到期日
       "discount": 0.88, //0<discount<=1
-      "maxQuantity": 3 //不得為0
+      "maxQuantity": 3, //不得為0
+      "description": "12313123123"
     }
     ```
   - Res

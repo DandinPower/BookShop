@@ -586,7 +586,7 @@ class Coupon {
 
     //檢查完後更新優惠券
     async updateCoupon() {
-        const sqlUpdate = `update coupon set date = "${this.date}",discount = "${this.discount}",maxQuantity = ${this.maxQuantity} where code = "${this.code}";`
+        const sqlUpdate = `update coupon set date = "${this.date}",discount = "${this.discount}",maxQuantity = ${this.maxQuantity},description = "${this.description}" where code = "${this.code}";`
         console.log(sqlUpdate)
         try{
             var result = await database.sqlConnection(sqlUpdate)
