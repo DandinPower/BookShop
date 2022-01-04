@@ -271,13 +271,15 @@ const OrderInfo = ({checkOrderInfo})=>{
         return(
           <Container bordered>
             <br size="lg"/>
-            <br size="lg"/>
+            
             {ListBooks(books)}
+            <br size="lg"/>
             <Row className="bg-dark p-2 text-dark bg-opacity-10">  
             <Col className="w-20">商店名稱: {books[0].businessName}</Col>
             <Col className="w-20">優惠碼: {ListCoupon(books[0].businessName)}</Col>
             <Col className="w-20">不使用<input type='radio' value={1} name={books[0].businessName} onClick={e=> UseCoupon(books[0].businessName,'',e.target.value)}></input></Col>
             </Row>
+            <br size="lg"/>
             <hr></hr>
           
           </Container>
