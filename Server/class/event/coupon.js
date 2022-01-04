@@ -200,7 +200,7 @@ class Coupon {
 
     //搜尋管理員開的所有優惠券
     async searchCouponByAdmin() {
-        const sql = `select C.code,C.discount,C.date,H.quantity\
+        const sql = `select C.code,C.discount,C.date,H.quantity,C.description\
                         from coupon as C \
                         join event as E on E.name = C.eventName \
                         join organizer as O on O.organizerId = E.organizerId \
@@ -431,7 +431,7 @@ class Coupon {
 
     //搜尋所有買家有的優惠券
     async searchAllCustomerHave(){
-        const sqlSearch = `select C.code,C.discount,C.date,H.quantity from coupon as C join have as H on C.code = H.couponCode where H.customerId = ${this.userId} and H.quantity > 0;`
+        const sqlSearch = `select C.code,C.discount,C.date,H.quantity,C.description from coupon as C join have as H on C.code = H.couponCode where H.customerId = ${this.userId} and H.quantity > 0;`
         console.log(sqlSearch)
         try{
             var result = await database.sqlConnection(sqlSearch)

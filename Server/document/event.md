@@ -422,7 +422,8 @@
         "code": "SEX69",
         "discount": 0.66,
         "date": "2021-12-25",
-        "quantity": 2
+        "quantity": 2,
+        "description": "1231sadaaw"
       }
     ]
     ```
@@ -478,7 +479,8 @@
         "code": "SEX69",
         "discount": 0.66,
         "date": "2021-12-25",
-        "quantity": 2
+        "quantity": 2,
+        "description": "1231sadaaw"
       }
     ]
     ```
