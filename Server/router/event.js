@@ -5,12 +5,12 @@ const datatype = require('../function/datatype')
 const file = require('../function/file')
 const router = express.Router()
 const Coupon = require('../class/event/coupon')
+const Event = require('../class/event/event')
 
 router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     var type = req.body.type 
     var userName = req.body.userName
     var name = req.body.name
-    var discount = req.body.discount
     var date = req.body.date
     var _date = new Date(date) 
     var currentDate = Date.now()
@@ -26,11 +26,6 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
     }
     if (name == ''){
         response["error"] = "活動名不符合限制"
-        response["state"] = 500
-        state = false
-    }
-    if (discount <= 0 | discount > 1){
-        response["error"] = "折扣不符合限制"
         response["state"] = 500
         state = false
     }
@@ -79,7 +74,7 @@ router.post('/add', datatype.verifyToken, async(req,res,next)=>{
                 console.log(organizerId)
                 if (organizerId != null){
                     try{
-                        var insertResult = await database.sqlConnection(`insert into event(organizerId,name,discount,date)value(${organizerId},"${name}",${discount},"${date}");`)
+                        var insertResult = await database.sqlConnection(`insert into event(organizerId,name,date)value(${organizerId},"${name}","${date}");`)
                         console.log(insertResult)
                         response["state"] = 200
                     }catch(e){
@@ -174,6 +169,7 @@ router.post('/search', datatype.verifyToken, async(req,res,next)=>{
         if (organizerId != null){
             try{
                 var result = await database.sqlConnection(`select * from event where organizerId = ${organizerId}`)
+                console.log(result)
                 var response = []
                 result.forEach(function(item, index, array) {
                     let event = datatype.json2json(item)
@@ -268,17 +264,9 @@ router.post('/update', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     var name = req.body.name 
-    var discount = req.body.discount
     var date = req.body.date
     var _date = new Date(date) 
     var currentDate = Date.now()
-    if (discount <= 0 | discount > 1){
-        let response = {
-            "error":"折扣不符合限制",
-            "state":500
-        }
-        res.json(response)
-    }
     if(_date < currentDate){
         let response = {
             "error":"到期日不符合限制",
@@ -290,7 +278,7 @@ router.post('/update', datatype.verifyToken, async(req,res,next)=>{
         var organizerId = await database.GetOrganizerId(type,userId)
         console.log(organizerId)
         if (organizerId != null){
-            const sql = `update event set discount = ${discount},date = "${date}" where organizerId = ${organizerId} and name = "${name}";`
+            const sql = `update event set date = "${date}" where organizerId = ${organizerId} and name = "${name}";`
             console.log(sql)
             try{
                 var result = await database.sqlConnection(sql)
@@ -437,6 +425,33 @@ router.post('/delete', datatype.verifyToken, async(req,res,next)=>{
     
 })
 
+router.get('/all', async(req,res,next)=>{ 
+    var event = new Event(req)
+    try{
+        var result = await event.getAllEvent()
+        if (result == false){
+            let response = {
+                "error":event.errorMessage,
+                "state":event.state
+            }
+            res.json(response)
+        }
+        else if (result == true){
+            res.json(new Array())
+        }
+        else{
+            res.json(result)
+        }
+    }catch(e){
+        console.log(e)
+        let response = {
+            "error":event.errorMessage,
+            "state":event.state
+        }
+        res.json(response)
+    }
+})
+
 router.post('/coupon/add', datatype.verifyToken, async(req,res,next)=>{
     var coupon = new Coupon(req)
     var state = true
@@ -500,9 +515,10 @@ router.post('/coupon/add', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkDateAvailable()
+        result = await coupon.checkDateAvailableByName()
     }
     if (result == false){
+        state = false;
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state
@@ -571,18 +587,8 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkNameAvailable()
-    }
-    if (result == false){
-        state = false 
-        let response = {
-            "error":coupon.errorMessage,
-            "state":coupon.state
-        }
-        res.json(response)
-    }
-    if (state){
         result = await coupon.searchCoupon()
+        console.log(result)
     }
     if (result == false){
         let response = {
@@ -590,6 +596,9 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
             "state":coupon.state
         }
         res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
     }
     else{
         res.json(result)
@@ -649,7 +658,7 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkNameAvailable()
+        result = await coupon.checkOrganizerHaveCoupon()
     }
     if (result == false){
         state = false
@@ -663,6 +672,7 @@ router.post('/coupon/update', datatype.verifyToken, async(req,res,next)=>{
         result = await coupon.checkDateAvailable()
     }
     if (result == false){
+        state = false
         let response = {
             "error":coupon.errorMessage,
             "state":coupon.state
@@ -731,7 +741,7 @@ router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
         res.json(response)
     }
     if (state){
-        result = await coupon.checkNameAvailable()
+        result = await coupon.checkOrganizerHaveCoupon()
     }
     if (result == false){
         state = false
@@ -751,5 +761,239 @@ router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
     res.json(response)
 })
 
+router.post('/coupon/customer/search', async(req,res,next)=>{
+    var name = req.body.name 
+    const sqlSearch = `select code,eventName as name,discount,date,maxQuantity from coupon where eventName = "${name}";`
+    try{
+        let response = []
+        var result = await database.sqlConnection(sqlSearch)
+        result.forEach(function(item, index, array) {
+            let coupon = datatype.json2json(item)
+            console.log(coupon)
+            response.push(coupon)
+        });
+        res.json(response)
+    }catch(e){
+        console.log(e)
+        let response = {
+            "error":"網路連線失敗",
+            "state":500
+        }
+        res.json(response)
+    }
+})
 
+router.post('/coupon/customer/receive', datatype.verifyToken, async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    if (state){
+        var result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkCodeAvailableByNothing()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.getMaxQuantity()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.receiveCoupon()
+    }
+    let response = {
+        "error":coupon.errorMessage,
+        "state":coupon.state
+    }
+    res.json(response)
+})
+
+router.post('/coupon/customer/product', async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    var result = null
+    if (state){
+        result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.setProductId(req.body.productId)
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.searchCouponByProductId()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
+    }
+    else{
+        res.json(result)
+    }
+})
+
+router.post('/coupon/customer/all', async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    var result = null
+    if (state){
+        result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.searchCouponByAdmin()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
+    }
+    else{
+        res.json(result)
+    }
+})
+
+router.post('/coupon/customer/have', datatype.verifyToken, async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    var result = null
+    if (state){
+        result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.searchAllCustomerHave()
+    }
+    if (result == false){
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
+    }
+    else{
+        res.json(result)
+    }
+})
+
+router.post('/coupon/customer/use', datatype.verifyToken, async(req,res,next)=>{
+    var coupon = new Coupon(req)
+    var state = true 
+    var result = null
+    if (state){
+        result = await coupon.getCustomerId()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkCodeAvailableByNothing()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkCustomerHaveCoupon()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.checkCouponQuantity()
+    }
+    if (result == false){
+        state = false 
+        let response = {
+            "error":coupon.errorMessage,
+            "state":coupon.state
+        }
+        res.json(response)
+    }
+    if (state){
+        result = await coupon.useCoupon()
+    }
+    let response = {
+        "error":coupon.errorMessage,
+        "state":coupon.state
+    }
+    res.json(response)
+})
 module.exports = router

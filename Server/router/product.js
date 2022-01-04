@@ -167,6 +167,7 @@ router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {
         var userName = product["userName"]
         var productId = product["productId"]
         var quantity = product["quantity"]
+        var discount = product["discount"]
         try{
             var customerId = await database.GetUserId(userName)
             console.log(customerId)
@@ -174,7 +175,7 @@ router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {
                 var businessId = await database.GetBusinessId(productId)
                 console.log(businessId)
                 try{
-                    const sqlInsert = `insert into orders(customerId,orderDate,quantity)value(${customerId},"${currentDate}",${quantity});`
+                    const sqlInsert = `insert into orders(customerId,orderDate,quantity,discount)value(${customerId},"${currentDate}",${quantity},${discount});`
                     console.log(sqlInsert)
                     var InsertResult = await database.sqlConnection(sqlInsert)
                     console.log(InsertResult)
@@ -229,7 +230,7 @@ router.post('/search', datatype.verifyToken,async (req, res, next)=> {
         console.log(customerId)
         try{
             let response = []
-            var sqlSearch = `select P.price,P.name,O.quantity,O.orderNo,O.status,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
+            var sqlSearch = `select P.price,P.name,O.quantity,O.orderNo,O.status,O.discount,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
             console.log(sqlSearch)
             var result = await database.sqlConnection(sqlSearch)
             result.forEach(function(item, index, array) {
@@ -356,7 +357,7 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
         console.log(businessId)
         if (businessId != null){
             try{
-                const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}",image = "${image}" where no = ${productId};`
+                const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}" where no = ${productId};`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["state"] = 200
@@ -377,6 +378,56 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
         response["state"] = 500
     }
     res.json(response)
+})
+
+router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
+    var userName = req.body.userName
+    var productId = req.body.productId
+    try{
+        var businessId = await database.GetUserId(userName)
+        if (businessId != null){
+            const sql = `delete from product where no = ${productId};`
+            try{
+                var result = await database.sqlConnection(sql)
+                console.log(result)
+                if (result["affectedRows"] != 0){
+                    let response = {
+                        "error":"",
+                        "state":200
+                    }
+                    res.json(response)
+                }else{
+                    let response = {
+                        "error":"沒有這個productId",
+                        "state":500
+                    }
+                    res.json(response)
+                }
+
+            }catch(e){
+                console.log(e)
+                let response = {
+                    "error":"網路連線錯誤",
+                    "state":500
+                }
+                res.json(response)
+            }
+        }else{
+            let response = {
+                "error":"找不到該用戶",
+                "state":500
+            }
+            res.json(response)
+        }
+    
+    }catch(e){
+        console.log(e)
+        let response = {
+            "error":"網路連線錯誤",
+            "state":500
+        }
+        res.json(response)
+    }
 })
 
 router.post('/manage/launch', datatype.verifyToken,async (req, res, next)=> {        
@@ -423,7 +474,7 @@ router.post('/manage/order/search', datatype.verifyToken,async (req, res, next)=
         if (businessId != null){
             try{
                 let response = []
-                var sqlSearch = `select P.no as productId,P.price,P.name,O.orderNo,O.quantity,O.status,O.orderDate,O.arrivalDate,O.customerId from product as P,orders as O,manage as M,business as B where P.no = M.productId and O.orderNo = M.orderNo and M.businessId = ${businessId} and B.id = M.businessId;`
+                var sqlSearch = `select P.no as productId,P.price,P.name,O.orderNo,O.quantity,O.status,O.discount,O.orderDate,O.arrivalDate,O.customerId from product as P,orders as O,manage as M,business as B where P.no = M.productId and O.orderNo = M.orderNo and M.businessId = ${businessId} and B.id = M.businessId;`
                 console.log(sqlSearch)
                 var result = await database.sqlConnection(sqlSearch)
                 result.forEach(function(item, index, array) {

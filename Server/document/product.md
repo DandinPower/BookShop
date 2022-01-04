@@ -226,12 +226,14 @@
                 "userName":"test",
                 "token":"54d6556f4d5464d65",
                 "productId":2,
+                "discount":0.77,
                 "quantity":1
             },
             {
                 "userName":"test",
                 "token":"rcrrc6533434",
                 "productId":3,
+                "discount":0.99,
                 "quantity":1
             }
         ]
@@ -273,6 +275,7 @@
                 "price":999,
                 "name":"電子學概論",
                 "quantity":2,
+                "discount":0.77,
                 "orderNo":2,
                 "status":"未出貨",
                 "orderDate":"2021-11-28T16:00:00.000Z",
@@ -282,6 +285,7 @@
                 "price":999,
                 "name":"基本概論",
                 "quantity":2,
+                "discount":0.77,
                 "orderNo":3,
                 "status":"未出貨",
                 "orderDate":"2021-11-28T16:00:00.000Z",
@@ -530,6 +534,7 @@
                 "arrivalDate":"null",
                 "quantity":"3",
                 "status":"未出貨",      //訂單的status
+                "discount":0.77,
                 "productId":"1",
                 "customerId":"3",
                 "name":"書籍名稱",

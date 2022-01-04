@@ -1,32 +1,29 @@
-import {Link} from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import "./css.css"
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import 'bootstrap/dist/css/bootstrap.min.css';        
-const Login = () => {
+const AdminLogin = ()=>{
     const [id,setID] = useState('')
     const [password,setPassword] = useState('')
     const submit = () => {
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/account/login/',
+            url: 'http://localhost:5000/admin/login',
             data:{
               userName: id,
               userPassword: password,
             }
           }).then((response) => {
-            console.log(response.data);
-            if(response.data.state === '200'){
-                window.sessionStorage.setItem('name',response.data.name)
-                window.sessionStorage.setItem('userName',response.data.userName)
+            if(response.data.state !== '500'){
+                window.sessionStorage.setItem('userName',id)
                 window.sessionStorage.setItem('token',response.data.token)
-                window.sessionStorage.setItem('type',response.data.type)
-                window.sessionStorage.setItem('password',password)
+                window.sessionStorage.setItem('type','admin')
+                window.sessionStorage.setItem('authority',response.data.authority)
                 window.location.href = `${window.location.origin}`
                 alert('登入成功')
             }
-            else if(response.data.state === '500'){
+            else{
                 alert(response.data.error)
               }
           })
@@ -34,7 +31,7 @@ const Login = () => {
     return (
         <div className='login' >
             <div>        
-                <h1>會員登入</h1>
+                <h1>管理員登入</h1>
             </div>
             <div>
 
@@ -45,14 +42,8 @@ const Login = () => {
             </div>
             <div>
             <button onClick={submit} className='button-ex1'>登入</button>
-            <nav>
-                <li><Link to="/member/register">註冊</Link></li>
-            </nav>
             </div>
         </div>
 )
-    
-    
 }
-
-export default Login
+export default AdminLogin

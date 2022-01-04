@@ -9,20 +9,19 @@ create table organizer (
 create table event (
 	organizerId int,
     name varchar(20),
-    discount double not null,
     date Datetime not null,
-    primary key(organizerId,name),
+    primary key(name),
     foreign key(organizerId)references organizer(organizerId) on delete cascade
 );
 
 create table coupon (
 	code varchar(10),
-    organizerId int,
     eventName varchar(20),
     date datetime not null,
     discount double not null,
     maxQuantity int not null,
-    primary key(code,eventName,organizerId)
+    primary key(code),
+	foreign key(eventName)references event(name)on delete cascade
 );
 
 create table admin (
@@ -36,7 +35,6 @@ create table admin (
 
 create table account ( 
 	id int primary key auto_increment,
-	adminId int,
 	address varchar(50) not null,
 	gender char(1) not null,
 	rating int default 0,
@@ -45,8 +43,7 @@ create table account (
 	password varchar(20) not null,
 	userName varchar(20) not null unique,
 	name varchar(20) not null,
-    enable char(1) not null default "1",
-    foreign key (adminId)references admin(id)on delete set null
+    enable char(1) not null default "1"
 );
 
 create table customer (
@@ -60,8 +57,8 @@ create table have (
     couponCode varchar(10),
     quantity int not null,
     primary key(customerId,couponCode),
-    foreign key(customerId)references customer(id)on delete cascade,
-    foreign key(couponCode)references coupon(code)on delete cascade
+    foreign key(couponCode)references coupon(code)on delete cascade,
+    foreign key(customerId)references customer(id)on delete cascade
 );
 
 create table business (
@@ -71,8 +68,6 @@ create table business (
     foreign key(id)references account(id)on delete cascade,
     foreign key(organizerId)references organizer(organizerId) on delete set null
 );
-
-
 
 create table product (
 	no int primary key auto_increment,
@@ -84,7 +79,6 @@ create table product (
     status char(1) not null,
     category varchar(20) not null,
     rating int default 0,
-    image varchar(100),
     uploadedDate datetime not null,
     foreign key(businessId)references business(id)on delete cascade
 );
@@ -94,6 +88,7 @@ create table orders (
      customerId int,
      orderDate datetime not null,
      arrivalDate datetime,
+     discount double default 1 not null,
      quantity int not null,
      status varchar(20) not null default "未出貨",
      foreign key (customerId) references account(id) on delete cascade
