@@ -20,6 +20,7 @@ create table coupon (
     date datetime not null,
     discount double not null,
     maxQuantity int not null,
+    description varchar(100),
     primary key(code),
 	foreign key(eventName)references event(name)on delete cascade
 );

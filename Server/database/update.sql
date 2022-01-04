@@ -85,3 +85,5 @@ insert into orders(customerId,orderDate,quantity,discount)value(2,"2021-12-8",2,
 insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()),3);
 insert into orders(customerId,orderDate,quantity,discount)value(3,"2021-12-8",1,0.77);
 insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
+
+alter table coupon add column description varchar(100);
