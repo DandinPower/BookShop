@@ -32,7 +32,7 @@ const ManageOrder = ({setOrderInfo})=>{
                   <td>{data.status}</td> 
                   <td>{data.productId}</td> 
                   <td>{data.customerId}</td> 
-                  <td>{data.price}</td> 
+                  <td>{data.price *parseInt(data.quantity) * parseFloat(data.discount)}</td> 
                   
                   <ButtonGroup vertical>
                     <Link to="/Products/business/updateorder">

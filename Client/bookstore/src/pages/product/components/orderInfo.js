@@ -64,7 +64,10 @@ const OrderInfo = ({checkOrderInfo})=>{
         FilterNameBooks.forEach(book => {
             getCoupons(book[0].productId)
         })
+        UseCoupon(-1,'',1)
     },[])
+
+    console.log(coupons);
     
     const ListCoupon =(id)=>{
         let couponById = coupons.filter(coupon => coupon.productId === id);
@@ -73,7 +76,7 @@ const OrderInfo = ({checkOrderInfo})=>{
            return(coupon.data.map((couponInfo)=>{
             return(
             <label>{couponInfo.code}
-            <input type='radio' value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
+            <input type='radio' disabled={coupon.quantity !== 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
             </input></label>)
            }))
         }))
@@ -156,12 +159,23 @@ const OrderInfo = ({checkOrderInfo})=>{
 
 
     const postBooks = books.map((book)=>{
+        let Coupon = useCoupons.find(e=>e.businessName === book.businessName)
+        let fullSiteCoupon = useCoupons.find(e=>e.businessName === 'admin')
+        let discount = 1;
+        let fullSiteDiscount = 1;
+        try{
+             discount = parseFloat(Coupon.discount);
+             fullSiteDiscount = parseFloat(fullSiteCoupon.discount);
+        }
+        catch(error){
+        }
         var bookInfo = 
         {
             'userName': window.sessionStorage.getItem('userName'),
             'token': window.sessionStorage.getItem('token'),
             'productId': book.productId,
             'quantity':  book.quantity ,
+            'discount': discount * fullSiteDiscount
         }
         return(bookInfo);
     })
@@ -186,6 +200,7 @@ const OrderInfo = ({checkOrderInfo})=>{
     }
 
     const OrderBooks = ()=>{
+        setCheckCoupon(true);
         useCoupons.forEach((coupon)=>{
             if(coupon.code !== ''){
                 axios({
@@ -199,10 +214,9 @@ const OrderInfo = ({checkOrderInfo})=>{
                     }
                   }).then((response) => {
                     if(response.data.state === 200){
-                        setCheckCoupon(true);
                     }
                     else if (response.data.state === 500){
-                        alert(response.data.error)
+                        alert(`code:${coupon.code}${response.data.error}`)
                         setCheckCoupon(false);
                       }
                   })
