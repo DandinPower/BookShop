@@ -170,7 +170,8 @@ class Coupon {
                         join product as P on P.businessId = B.id \
                         join have as H on H.couponCode = C.code \
                         where P.no = ${this.productId} \
-                        and H.customerId = ${this.userId};`
+                        and H.customerId = ${this.userId} \
+                        and H.quantity > 0;`
         console.log(sql)
         try{
             var result = await database.sqlConnection(sql)

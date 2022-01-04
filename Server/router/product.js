@@ -357,7 +357,7 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
         console.log(businessId)
         if (businessId != null){
             try{
-                const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}",image = "${image}" where no = ${productId};`
+                const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}" where no = ${productId};`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["state"] = 200
