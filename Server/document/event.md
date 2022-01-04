@@ -325,7 +325,8 @@
         "name": "全網88", //活動名稱
         "discount": 0.88,
         "date": "2021-12-25",
-        "maxQuantity": 3
+        "maxQuantity": 3,
+        "description": "2132131ssdasda"
       }
     ]
     ```
