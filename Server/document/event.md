@@ -193,6 +193,7 @@
         "date": "2021-12-25",
         "discount": 0.88,
         "maxQuantity": 2,
+        "description": "12313123123",
         "name": "全站88"
       },
       {
@@ -200,6 +201,7 @@
         "date": "2021-12-25",
         "discount": 0.88,
         "maxQuantity": 1,
+        "description": "12313123123",
         "name": "全站88"
       }
     ]

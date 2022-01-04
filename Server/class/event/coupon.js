@@ -559,7 +559,7 @@ class Coupon {
 
     //檢查完後查詢優惠券
     async searchCoupon() {
-        const sqlSearch = `select C.code,C.date,C.discount,C.maxQuantity,C.eventName as name from coupon as C join event as E on C.eventName = E.name where E.organizerId = ${this.organizerId};`
+        const sqlSearch = `select C.code,C.date,C.discount,C.maxQuantity,C.description,C.eventName as name from coupon as C join event as E on C.eventName = E.name where E.organizerId = ${this.organizerId};`
         console.log(sqlSearch)
         try{
             var result = await database.sqlConnection(sqlSearch)
