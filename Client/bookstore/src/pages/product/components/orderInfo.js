@@ -76,7 +76,7 @@ const OrderInfo = ({checkOrderInfo})=>{
            return(coupon.data.map((couponInfo)=>{
             return(
             <label>{couponInfo.code}
-            <input type='radio' disabled={coupon.quantity !== 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
+            <input type='radio' disabled={coupon.quantity === 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
             </input></label>)
            }))
         }))
@@ -129,7 +129,7 @@ const OrderInfo = ({checkOrderInfo})=>{
    
     const ListFullSiteCoupon = fullSiteCoupon.map((coupon)=>{
         return(<label>{coupon.code}
-            <input type='radio' value={coupon.discount} name={-1} id={coupon.code} onClick={e=> UseCoupon(-1,e.target.id,e.target.value)}></input></label>)
+            <input type='radio' disabled={coupon.quantity === 0} value={coupon.discount} name={-1} id={coupon.code} onClick={e=> UseCoupon(-1,e.target.id,e.target.value)}></input></label>)
     })
 
     function deleteBook (BID){

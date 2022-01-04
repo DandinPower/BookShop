@@ -5,7 +5,7 @@ import {Container, Col, Table, Button, ButtonGroup} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const Order =({setClientOrderInfo})=>{
-    const [orderBooks, setOrderBooks] = useState();
+    const [orderBooks, setOrderBooks] = useState(['']);
     
     useEffect(()=>{
         axios({
