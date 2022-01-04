@@ -20,7 +20,7 @@ const OrderInfo = ({checkOrderInfo})=>{
         return books.filter(book => book.businessName === businessName)
      })
 
-     const getCoupons =(id)=>{
+     const getCoupons =(id,bname)=>{
         axios({
             method: 'POST',
             url: 'http://localhost:5000/event/coupon/customer/product',
@@ -34,10 +34,10 @@ const OrderInfo = ({checkOrderInfo})=>{
                 let newarray = 
                 {
                     'data':response.data,
-                    'productId':id
+                    'businessName':bname
                 }
                 setCoupons(prevArray => [newarray, ...prevArray])
-                UseCoupon(id,'',1)
+                UseCoupon(bname,'',1)
             }
             else{
                 alert(response.data.error)
@@ -62,51 +62,49 @@ const OrderInfo = ({checkOrderInfo})=>{
               }
           })
         FilterNameBooks.forEach(book => {
-            getCoupons(book[0].productId)
+            getCoupons(book[0].productId,book[0].businessName)
         })
         UseCoupon(-1,'',1)
     },[])
 
     console.log(coupons);
     
-    const ListCoupon =(id)=>{
-        let couponById = coupons.filter(coupon => coupon.productId === id);
+    const ListCoupon =(bname)=>{
+        let couponById = coupons.filter(coupon => coupon.businessName === bname);
         
         return(couponById.map((coupon)=>{
            return(coupon.data.map((couponInfo)=>{
             return(
             <label>{couponInfo.code}
-            <input type='radio' disabled={coupon.quantity === 0} value={couponInfo.discount} name={id} id={couponInfo.code} onClick={e=> UseCoupon(id,e.target.id,e.target.value)}>
+            <input type='radio' disabled={coupon.quantity === 0} value={couponInfo.discount} name={bname} id={couponInfo.code} onClick={e=> UseCoupon(bname,e.target.id,e.target.value)}>
             </input></label>)
            }))
         }))
     }
 
-    const UseCoupon =(id,code,discount)=>{
-        if(id === -1){
+    const UseCoupon =(bname,code,discount)=>{
+        if(bname === -1){
             let newArray =
             {
-            'id':id,
             "businessName":'admin',
             'code':code,
             'discount':discount,
             }
-            if(useCoupons.find(e => e.id === id) !== undefined){
-                setUseCoupons(prevArray => prevArray.filter(e => e.id !== id))
+            if(useCoupons.find(e => e.businessName === bname) !== undefined){
+                setUseCoupons(prevArray => prevArray.filter(e => e.businessName !== bname))
             }
             setUseCoupons(prevArray => [newArray, ...prevArray])
         }
         else{
-            let book = books.find(e=>e.productId ===id)
+            let book = books.find(e=>e.businessName ===bname)
             let newArray =
             {
-                'id':id,
                 "businessName":book.businessName,
                 'code':code,
                 'discount':discount,
             }
-            if(useCoupons.find(e => e.id === id) !== undefined){
-                setUseCoupons(prevArray => prevArray.filter(e => e.id !== id))
+            if(useCoupons.find(e => e.businessName === bname) !== undefined){
+                setUseCoupons(prevArray => prevArray.filter(e => e.businessName !== bname))
             }
             setUseCoupons(prevArray => [newArray, ...prevArray])
         }
@@ -122,8 +120,11 @@ const OrderInfo = ({checkOrderInfo})=>{
                 sum += book.price * parseInt(book.quantity) * parseFloat(Coupon.discount)* parseFloat(FullSiteCoupon.discount);
                 setPrice(sum)
             }catch (error) {
+            }
+        })
+        if(books.length === 0){
+            setPrice(0)
         }
-    })
     },[books,useCoupons])
     
    
@@ -266,14 +267,15 @@ const OrderInfo = ({checkOrderInfo})=>{
             <div>
                 <div>商店名稱: {books[0].businessName}</div>
                 <label>優惠碼: </label>
-                <label>不使用<input type='radio' value={1} name={books[0].productId} onClick={e=> UseCoupon(books[0].productId,'',e.target.value)}></input></label>
-                {ListCoupon(books[0].productId)}
+                <label>不使用<input type='radio' value={1} name={books[0].businessName} onClick={e=> UseCoupon(books[0].businessName,'',e.target.value)}></input></label>
+                {ListCoupon(books[0].businessName)}
                 {ListBooks(books)}
             </div>
         )
     })
 
     return(<div>
+            <h1>優惠券使用說明:要先領取該商家的優惠券才能夠使用</h1>
             <div>{ListBooksByBusinessName}</div>
             <label>全站優惠碼: </label>
             <label>不使用<input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input></label>
