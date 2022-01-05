@@ -22,8 +22,7 @@ router.get('/search/:keywords', async (req, res, next)=>{
         result.forEach(function(item, index, array) {
             let product = datatype.json2json(item)
             if (product["image"] != null){
-                roduct["image"] = Buffer.from(product["image"]).toString('base64')
-                //product["image"] = ""
+                product["image"] = Buffer.from(product["image"]).toString('base64')
             }
             else{
                 product["image"] = ""

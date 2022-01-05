@@ -206,7 +206,7 @@ class Coupon {
                         join organizer as O on O.organizerId = E.organizerId \
                         join admin as A on A.organizerId = O.organizerId \
                         join have as H on H.couponCode = C.code \
-                        where H.customerId = ${this.userId};`
+                        where H.customerId = ${this.userId} and H.quantity > 0;`
         console.log(sql)
         try{
             var result = await database.sqlConnection(sql)
