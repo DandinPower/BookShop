@@ -195,7 +195,7 @@ const OrderInfo = ({checkOrderInfo})=>{
             }
           }).then((response) => {
             if(response.data.state === 200){
-                setBooks([''])
+                setBooks([])
             }
             else if (response.data.state === 500){
                 alert(response.data.error)
@@ -299,7 +299,7 @@ const OrderInfo = ({checkOrderInfo})=>{
         </div>
         <br size="lg"/>
         <div className="d-flex justify-content-end">
-          <h1 className="me-4">總金額:</h1>
+          <h1 className="me-4">總金額:{price}</h1>
           <Button variant="success" size="lg" onClick={ e => OrderBooks()}>下訂</Button>
         </div>
         <div className="d-flex justify-content-end">        
