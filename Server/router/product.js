@@ -767,4 +767,96 @@ router.post('/manage/order/delete', datatype.verifyToken, async (req, res, next)
         res.json(response)
     }
 })
+
+router.post('/order/cancel', datatype.verifyToken, async (req, res, next) => {
+    var userName = req.body.userName
+    var orderNo = req.body.orderNo
+    var state = true
+    if (state) {
+        try {
+            var userId = await database.GetUserId(userName)
+            if (userId == null) {
+                state = false
+                let response = {
+                    "error": "找不到該用戶",
+                    "state": 500
+                }
+                res.json(response)
+            }
+        } catch (e) {
+            console.log(e)
+            state = false
+            let response = {
+                "error": "網路連線失敗",
+                "state": 500
+            }
+            res.json(response)
+        }
+    }
+    if (state) {
+        try {
+            const sqlCheckStatus = `select O.status from orders as O where O.orderNo = ${orderNo} and ${orderNo} in (select orderNo from manage where customerId = ${userId});`
+            console.log(sqlCheckStatus)
+            var result = await database.sqlConnection(sqlCheckStatus)
+            if (result.length == 0) {
+                state = false
+                let response = {
+                    "error": "找不到該訂單",
+                    "state": 500
+                }
+                res.json(response)
+            }
+            else {
+                var status = result[0].status
+                if (status != '未出貨') {
+                    state = false
+                    let response = {
+                        "error": "商品已出貨不能取消",
+                        "state": 500
+                    }
+                    res.json(response)
+                }
+            }
+        } catch (e) {
+            console.log(e)
+            state = false
+            let response = {
+                "error": "網路連線失敗",
+                "state": 500
+            }
+            res.json(response)
+        }
+    }
+    if (state) {
+        const sqlUpdateState = `update orders set status = "申請取消" where orderNo = ${orderNo};`
+        console.log(sqlUpdateState)
+        try {
+            var result = await database.sqlConnection(sqlUpdateState)
+            console.log(result)
+            if (result["affectedRows"] != 0) {
+                let response = {
+                    "error": "",
+                    "state": 200
+                }
+                res.json(response)
+            }
+            else {
+                state = false
+                let response = {
+                    "error": "未知的錯誤",
+                    "state": 500
+                }
+                res.json(response)
+            }
+        } catch (e) {
+            console.log(e)
+            state = false
+            let response = {
+                "error": "網路連線失敗",
+                "state": 500
+            }
+            res.json(response)
+        }
+    }
+})
 module.exports = router
