@@ -101,7 +101,7 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                         </Row>
                         <br/>
                         <Row>
-                       <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>
+                          <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>
                         </Row>
                       </Col>
                     </Row>

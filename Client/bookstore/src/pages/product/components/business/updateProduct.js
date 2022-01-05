@@ -159,7 +159,7 @@ const UpdateProduct = ({productInfo}) =>{
                     <Col xs={10}>
                         <Form.Control type="file" accept="image/*"onChange={handleOnPreview}/>
 												<br size="sm"/>
-												<img src={imageSrc} alt="" />
+												<img src={imageSrc} alt="" width="180" height="180"/>
                     </Col> 
                 </Form.Group>
             </Form>

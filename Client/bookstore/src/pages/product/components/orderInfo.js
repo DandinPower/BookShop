@@ -256,23 +256,21 @@ const OrderInfo = ({checkOrderInfo})=>{
             catch(error){
             }
             return(
-              <Row>
-                <Col><img src={`data:image/png;base64,${data.image}`} width="200" height="200"></img></Col>
-                <Col className="w-20"></Col>
-                <Col className="w-20">{data.name}</Col>
+              <Container as={Row}>
+                <Col><img src={`data:image/png;base64,${data.image}`} width="180" height="180"></img></Col>
+                <Col className="">{data.name}</Col>
                 <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
                 <Col>{data.price * parseInt(data.quantity)*(discount)}</Col>
                 <Col><Button variant="outline-danger" onClick={e => deleteBook(data.productId)}>Delete</Button></Col>  
-              </Row>              
-                )
+              </Container>              
+            )
         }))
     }
 
     const ListBooksByBusinessName = FilterNameBooks.map((books)=>{  
         return(
           <Container bordered>
-            <br size="lg"/>
-            
+            <br size="lg"/> 
             {ListBooks(books)}
             <br size="lg"/>
             <Row className="bg-dark p-2 text-dark bg-opacity-10">  
@@ -282,7 +280,6 @@ const OrderInfo = ({checkOrderInfo})=>{
             </Row>
             <br size="lg"/>
             <hr></hr>
-          
           </Container>
         )
     })

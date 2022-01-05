@@ -61,7 +61,7 @@ const HomeContent = ({setBookInfo}) =>{
         return(
           <Col >
               <Card style={{ width: '10rem' }} className="h-100">
-                      <Card.Img variant="top" src={`data:image/png;base64,${data.image}`}  alt={data.description}/>
+                      <Card.Img variant="top" src={`data:image/png;base64,${data.image}`}  alt={data.description} width="180" height="180"/>
                       <Card.Body className="d-flex flex-column">
                           <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
                           <Card.Text className="fw-light fs-6">{data.description}</Card.Text>
