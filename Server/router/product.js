@@ -6,6 +6,37 @@ const file = require('../function/file')
 const multer = require('multer')
 const router = express.Router()
 
+router.get('/search/:keywords', async (req, res, next)=>{
+    var keywords = req.params.keywords
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image \
+                from product as P join business as B on P.businessId = B.id \
+                join account as A on B.id = A.id \
+                left join image_list as I on I.productId = P.no \
+                where P.name like "%${keywords}%" \ 
+                or P.description like "%${keywords}%";`
+    var response = []
+    console.log(sql)
+    try {
+        result = await database.sqlConnection(sql);
+        console.log(result);
+        result.forEach(function(item, index, array) {
+            let product = datatype.json2json(item)
+            if (product["image"] != null){
+                roduct["image"] = Buffer.from(product["image"]).toString('base64')
+                //product["image"] = ""
+            }
+            else{
+                product["image"] = ""
+            }
+            console.log(product)
+            response.push(product)
+            });
+    } catch(e){
+        console.log(e);
+    }
+    res.json(response)
+})
+
 router.get('/categories', async (req, res, next)=> {        
     const sql = `SELECT distinct category FROM product;`
     response = []

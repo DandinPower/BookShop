@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ManageOrder = ({setOrderInfo})=>{
 
-    const [orderData, setOrderData] = useState([""]);
-
-    axios({
+    const [orderData, setOrderData] = useState([""]); 
+    useEffect(()=>{
+        axios({
       method: 'POST',
       url: 'http://localhost:5000/product/manage/order/search',
       data:
@@ -19,11 +19,8 @@ const ManageOrder = ({setOrderInfo})=>{
     }).then((response) => {
       setOrderData(response.data)
     })
-
-   /* useEffect(()=>{
-        
     },[])
-*/
+
     const listOrder = orderData.map((data)=>{
         return(
                 <tr>
