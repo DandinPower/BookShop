@@ -555,7 +555,7 @@ router.post('/manage/order/status', datatype.verifyToken,async (req, res, next)=
         console.log(businessId)
         if (businessId != null){
             try{
-                const sqlUpdate = `update orders set status = "${status}" where orderNo = ${orderNo} and orderNo = (select orderNo from manage where businessId = ${businessId});`
+                const sqlUpdate = `update orders set status = "${status}" where orderNo = ${orderNo};`
                 var result = await database.sqlConnection(sqlUpdate)
                 if (result["affectedRows"] == 0){
                     response["error"] = "找不到該訂單"
