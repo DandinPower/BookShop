@@ -4,7 +4,7 @@ import axios from 'axios'
 import {Container, Col, Table, Button, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
-const ManageProduct = ({setProductInfo}) =>{
+const ManageProduct = ({setProductInfo}) => {
     const [bookData, setBookData] = useState([""]);
     useEffect(()=>{
         axios({
@@ -47,15 +47,15 @@ const ManageProduct = ({setProductInfo}) =>{
                   <td>{launch}</td>
                   
                   <ButtonGroup vertical>
-                  <Link to="/Products/business/updateproduct" onClick={e => setProductInfo(data)}>
-                    <Button variant="outline-success" >Update</Button>
-                  </Link>
-                    <br/>
+                    <Link to="/Products/business/updateproduct">
+                    
+                    <Button onClick={(e)=>setProductInfo(data)}>Update</Button>
+                    </Link>
                     <Button variant="outline-danger">Delete</Button>
                   </ButtonGroup>
                 </tr>
               )
-      }
+      } 
       else{
          return(<Col></Col>)
       }

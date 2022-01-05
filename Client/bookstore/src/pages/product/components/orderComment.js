@@ -24,7 +24,6 @@ const OrderComment = ({clientOrderInfo}) =>{
              else{
                 alert('評論成功')
              }
-            
         })
     }
     return(

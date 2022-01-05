@@ -36,10 +36,10 @@ const Order =({setClientOrderInfo})=>{
             <td>{book.price * parseInt(book.quantity)}</td> 
             
             <ButtonGroup vertical>
-                <Link to="/Products/ordercomment"  onClick={e =>setClientOrderInfo(book)} ><button disabled={book.status !=='訂單完成'}>評價此訂單</button></Link>
+                <Link to="/Products/ordercomment"  onClick={ e => setClientOrderInfo(book)} ><button disabled={book.status !=='訂單完成'}>評價此訂單</button></Link>
                 <br/>
                 <Button variant="outline-danger">撤銷此訂單</Button>
-              </ButtonGroup>
+            </ButtonGroup>
           </tr>
         )
     })

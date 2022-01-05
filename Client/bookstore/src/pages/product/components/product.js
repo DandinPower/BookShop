@@ -42,7 +42,6 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
           })
     }
 
-
     const postBook=()=>{
         var book = 
         [

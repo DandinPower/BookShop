@@ -1,7 +1,7 @@
 const mysql = require('mysql')
 
 //Li本地端
-/*
+
 const pool = mysql.createPool({  
     connectionLimit: 10,
     password: '1234',
@@ -9,9 +9,9 @@ const pool = mysql.createPool({
     database: 'dandinpo_teamproject',
     host: 'localhost',
     port: '3306'
-})*/
+})
 //Liaw本地端
-
+/*
 const pool = mysql.createPool({  
     connectionLimit: 10,
     password: 'root',
@@ -19,7 +19,7 @@ const pool = mysql.createPool({
     database: 'dandinpo_teamproject',
     host: 'localhost',
     port: '3306'
-})
+})*/
 /*
 const pool = mysql.createPool({  
     connectionLimit: 10,

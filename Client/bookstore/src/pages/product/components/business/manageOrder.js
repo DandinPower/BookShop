@@ -7,20 +7,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const ManageOrder = ({setOrderInfo})=>{
 
     const [orderData, setOrderData] = useState([""]);
-    useEffect(()=>{
-        axios({
-            method: 'POST',
-            url: 'http://localhost:5000/product/manage/order/search',
-            data:
-            {
-              userName: window.sessionStorage.getItem('userName'),
-              token: window.sessionStorage.getItem('token'),
-            }
-          }).then((response) => {
-            setOrderData(response.data)
-          })
-    },[])
 
+    axios({
+      method: 'POST',
+      url: 'http://localhost:5000/product/manage/order/search',
+      data:
+      {
+        userName: window.sessionStorage.getItem('userName'),
+        token: window.sessionStorage.getItem('token'),
+      }
+    }).then((response) => {
+      setOrderData(response.data)
+    })
+
+   /* useEffect(()=>{
+        
+    },[])
+*/
     const listOrder = orderData.map((data)=>{
         return(
                 <tr>
@@ -36,7 +39,7 @@ const ManageOrder = ({setOrderInfo})=>{
                   
                   <ButtonGroup vertical>
                     <Link to="/Products/business/updateorder">
-                      <Button variant="outline-success" onClick={e => setOrderInfo(data)}>
+                      <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>
                         Update
                       </Button>
                     </Link>
