@@ -6,7 +6,7 @@ const file = require('../function/file')
 const multer = require('multer')
 const router = express.Router()
 
-router.get('/search/:keywords', async (req, res, next)=>{
+router.get('/search/:keywords', async (req, res, next) => {
     var keywords = req.params.keywords
     const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image \
                 from product as P join business as B on P.businessId = B.id \
@@ -19,273 +19,273 @@ router.get('/search/:keywords', async (req, res, next)=>{
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
-            if (product["image"] != null){
+            if (product["image"] != null) {
                 product["image"] = Buffer.from(product["image"]).toString('base64')
             }
-            else{
+            else {
                 product["image"] = ""
             }
             console.log(product)
             response.push(product)
-            });
-    } catch(e){
+        });
+    } catch (e) {
         console.log(e);
     }
     res.json(response)
 })
 
-router.get('/categories', async (req, res, next)=> {        
+router.get('/categories', async (req, res, next) => {
     const sql = `SELECT distinct category FROM product;`
     response = []
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             response.push(item['category'])
-          });
-    } catch(e){
+        });
+    } catch (e) {
         console.log(e);
     }
     res.send(response)
 })
 
-router.get('/category/:name', async (req, res, next)=> {        
+router.get('/category/:name', async (req, res, next) => {
     const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where P.category = "${req.params.name}";`
     var response = []
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
-            if (product["image"] != null){
+            if (product["image"] != null) {
                 product["image"] = Buffer.from(product["image"]).toString('base64')
             }
-            else{
+            else {
                 product["image"] = ""
             }
             console.log(product)
             response.push(product)
-          });
-    } catch(e){
+        });
+    } catch (e) {
         console.log(e);
     }
     res.json(response)
 })
 
-router.get('/all', async (req, res, next)=> {        
+router.get('/all', async (req, res, next) => {
     const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where P.launch = "1";`
     var response = []
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
-            if (product["image"] != null){
+            if (product["image"] != null) {
                 product["image"] = Buffer.from(product["image"]).toString('base64')
             }
-            else{
+            else {
                 product["image"] = ""
             }
             console.log(product)
             response.push(product)
-          });
-    } catch(e){
+        });
+    } catch (e) {
         console.log(e);
     }
     res.json(response)
 })
 
-router.get('/image/all',async (req, res, next)=> {        
+router.get('/image/all', async (req, res, next) => {
     var response = []
-    try{
+    try {
         const sql = `select * from image_list;`
         let result = await database.sqlConnection(sql)
         console.log(result)
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             let productId = item["productId"]
             let content = item["content"]
             let image = Buffer.from(content).toString('base64')
             let product = {
-                "productId":productId,
-                "image":image
+                "productId": productId,
+                "image": image
             }
             console.log(product)
             response.push(product)
-          });
-    }catch(e){
+        });
+    } catch (e) {
         console.log(e)
     }
     res.send(response)
 })
 
-router.get('/image/category/:name',async (req, res, next)=> {        
+router.get('/image/category/:name', async (req, res, next) => {
     var response = []
-    try{
+    try {
         const sql = `select * from image_list as I,product as P where I.productId = P.no and P.category = "${req.params.name}";`
         let result = await database.sqlConnection(sql)
         console.log(result)
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             let productId = item["productId"]
             let content = item["content"]
             let image = Buffer.from(content).toString('base64')
             let product = {
-                "productId":productId,
-                "image":image
+                "productId": productId,
+                "image": image
             }
             console.log(product)
             response.push(product)
-          });
-    }catch(e){
+        });
+    } catch (e) {
         console.log(e)
     }
     res.send(response)
 })
 
-router.get('/image/:productId',async (req, res, next)=> {        
+router.get('/image/:productId', async (req, res, next) => {
     var product = {
-        "productId":0,
-        "image":""
+        "productId": 0,
+        "image": ""
     }
-    try{
+    try {
         const sql = `select * from image_list where productId = ${req.params.productId};`
         let result = await database.sqlConnection(sql)
         console.log(result)
         product["productId"] = result[0]["productId"]
         let content = result[0]["content"]
         product["image"] = Buffer.from(content).toString('base64')
-    }catch(e){
+    } catch (e) {
         console.log(e)
     }
     res.send(product)
 })
 
-router.post('/comment', async (req, res, next)=> {        
+router.post('/comment', async (req, res, next) => {
     var productId = req.body.productId
-    const sql = `select PC.productId,PC.star,PC.comment,A.name from product_comment as PC,account as A,customer as C where PC.customerId = C.id and C.id = A.id and PC.productId = ${productId};` 
+    const sql = `select PC.productId,PC.star,PC.comment,A.name from product_comment as PC,account as A,customer as C where PC.customerId = C.id and C.id = A.id and PC.productId = ${productId};`
     var response = []
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
         console.log(result);
-        result.forEach(function(item, index, array) {
+        result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
             console.log(product)
             response.push(product)
-          });
-    } catch(e){
+        });
+    } catch (e) {
         console.log(e);
     }
     res.json(response)
 })
 
-router.post('/add', datatype.verifyTokenByList,async (req, res, next)=> {       
+router.post('/add', datatype.verifyTokenByList, async (req, res, next) => {
     var state = true
     var request = req.body
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    var result = await Promise.all(request.map(async(item,index,array)=>{
+    var result = await Promise.all(request.map(async (item, index, array) => {
         let product = datatype.json2json(item)
         var today = new Date();
-        var currentDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate()
+        var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
         var userName = product["userName"]
         var productId = product["productId"]
         var quantity = product["quantity"]
         var discount = product["discount"]
-        try{
+        try {
             var customerId = await database.GetUserId(userName)
             console.log(customerId)
-            try{
+            try {
                 var businessId = await database.GetBusinessId(productId)
                 console.log(businessId)
-                try{
+                try {
                     const sqlInsert = `insert into orders(customerId,orderDate,quantity,discount)value(${customerId},"${currentDate}",${quantity},${discount});`
                     console.log(sqlInsert)
                     var InsertResult = await database.sqlConnection(sqlInsert)
                     console.log(InsertResult)
                     var insertId = InsertResult["insertId"]
-                    try{
+                    try {
                         const sqlManage = `insert into manage(businessId,orderNo,productId)value(${businessId},${insertId},${productId});`
                         console.log(sqlManage)
                         var ManageResult = await database.sqlConnection(sqlManage)
                         console.log(ManageResult)
-                    }catch(e){
+                    } catch (e) {
                         console.log(e)
                         response["error"] = "插入manage失敗"
                         response["state"] = 500
                         state = false
                         return "fail"
                     }
-                }catch(e){
+                } catch (e) {
                     console.log(e)
                     response["error"] = "插入order失敗"
                     response["state"] = 500
                     state = false
                     return "fail"
-                }         
-            }catch(e){
+                }
+            } catch (e) {
                 console.log(e)
                 response["error"] = "找不到廠商"
                 response["state"] = 500
                 state = false
                 return "fail"
             }
-            
-        }catch(e){
+
+        } catch (e) {
             console.log(e)
             response["error"] = "找不到使用者"
             response["state"] = 500
             state = false
             return "fail"
         }
-        
-        return "true"   
+
+        return "true"
     }));
-    if (state){
+    if (state) {
         response["state"] = 200
     }
     res.json(response)
 })
 
-router.post('/search', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/search', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName;
-    try{
+    try {
         var customerId = await database.GetUserId(userName)
         console.log(customerId)
-        try{
+        try {
             let response = []
             var sqlSearch = `select P.price,P.name,O.quantity,O.orderNo,O.status,O.discount,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
             console.log(sqlSearch)
             var result = await database.sqlConnection(sqlSearch)
-            result.forEach(function(item, index, array) {
+            result.forEach(function (item, index, array) {
                 let product = datatype.json2json(item)
                 console.log(product)
                 response.push(product)
-              });
+            });
             res.json(response)
-        }catch(e){
+        } catch (e) {
             let response = {
-                "error":"找尋訂單失敗",
-                "state":500
+                "error": "找尋訂單失敗",
+                "state": 500
             }
             res.json(response)
         }
-    }catch(e){
+    } catch (e) {
         let response = {
-            "error":"找不到使用者",
-            "state":500
+            "error": "找不到使用者",
+            "state": 500
         }
         res.json(response)
     }
 })
 
-router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/manage/add', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName;
     var description = req.body.description
     var name = req.body.name
@@ -293,83 +293,83 @@ router.post('/manage/add', datatype.verifyToken,async (req, res, next)=> {
     var status = req.body.status
     var category = req.body.category
     var today = new Date();
-    var currentDate = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate()
+    var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     var response = {
-        "productId":0,
-        "error":"",
-        "state":0
+        "productId": 0,
+        "error": "",
+        "state": 0
     }
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
         console.log(businessId)
-        if (businessId != null){
-            try{
+        if (businessId != null) {
+            try {
                 const sqlInsert = `insert into product (businessId,description,name,price,status,category,uploadedDate) value (${businessId},"${description}","${name}",${price},"${status}","${category}","${currentDate}");`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["productId"] = result["insertId"]
                 response["state"] = 200
-                
-            }catch(e){
+
+            } catch (e) {
                 response["error"] = "新增商品失敗"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             response["error"] = "找不到使用者"
-           response["state"] = 500
+            response["state"] = 500
         }
-        
-    }catch(e){
+
+    } catch (e) {
         response["error"] = "找不到使用者"
         response["state"] = 500
     }
     res.json(response)
 })
 
-router.post('/manage/search', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/manage/search', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName;
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
         console.log(businessId)
-        if (businessId != null){
-            try{
+        if (businessId != null) {
+            try {
                 const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where B.id = ${businessId};`
                 var result = await database.sqlConnection(sqlInsert)
                 var response = []
                 console.log(result)
-                result.forEach(function(item, index, array) {
+                result.forEach(function (item, index, array) {
                     let product = datatype.json2json(item)
-                    if (product["image"] != null){
+                    if (product["image"] != null) {
                         product["image"] = Buffer.from(product["image"]).toString('base64')
                     }
-                    else{
+                    else {
                         product["image"] = ""
                     }
                     console.log(product)
                     response.push(product)
                 });
-            }catch(e){
+            } catch (e) {
                 response["error"] = "查找商品失敗"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             response["error"] = "找不到使用者"
             response["state"] = 500
         }
-    }catch(e){
+    } catch (e) {
         response["error"] = "找不到使用者"
         response["state"] = 500
     }
     res.json(response)
 })
 
-router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/manage/update', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName
     var productId = req.body.productId
     var description = req.body.description
@@ -379,30 +379,30 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
     var category = req.body.category
     var image = req.body.image
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
         console.log(businessId)
-        if (businessId != null){
-            try{
+        if (businessId != null) {
+            try {
                 const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}" where no = ${productId};`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["state"] = 200
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 response["error"] = "修改商品失敗"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             console.log(e)
             response["error"] = "找不到使用者"
             response["state"] = 500
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         response["error"] = "找不到使用者"
         response["state"] = 500
@@ -410,85 +410,85 @@ router.post('/manage/update', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
-router.post('/manage/delete', datatype.verifyToken,async (req, res, next)=>{
+router.post('/manage/delete', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName
     var productId = req.body.productId
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
-        if (businessId != null){
+        if (businessId != null) {
             const sql = `delete from product where no = ${productId};`
-            try{
+            try {
                 var result = await database.sqlConnection(sql)
                 console.log(result)
-                if (result["affectedRows"] != 0){
+                if (result["affectedRows"] != 0) {
                     let response = {
-                        "error":"",
-                        "state":200
+                        "error": "",
+                        "state": 200
                     }
                     res.json(response)
-                }else{
+                } else {
                     let response = {
-                        "error":"沒有這個productId",
-                        "state":500
+                        "error": "沒有這個productId",
+                        "state": 500
                     }
                     res.json(response)
                 }
 
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 let response = {
-                    "error":"網路連線錯誤",
-                    "state":500
+                    "error": "網路連線錯誤",
+                    "state": 500
                 }
                 res.json(response)
             }
-        }else{
+        } else {
             let response = {
-                "error":"找不到該用戶",
-                "state":500
+                "error": "找不到該用戶",
+                "state": 500
             }
             res.json(response)
         }
-    
-    }catch(e){
+
+    } catch (e) {
         console.log(e)
         let response = {
-            "error":"網路連線錯誤",
-            "state":500
+            "error": "網路連線錯誤",
+            "state": 500
         }
         res.json(response)
     }
 })
 
-router.post('/manage/launch', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/manage/launch', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName
     var productId = req.body.productId
     var launch = req.body.launch
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
         console.log(businessId)
-        if (businessId != null){
-            try{
+        if (businessId != null) {
+            try {
                 const sqlInsert = `update product set launch = "${launch}" where no = ${productId};`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["state"] = 200
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 response["error"] = "修改上下架失敗"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             console.log(e)
             response["error"] = "找不到使用者"
             response["state"] = 500
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         response["error"] = "找不到使用者"
         response["state"] = 500
@@ -496,86 +496,86 @@ router.post('/manage/launch', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
-router.post('/manage/order/search', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/manage/order/search', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName;
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
         console.log(businessId)
-        if (businessId != null){
-            try{
+        if (businessId != null) {
+            try {
                 let response = []
                 var sqlSearch = `select P.no as productId,P.price,P.name,O.orderNo,O.quantity,O.status,O.discount,O.orderDate,O.arrivalDate,O.customerId from product as P,orders as O,manage as M,business as B where P.no = M.productId and O.orderNo = M.orderNo and M.businessId = ${businessId} and B.id = M.businessId;`
                 console.log(sqlSearch)
                 var result = await database.sqlConnection(sqlSearch)
-                result.forEach(function(item, index, array) {
+                result.forEach(function (item, index, array) {
                     let product = datatype.json2json(item)
                     console.log(product)
                     response.push(product)
-                  });
+                });
                 res.json(response)
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 let response = {
-                    "error":"找尋訂單失敗",
-                    "state":500
+                    "error": "找尋訂單失敗",
+                    "state": 500
                 }
                 res.json(response)
             }
         }
-        else{
+        else {
             console.log(e)
             let response = {
-                "error":"找不到使用者",
-                "state":500
+                "error": "找不到使用者",
+                "state": 500
             }
             res.json(response)
         }
-        
-    }catch(e){
+
+    } catch (e) {
         console.log(e)
         let response = {
-            "error":"找不到使用者",
-            "state":500
+            "error": "找不到使用者",
+            "state": 500
         }
         res.json(response)
     }
 })
 
-router.post('/manage/order/status', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/manage/order/status', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName
-    var orderNo= req.body.orderNo
+    var orderNo = req.body.orderNo
     var status = req.body.status
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
+    try {
         var businessId = await database.GetUserId(userName)
         console.log(businessId)
-        if (businessId != null){
-            try{
+        if (businessId != null) {
+            try {
                 const sqlUpdate = `update orders set status = "${status}" where orderNo = ${orderNo};`
                 var result = await database.sqlConnection(sqlUpdate)
-                if (result["affectedRows"] == 0){
+                if (result["affectedRows"] == 0) {
                     response["error"] = "找不到該訂單"
                     response["state"] = 500
                 }
-                else{
+                else {
                     console.log(result)
                     response["state"] = 200
                 }
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 response["error"] = "修改訂單status失敗"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             console.log(e)
             response["error"] = "找不到使用者"
             response["state"] = 500
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         response["error"] = "找不到使用者"
         response["state"] = 500
@@ -583,58 +583,58 @@ router.post('/manage/order/status', datatype.verifyToken,async (req, res, next)=
     res.json(response)
 })
 
-router.post('/order/comment', datatype.verifyToken,async (req, res, next)=> {        
+router.post('/order/comment', datatype.verifyToken, async (req, res, next) => {
     var userName = req.body.userName
-    var orderNo= req.body.orderNo
-    var star = req.body.star 
-    var comment = req.body.comment 
+    var orderNo = req.body.orderNo
+    var star = req.body.star
+    var comment = req.body.comment
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
+    try {
         var customerId = await database.GetUserId(userName)
         console.log(customerId)
-        if (customerId != null){
-            try{
+        if (customerId != null) {
+            try {
                 const sqlSearch = `select productId from manage where orderNo = ${orderNo};`
                 var result = await database.sqlConnection(sqlSearch)
-                if (result.length == 0){
+                if (result.length == 0) {
                     response["error"] = "找不到該訂單"
                     response["state"] = 500
                 }
-                else{
+                else {
                     productId = result[0]["productId"]
-                    if (star <= 5 & star >= 0){
-                        try{
+                    if (star <= 5 & star >= 0) {
+                        try {
                             const sqlInsert = `insert into product_comment(productId,customerId,orderNo,star,comment) value(${productId},${customerId},${orderNo},${star},"${comment}");`
                             let result = await database.sqlConnection(sqlInsert)
                             console.log(result)
                             response["state"] = 200
-                        }catch(e){
+                        } catch (e) {
                             console.log(e)
                             response["error"] = "插入評論失敗"
                             response["state"] = 500
                         }
                     }
-                    else{
+                    else {
                         response["error"] = "評價超出限制"
                         response["state"] = 500
                     }
-                    
+
                 }
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 response["error"] = "找不到該訂單"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             console.log(e)
             response["error"] = "找不到使用者"
             response["state"] = 500
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         response["error"] = "找不到使用者"
         response["state"] = 500
@@ -642,26 +642,26 @@ router.post('/order/comment', datatype.verifyToken,async (req, res, next)=> {
     res.json(response)
 })
 
-router.post('/manage/add/image/:productId',file.UploadImage.single('image'),async (req, res, next)=> {        
+router.post('/manage/add/image/:productId', file.UploadImage.single('image'), async (req, res, next) => {
     var productId = req.params.productId
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
-        if (req.file != undefined){
-            console.log(req.file)  
+    try {
+        if (req.file != undefined) {
+            console.log(req.file)
             response["state"] = 200
         }
-        else{
+        else {
             console.log('沒有上傳圖片')
             response["error"] = "沒選擇圖片"
-            response["state"] = 500 
+            response["state"] = 500
         }
         var sql = `insert into image_list(productId,content)value(${productId},?);`
-        let result = await database.sqlConnectionFile(sql,req.file.buffer)
+        let result = await database.sqlConnectionFile(sql, req.file.buffer)
         console.log(result)
-    }catch(e){
+    } catch (e) {
         console.log(e)
         response["error"] = "已存在圖片"
         response["state"] = 500
@@ -669,42 +669,42 @@ router.post('/manage/add/image/:productId',file.UploadImage.single('image'),asyn
     res.json(response)
 })
 
-router.post('/manage/update/image/:productId',file.UploadImage.single('image'),async (req, res, next)=> {        
+router.post('/manage/update/image/:productId', file.UploadImage.single('image'), async (req, res, next) => {
     var productId = req.params.productId
     var response = {
-        "error":"",
-        "state":0
+        "error": "",
+        "state": 0
     }
-    try{
-        if (req.file != undefined){
+    try {
+        if (req.file != undefined) {
             response["state"] = 200
-            console.log(req.file)  
+            console.log(req.file)
         }
-        else{
+        else {
             console.log('沒有上傳圖片')
             response["error"] = "沒選擇圖片"
-            response["state"] = 500 
+            response["state"] = 500
         }
         var sql = `update image_list set content = ? where productId = ${productId};`
-        let result = await database.sqlConnectionFile(sql,req.file.buffer)
+        let result = await database.sqlConnectionFile(sql, req.file.buffer)
         console.log(result)
-        if (result["affectedRows"] ==0){
-            try{
+        if (result["affectedRows"] == 0) {
+            try {
                 let sql = `insert into image_list(productId,content)value(${productId},?);`
-                let result = await database.sqlConnectionFile(sql,req.file.buffer)
+                let result = await database.sqlConnectionFile(sql, req.file.buffer)
                 console.log(result)
                 response["state"] = 200
-            }catch(e){
+            } catch (e) {
                 console.log(e)
                 response["error"] = "沒有此項商品"
                 response["state"] = 500
             }
         }
-        else{
+        else {
             response["state"] = 200
         }
-        
-    }catch(e){
+
+    } catch (e) {
         console.log(e)
         response["error"] = "網路連線錯誤"  //資料庫錯誤
         response["state"] = 500

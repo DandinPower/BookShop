@@ -90,6 +90,8 @@ create table orders (
      orderDate datetime not null,
      arrivalDate datetime,
      discount double default 1 not null,
+     address varchar(50) not null,
+     paymentInfo varchar(20) default "現金" not null,
      quantity int not null,
      status varchar(20) not null default "未出貨",
      foreign key (customerId) references account(id) on delete cascade
