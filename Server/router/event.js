@@ -169,6 +169,7 @@ router.post('/search', datatype.verifyToken, async(req,res,next)=>{
         if (organizerId != null){
             try{
                 var result = await database.sqlConnection(`select * from event where organizerId = ${organizerId}`)
+                console.log(result)
                 var response = []
                 result.forEach(function(item, index, array) {
                     let event = datatype.json2json(item)
@@ -435,6 +436,9 @@ router.get('/all', async(req,res,next)=>{
             }
             res.json(response)
         }
+        else if (result == true){
+            res.json(new Array())
+        }
         else{
             res.json(result)
         }
@@ -584,6 +588,7 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
     }
     if (state){
         result = await coupon.searchCoupon()
+        console.log(result)
     }
     if (result == false){
         let response = {
@@ -591,6 +596,9 @@ router.post('/coupon/search', datatype.verifyToken, async(req,res,next)=>{
             "state":coupon.state
         }
         res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
     }
     else{
         res.json(result)
@@ -755,7 +763,7 @@ router.post('/coupon/delete', datatype.verifyToken, async(req,res,next)=>{
 
 router.post('/coupon/customer/search', async(req,res,next)=>{
     var name = req.body.name 
-    const sqlSearch = `select code,eventName as name,discount,date,maxQuantity from coupon where eventName = "${name}";`
+    const sqlSearch = `select code,eventName as name,discount,date,maxQuantity,description from coupon where eventName = "${name}";`
     try{
         let response = []
         var result = await database.sqlConnection(sqlSearch)
@@ -857,12 +865,15 @@ router.post('/coupon/customer/product', async(req,res,next)=>{
         }
         res.json(response)
     }
+    else if (result == true){
+        res.json(new Array())
+    }
     else{
         res.json(result)
     }
 })
 
-router.get('/coupon/customer/all', async(req,res,next)=>{
+router.post('/coupon/customer/all', async(req,res,next)=>{
     var coupon = new Coupon(req)
     var state = true 
     var result = null
@@ -886,6 +897,9 @@ router.get('/coupon/customer/all', async(req,res,next)=>{
             "state":coupon.state
         }
         res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
     }
     else{
         res.json(result)
@@ -916,6 +930,9 @@ router.post('/coupon/customer/have', datatype.verifyToken, async(req,res,next)=>
             "state":coupon.state
         }
         res.json(response)
+    }
+    else if (result == true){
+        res.json(new Array())
     }
     else{
         res.json(result)

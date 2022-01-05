@@ -69,3 +69,21 @@ values
 (1,"XMAS88",2),
 (2,"STUDY77",2),
 (3,"HAPPY69",3);
+
+alter table product drop column image;
+alter table account drop foreign key account_ibfk_1;
+alter table account drop column adminId;
+
+alter table orders add column discount double;
+alter table orders modify column discount double default 1 not null;
+
+delete from manage;
+delete from orders;
+insert into orders(customerId,orderDate,quantity,discount)value(1,"2021-12-8",3,0.99);
+insert into manage(businessId,orderNo,productId)value(4,(select last_insert_id()),2);
+insert into orders(customerId,orderDate,quantity,discount)value(2,"2021-12-8",2,1);
+insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()),3);
+insert into orders(customerId,orderDate,quantity,discount)value(3,"2021-12-8",1,0.77);
+insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
+
+alter table coupon add column description varchar(100);

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
-import {Container, Col, Table, Button, ButtonGroup} from 'react-bootstrap'; 
+import {Container, Table, Button, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const Order =({setClientOrderInfo})=>{
-    const [orderBooks, setOrderBooks] = useState();
+    const [orderBooks, setOrderBooks] = useState(['']);
     
     useEffect(()=>{
         axios({
@@ -33,7 +33,7 @@ const Order =({setClientOrderInfo})=>{
             <td>{book.arrivalDate}</td>
             <td>{book.quantity}</td>
             <td>{book.status}</td> 
-            <td>{book.price * parseInt(book.quantity)}</td> 
+            <td>{book.price * parseInt(book.quantity) * parseFloat(book.discount)}</td> 
             
             <ButtonGroup vertical>
                 <Link to="/Products/ordercomment"  onClick={ e => setClientOrderInfo(book)} ><button disabled={book.status !=='訂單完成'}>評價此訂單</button></Link>

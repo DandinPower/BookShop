@@ -20,6 +20,28 @@ const ManageProduct = ({setProductInfo}) => {
           })
     },[])
   
+    const deleteProduct =(id)=>{
+      setBookData(function (prev){
+        return prev.filter(e=>e.productId !== id)
+      })
+      axios({
+        method: 'POST',
+        url: 'http://localhost:5000/product/manage/delete',
+        data:
+        {
+          userName: window.sessionStorage.getItem('userName'),
+          token: window.sessionStorage.getItem('token'),
+          productId:id
+        }
+      }).then((response) => {
+        if(response.data !== 500){
+          alert('刪除成功')
+        }
+        else{
+          alert(response.data.error)
+        }
+      })
+    }
 
     const listBooks = bookData.map((data)=>{
       if(data.image !== undefined){
@@ -47,11 +69,11 @@ const ManageProduct = ({setProductInfo}) => {
                   <td>{launch}</td>
                   
                   <ButtonGroup vertical>
-                    <Link to="/Products/business/updateproduct">
-                    
-                    <Button onClick={(e)=>setProductInfo(data)}>Update</Button>
-                    </Link>
-                    <Button variant="outline-danger">Delete</Button>
+                  <Link to="/Products/business/updateproduct" onClick={e => setProductInfo(data)}>
+                    <Button variant="outline-success" >Update</Button>
+                  </Link>
+                    <br/>
+                    <Button variant="outline-danger" onClick={e => deleteProduct(data.productId)}>Delete</Button>
                   </ButtonGroup>
                 </tr>
               )

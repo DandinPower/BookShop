@@ -18,6 +18,7 @@ const AdminLogin = ()=>{
             if(response.data.state !== '500'){
                 window.sessionStorage.setItem('userName',id)
                 window.sessionStorage.setItem('token',response.data.token)
+                window.sessionStorage.setItem('type','admin')
                 window.sessionStorage.setItem('authority',response.data.authority)
                 window.location.href = `${window.location.origin}`
                 alert('登入成功')

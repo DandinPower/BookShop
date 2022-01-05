@@ -59,11 +59,11 @@ values
 (2,"STUDY77",2),
 (3,"HAPPY69",3);
 
-insert into orders(customerId,orderDate,quantity)value(1,"2021-12-8",3);
+insert into orders(customerId,orderDate,quantity,discount)value(1,"2021-12-8",3,0.99);
 insert into manage(businessId,orderNo,productId)value(4,(select last_insert_id()),2);
-insert into orders(customerId,orderDate,quantity)value(2,"2021-12-8",2);
+insert into orders(customerId,orderDate,quantity,discount)value(2,"2021-12-8",2,1);
 insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()),3);
-insert into orders(customerId,orderDate,quantity)value(3,"2021-12-8",1);
+insert into orders(customerId,orderDate,quantity,discount)value(3,"2021-12-8",1,0.77);
 insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
 
 insert into product_comment(productId,customerId,orderNo,star,comment) value(4,3,3,5,"好書推薦");

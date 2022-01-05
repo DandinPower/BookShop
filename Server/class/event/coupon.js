@@ -17,6 +17,8 @@ class Coupon {
         this._date = new Date(this.date)
         this.discount = req.body.discount 
         this.maxQuantity = req.body.maxQuantity
+        this.description = null
+        this.description = req.body.description
         this.initialize()
     }
     /*
@@ -162,7 +164,7 @@ class Coupon {
 
     //根據參數查找符合的優惠券
     async searchCouponByProductId() {
-        const sql = `select C.code,C.discount,C.date,H.quantity\
+        const sql = `select C.code,C.discount,C.date,H.quantity,C.description\
                         from coupon as C \
                         join event as E on E.name = C.eventName \
                         join organizer as O on O.organizerId = E.organizerId \
@@ -170,7 +172,8 @@ class Coupon {
                         join product as P on P.businessId = B.id \
                         join have as H on H.couponCode = C.code \
                         where P.no = ${this.productId} \
-                        and H.customerId = ${this.userId};`
+                        and H.customerId = ${this.userId} \
+                        and H.quantity > 0;`
         console.log(sql)
         try{
             var result = await database.sqlConnection(sql)
@@ -181,7 +184,12 @@ class Coupon {
                 console.log(coupon)
                 response.push(coupon)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"
@@ -192,7 +200,7 @@ class Coupon {
 
     //搜尋管理員開的所有優惠券
     async searchCouponByAdmin() {
-        const sql = `select C.code,C.discount,C.date,H.quantity\
+        const sql = `select C.code,C.discount,C.date,H.quantity,C.description\
                         from coupon as C \
                         join event as E on E.name = C.eventName \
                         join organizer as O on O.organizerId = E.organizerId \
@@ -209,7 +217,12 @@ class Coupon {
                 console.log(coupon)
                 response.push(coupon)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"
@@ -418,7 +431,7 @@ class Coupon {
 
     //搜尋所有買家有的優惠券
     async searchAllCustomerHave(){
-        const sqlSearch = `select C.code,C.discount,C.date,H.quantity from coupon as C join have as H on C.code = H.couponCode where H.customerId = ${this.userId};`
+        const sqlSearch = `select C.code,C.discount,C.date,H.quantity,C.description from coupon as C join have as H on C.code = H.couponCode where H.customerId = ${this.userId} and H.quantity > 0;`
         console.log(sqlSearch)
         try{
             var result = await database.sqlConnection(sqlSearch)
@@ -528,7 +541,7 @@ class Coupon {
 
     //檢查完畢後新增優惠券
     async addNewCoupon() {
-        const sqlInsert = `insert into coupon(code,eventName,date,discount,maxQuantity)value("${this.code}","${this.name}","${this.date}",${this.discount},${this.maxQuantity});`       
+        const sqlInsert = `insert into coupon(code,eventName,date,discount,maxQuantity,description)value("${this.code}","${this.name}","${this.date}",${this.discount},${this.maxQuantity},"${this.description}");`       
         console.log(sqlInsert)
         try{
             var result = await database.sqlConnection(sqlInsert)
@@ -546,7 +559,7 @@ class Coupon {
 
     //檢查完後查詢優惠券
     async searchCoupon() {
-        const sqlSearch = `select C.code,C.date,C.discount,C.maxQuantity,C.eventName as name from coupon as C join event as E on C.eventName = E.name where E.organizerId = ${this.organizerId};`
+        const sqlSearch = `select C.code,C.date,C.discount,C.maxQuantity,C.description,C.eventName as name from coupon as C join event as E on C.eventName = E.name where E.organizerId = ${this.organizerId};`
         console.log(sqlSearch)
         try{
             var result = await database.sqlConnection(sqlSearch)
@@ -557,7 +570,12 @@ class Coupon {
                 console.log(coupon)
                 response.push(coupon)
             });
-            return response
+            if (response.length == 0){
+                return true
+            }
+            else {
+                return response
+            } 
         }catch(e){
             console.log(e)
             this.errorMessage = "網路連線失敗"
@@ -568,7 +586,7 @@ class Coupon {
 
     //檢查完後更新優惠券
     async updateCoupon() {
-        const sqlUpdate = `update coupon set date = "${this.date}",discount = "${this.discount}",maxQuantity = ${this.maxQuantity} where code = "${this.code}";`
+        const sqlUpdate = `update coupon set date = "${this.date}",discount = "${this.discount}",maxQuantity = ${this.maxQuantity},description = "${this.description}" where code = "${this.code}";`
         console.log(sqlUpdate)
         try{
             var result = await database.sqlConnection(sqlUpdate)

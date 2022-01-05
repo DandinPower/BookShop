@@ -37,7 +37,7 @@ const Category = ({setBookInfo}) =>{
               .catch((err) => { console.error(err) })
         }
     ,[selectCate,url])
-    
+
     const listCategory = category.map((data)=>{
         return <ListGroup.Item action onClick={(e => {setSelectCate(e.target.innerHTML)})}>{data}</ListGroup.Item>
     })
