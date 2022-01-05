@@ -198,6 +198,8 @@ router.post('/add', datatype.verifyTokenByList, async (req, res, next) => {
         var productId = product["productId"]
         var quantity = product["quantity"]
         var discount = product["discount"]
+        var address = product["address"]
+        var paymentInfo = product["paymentInfo"]
         try {
             var customerId = await database.GetUserId(userName)
             console.log(customerId)
@@ -205,7 +207,7 @@ router.post('/add', datatype.verifyTokenByList, async (req, res, next) => {
                 var businessId = await database.GetBusinessId(productId)
                 console.log(businessId)
                 try {
-                    const sqlInsert = `insert into orders(customerId,orderDate,quantity,discount)value(${customerId},"${currentDate}",${quantity},${discount});`
+                    const sqlInsert = `insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)value(${customerId},"${currentDate}",${quantity},${discount},"${address}","${paymentInfo}");`
                     console.log(sqlInsert)
                     var InsertResult = await database.sqlConnection(sqlInsert)
                     console.log(InsertResult)
