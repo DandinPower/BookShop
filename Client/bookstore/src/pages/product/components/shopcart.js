@@ -1,6 +1,6 @@
 import React, { useEffect,useState} from 'react'
 import axios from 'axios'
-import {Container, Col, Table, Button, ButtonGroup, Form} from 'react-bootstrap'; 
+import {Container, Row, Col, Table, Button, ButtonGroup, Form} from 'react-bootstrap'; 
 import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
@@ -150,27 +150,19 @@ const ShopCart = ({setCheckOrderInfo}) => {
                   {listBooks}
               </tbody>
             </Table>
-            <h3>總價格 : {price}</h3>
-            <Link to="/Products/orderInfo"><Button variant='success' onClick={OrderBooks}>下單</Button></Link>
-            <Button variant="outline-danger" onClick = {deleteall}>全部刪除</Button>
+            <br size="lg"/>
+            <hr/>
+            
+            <div className="d-flex justify-content-end">
+              <h3>總價格 : {price}</h3>
+            </div>        
+            <div className="d-flex justify-content-end">
+              <Link className="me-2"  to="/Products/orderInfo"><Button size="lg" variant='success' onClick={OrderBooks}>下單</Button></Link>
+              <Button  size="sm" variant="outline-danger" onClick = {deleteall}>全部刪除</Button>
+            </div>
+            
           </Container>
         
     )
 }
 export default ShopCart
-/*<div>
-        <button onClick = {deleteall}>全部刪除</button>
-        {listBooks}
-        <div>總價格</div>
-        <div>{price}</div>
-        <button onClick={orderBooks}>下單</button>
-    </div> 
-    
-    <div>
-                    <img src={`data:image/png;base64,${data.image}`}  alt={data.description}></img>
-                    <div>{data.name}</div>
-                    <label>數量:</label>
-                    <input type='text' value={data.quantity} onChange={e=>changeQuantity(data.productId,e.target.value)}></input>
-                    <div>價格:{data.price * parseInt(data.quantity)}</div>
-                    <button onClick={ e=> deleteBook(data.productId)}>刪除</button>
-                </div>*/

@@ -275,9 +275,9 @@ const OrderInfo = ({checkOrderInfo})=>{
             {ListBooks(books)}
             <br size="lg"/>
             <Row className="bg-dark p-2 text-dark bg-opacity-10">  
-            <Col className="w-20">商店名稱: {books[0].businessName}</Col>
-            <Col className="w-20">優惠碼: {ListCoupon(books[0].businessName)}</Col>
-            <Col className="w-20">不使用<input type='radio' value={1} name={books[0].businessName} onClick={e=> UseCoupon(books[0].businessName,'',e.target.value)}></input></Col>
+              <Col className="w-20">商店名稱: {books[0].businessName}</Col>
+              <Col className="w-20">優惠碼: {ListCoupon(books[0].businessName)}</Col>
+              <Col className="w-20">不使用<input type='radio' value={1} name={books[0].businessName} onClick={e=> UseCoupon(books[0].businessName,'',e.target.value)}></input></Col>
             </Row>
             <br size="lg"/>
             <hr></hr>
@@ -290,6 +290,22 @@ const OrderInfo = ({checkOrderInfo})=>{
     <Container>
       <hr/>  
       {ListBooksByBusinessName}
+      <Container>
+        
+        <div className="d-flex justify-content-end">
+          <p className="me-2">全站優惠碼:{ListFullSiteCoupon} </p>
+          <p className="me-2">不使用<input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input></p>
+          <Button className="me-2" variant="danger" onClick={ e => deleteall()}>撤銷全部</Button>
+        </div>
+        <br size="lg"/>
+        <div className="d-flex justify-content-end">
+          <h1 className="me-4">總金額:</h1>
+          <Button variant="success" size="lg" onClick={ e => OrderBooks()}>下訂</Button>
+        </div>
+        <div className="d-flex justify-content-end">        
+          
+        </div>
+      </Container>
     </Container>)
 }
 export default OrderInfo
