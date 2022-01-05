@@ -195,7 +195,7 @@ const OrderInfo = ({checkOrderInfo})=>{
             }
           }).then((response) => {
             if(response.data.state === 200){
-                setBooks([''])
+                setBooks([])
             }
             else if (response.data.state === 500){
                 alert(response.data.error)
