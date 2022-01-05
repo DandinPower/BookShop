@@ -556,7 +556,7 @@ router.post('/manage/order/status', datatype.verifyToken, async (req, res, next)
         console.log(businessId)
         if (businessId != null) {
             try {
-                const sqlUpdate = `update orders set status = "${status}" where orderNo = ${orderNo};`
+                const sqlUpdate = `update orders set status = "${status}" where orderNo = ${orderNo} and ${orderNo} in (select orderNo from manage where businessId = ${businessId});`
                 var result = await database.sqlConnection(sqlUpdate)
                 if (result["affectedRows"] == 0) {
                     response["error"] = "找不到該訂單"
@@ -714,5 +714,57 @@ router.post('/manage/update/image/:productId', file.UploadImage.single('image'),
     res.json(response)
 })
 
+router.post('/manage/order/delete', datatype.verifyToken, async (req, res, next) => {
+    var userName = req.body.userName;
+    var orderNo = req.body.orderNo;
+    try {
+        var businessId = await database.GetUserId(userName)
+        console.log(businessId)
+        if (businessId != null) {
+            try {
+                var sqlDelete = `delete from orders where orderNo = ${orderNo} and ${orderNo} in (select orderNo from manage where businessId = ${businessId});`
+                console.log(sqlDelete)
+                var result = await database.sqlConnection(sqlDelete)
+                console.log(result)
+                if (result["affectedRows"] != 0) {
+                    let response = {
+                        "error": "",
+                        "state": 200
+                    }
+                    res.json(response)
+                }
+                else {
+                    let response = {
+                        "error": "找不到該訂單",
+                        "state": 500
+                    }
+                    res.json(response)
+                }
+            } catch (e) {
+                console.log(e)
+                let response = {
+                    "error": "網路連線失敗",
+                    "state": 500
+                }
+                res.json(response)
+            }
+        }
+        else {
+            console.log(e)
+            let response = {
+                "error": "找不到該用戶",
+                "state": 500
+            }
+            res.json(response)
+        }
 
+    } catch (e) {
+        console.log(e)
+        let response = {
+            "error": "網路連線失敗",
+            "state": 500
+        }
+        res.json(response)
+    }
+})
 module.exports = router
