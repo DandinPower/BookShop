@@ -121,7 +121,7 @@ const OrderInfo = ({checkOrderInfo})=>{
             let FullSiteCoupon = useCoupons.find(e=>e.businessName === 'admin')
             try{
                 sum += book.price * parseInt(book.quantity) * parseFloat(Coupon.discount)* parseFloat(FullSiteCoupon.discount);
-                setPrice(sum)
+                setPrice(Math.round(sum))
             }catch (error) {
             }
         })
@@ -261,7 +261,7 @@ const OrderInfo = ({checkOrderInfo})=>{
                 <Col className="w-20"></Col>
                 <Col className="w-20">{data.name}</Col>
                 <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
-                <Col>{data.price * parseInt(data.quantity)*(discount)}</Col>
+                <Col>{Math.round(data.price * parseInt(data.quantity)*(discount))}</Col>
                 <Col><Button variant="outline-danger" onClick={e => deleteBook(data.productId)}>Delete</Button></Col>  
               </Row>              
                 )
