@@ -13,7 +13,7 @@ const pool = mysql.createPool({
 
 //Liaw本地端
 /*
-const pool = mysql.createPool({  
+const pool = mysql.createPool({
     connectionLimit: 10,
     password: 'root',
     user: 'root',
@@ -21,7 +21,8 @@ const pool = mysql.createPool({
     host: 'localhost',
     port: '3306'
 })*/
-const pool = mysql.createPool({  
+
+const pool = mysql.createPool({
     connectionLimit: 10,
     password: 'admin',
     user: 'dandinpo_admin',
@@ -31,10 +32,10 @@ const pool = mysql.createPool({
 })
 
 let sqlConnection = (sql) => {
-    return new Promise((resolve,reject) => {
-        
-        pool.query(sql,(err,results)=>{
-            if(err){
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, results) => {
+            if (err) {
                 return reject(err)
             }
             return resolve(results)
@@ -44,108 +45,108 @@ let sqlConnection = (sql) => {
 
 const sqlConnectionFile = (sql, values) => {
     return new Promise((reslove, reject) => {
-      pool.getConnection((err, connection) => {
-        if (err) {
-          reject(err);
-        } else {
-          connection.query(sql, values, (error, rows) => {
-            if (error) {
-              reject(error);
+        pool.getConnection((err, connection) => {
+            if (err) {
+                reject(err);
             } else {
-              reslove(rows);
+                connection.query(sql, values, (error, rows) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        reslove(rows);
+                    }
+                    connection.release();
+                });
             }
-            connection.release();
-          });
-        }
-      });
+        });
     });
-  }
+}
 
-async function GetUserId (userName){
-    try{
+async function GetUserId(userName) {
+    try {
         result = await sqlConnection(`select id from account where userName = "${userName}";`)
         console.log(result);
-        if (result.length != 0){
+        if (result.length != 0) {
             return result[0]["id"]
         }
-        else{
+        else {
             return null
         }
-    }catch(e){
+    } catch (e) {
         console.log(e);
         return null
     }
 }
 
-async function GetBusinessId (productId){
-    try{
+async function GetBusinessId(productId) {
+    try {
         result = await sqlConnection(`select businessId from product where no = ${productId};`)
         console.log(result);
-        if (result.length != 0){
+        if (result.length != 0) {
             return result[0]["businessId"]
         }
-        else{
+        else {
             return null
         }
-    }catch(e){
+    } catch (e) {
         console.log(e);
         return null
     }
 }
 
-async function GetAdminId (userName){
-    try{
+async function GetAdminId(userName) {
+    try {
         result = await sqlConnection(`select id from admin where userName = "${userName}";`)
         console.log(result);
-        if (result.length != 0){
+        if (result.length != 0) {
             return result[0]["id"]
         }
-        else{
+        else {
             return null
         }
-    }catch(e){
+    } catch (e) {
         console.log(e);
         return null
     }
 }
 
-async function AddNewOrganizer(){
+async function AddNewOrganizer() {
     const sql = `insert into organizer()value();`
-    try{
+    try {
         var result = await sqlConnection(sql)
         console.log(result)
-        if (result.length != 0){
+        if (result.length != 0) {
             return result["insertId"]
         }
-        else{
+        else {
             return null
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         return null
     }
 }
 
-async function GetOrganizerId(type,id){
-    if (type == 'business'){
+async function GetOrganizerId(type, id) {
+    if (type == 'business') {
         var sql = `select organizerId from business where id = ${id};`
     }
-    else if (type == 'admin'){
+    else if (type == 'admin') {
         var sql = `select organizerId from admin where id = ${id};`
     }
     else {
         return null
     }
-    try{
+    try {
         console.log(sql)
         var result = await sqlConnection(sql)
-        if (result[0].organizerId == null){
+        if (result[0].organizerId == null) {
             let returnId = await AddNewOrganizer()
             console.log(`returnId:${returnId}`)
             try {
-                if (type == 'business'){
+                if (type == 'business') {
                     var sqlUpdate = `update business set organizerId = ${returnId} where id = ${id}`
-                }else{
+                } else {
                     var sqlUpdate = `update admin set organizerId = ${returnId} where id = ${id}`
                 }
                 console.log(sqlUpdate)
@@ -153,15 +154,15 @@ async function GetOrganizerId(type,id){
                 console.log(updateResult)
                 return returnId
             }
-            catch(e){
+            catch (e) {
                 console.log(e)
                 return null
-            }                 
+            }
         }
-        else{
+        else {
             return result[0].organizerId
         }
-        }catch(e){
+    } catch (e) {
         console.log(e)
         return null
     }

@@ -107,13 +107,13 @@ class Coupon {
         if (this.checkCode() == false) {
             return false
         }
-        if (this.checkDate() == false) {
-            return false
-        }
         if (this.checkDiscount() == false) {
             return false
         }
         if (this.checkMaxQuantity() == false) {
+            return false
+        }
+        if (this.checkDate() == false) {
             return false
         }
         return true
