@@ -49,22 +49,9 @@ const UpdataOrder = ({orderInfo})=>{
           </Form>
 
           <div className="d-grid gap-2">
-                <Button variant="success" size="lg" onClick={UpdateStatus}>修改訂單狀態</Button>
+            <Button variant="success" size="lg" onClick={UpdateStatus}>修改訂單狀態</Button>
           </div>
         </Container>
     )
 }
 export default UpdataOrder
-    /*<div>
-        <div>訂單編號: {orderInfo.orderNo}</div>
-        <div>
-            <input type='radio' name="status" value='未出貨' onClick={(e) => {setStatus(e.target.value)}} checked={status === '未出貨'}></input>
-            <label>未出貨</label>
-            <input type='radio' name="status" value='出貨' onClick={(e) => {setStatus(e.target.value)}} checked={status === '出貨'}></input>
-            <label>出貨</label>
-            <input type='radio' name="status" value='訂單完成' onClick={(e) => {setStatus(e.target.value)}} checked={status === '訂單完成'}></input>
-            <label>訂單完成</label>
-            <br/>
-            <button onClick={UpdateStatus}>修改狀態</button>
-        </div>
-    </div> */

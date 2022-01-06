@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import {Container, Row, Col, Button, Form} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const AddCoupon = ({eventInfo}) =>{
     const [code,setCode] = useState('')
@@ -38,24 +40,54 @@ const AddCoupon = ({eventInfo}) =>{
         }
     }
 
-    return(<div>
-           <h1>新增優惠券</h1>
-           <label>活動名稱: </label>
-           <input type='text' value={eventInfo.name} disabled></input>
-           <br/>
-           <label>優惠碼: </label>
-           <input type='text' onChange={e => setCode(e.target.value)}></input>
-           <br/>
-           <label>優惠券到期日: </label>
-           <input type='date' onChange={e => setDate(e.target.value)}></input>
-           <br/>
-           <label>優惠券折扣: </label>
-           <input type='number'onChange={e => setDiscount(e.target.value)}></input>
-           <br/>
-           <label>優惠券最多使用次數: </label>
-           <input type='number'onChange={e => setMaxQuantity(e.target.value)}></input>
-           <br/>
-           <button onClick={SendCoupon}>送出</button>
-           </div>)
+    return(
+      <Container className='w-50 text-center'>
+        <h1>新增優惠券</h1>
+        <Form>
+          <Form.Group as={Row}>
+            <Form.Label column>活動名稱</Form.Label>
+            <Col xs={10}>
+              <Form.Control type='text' value={eventInfo.name} disabled/>
+            </Col>
+          </Form.Group>
+          <br size="sm"/>
+          <Form.Group as={Row}>
+              <Form.Label column>優惠碼</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='text' onChange={e => setCode(e.target.value)}/>
+              </Col> 
+          </Form.Group>
+          
+          <br size="sm"/>
+          <Form.Group as={Row}>
+              <Form.Label column>優惠券到期日</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='date' onChange={e => setDate(e.target.value)}/>
+              </Col> 
+          </Form.Group>
+          
+          <br size="sm"/>
+          <Form.Group as={Row}>
+              <Form.Label column>優惠券折扣</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='number'onChange={e => setDiscount(e.target.value)}/>
+              </Col> 
+          </Form.Group>
+
+          <br size="sm"/>
+          <Form.Group as={Row}>
+              <Form.Label column>優惠券發行總數</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='number'onChange={e => setMaxQuantity(e.target.value)}/>
+              </Col> 
+          </Form.Group>
+        </Form>
+
+        <br size='lg'/>
+        <div className='d-flex justify-content-center'>
+          <Button size='lg' variant='success' onClick={SendCoupon}>送出</Button>
+        </div>
+      </Container>
+          )
 }
 export default AddCoupon

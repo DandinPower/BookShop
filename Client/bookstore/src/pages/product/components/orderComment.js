@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, {useState} from 'react'
+import {Container, Row, Col, Button, Form} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const OrderComment = ({clientOrderInfo}) =>{
     const [star, setStar] = useState();
@@ -27,25 +29,41 @@ const OrderComment = ({clientOrderInfo}) =>{
         })
     }
     return(
-    <div>
-        <div>訂單編號:{clientOrderInfo.orderNo}的評價</div>
-        <div>評價:
-            <input type='radio' name="star" value='1' onClick={(e) => {setStar(e.target.value)}}></input>
-            <label> 1 </label>
-            <input type='radio' name="star" value='2' onClick={(e) => {setStar(e.target.value)}}></input>
-            <label> 2 </label>
-            <input type='radio' name="star" value='3' onClick={(e) => {setStar(e.target.value)}}></input>
-            <label> 3 </label>
-            <input type='radio' name="star" value='4' onClick={(e) => {setStar(e.target.value)}}></input>
-            <label> 4 </label>
-            <input type='radio' name="star" value='5' onClick={(e) => {setStar(e.target.value)}}></input>
-            <label> 5 </label>
+
+    <Container as={Form} className='text-center'>
+        <br size="sm"/>
+        <Form.Group as={Row}>
+          <Form.Label column>活動名稱</Form.Label>
+          <Col xs={10}>
+              <Form.Control type='text' value ={clientOrderInfo.orderNo} disabled/>
+          </Col> 
+        </Form.Group>
+        
+        <br size="sm"/>
+        <Form.Group as={Row}>
+            <Form.Label column>評價</Form.Label>
+            <Col xs={10} className="text-start">
+                <Form.Check inline label="1" type="radio" name="star" value='1' onClick={(e) => {setStar(e.target.value)}}/> 
+                <Form.Check inline label="2" type="radio" name="star" value='2' onClick={(e) => {setStar(e.target.value)}}/>
+                <Form.Check inline label="3" type="radio" name="star" value='3' onClick={(e) => {setStar(e.target.value)}}/> 
+                <Form.Check inline label="4" type="radio" name="star" value='4' onClick={(e) => {setStar(e.target.value)}}/> 
+                <Form.Check inline label="5" type="radio" name="star" value='5' onClick={(e) => {setStar(e.target.value)}}/>     
+            </Col> 
+        </Form.Group>
+
+        <br size="sm"/>
+        <Form.Group as={Row}>
+          <Form.Label column>評論</Form.Label>
+          <Col xs={10}>
+              <Form.Control as="textarea" type='text' value={comment} onChange={e=>setComment(e.target.value)} rows={3}/>
+          </Col> 
+        </Form.Group>
+
+        <br size="sm"/>
+        
+        <div className='d-flex justify-content-center'>
+            <Button size='lg' variant='success' onClick={SendComment}>送出</Button>
         </div>
-        <div>
-            <label>評論: </label>
-            <input type='text'  value={comment} onChange={e=>setComment(e.target.value)}></input>
-        </div>
-        <div><button onClick={SendComment}>送出</button></div>
-    </div>)
+    </Container>)
 }
 export default OrderComment

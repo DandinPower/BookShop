@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import {Container, Form, Row, Col, Button} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const UpdateEvent =({eventInfo})=>{
     const [eventName,setEventName] = useState(eventInfo.name)
@@ -32,16 +34,29 @@ const UpdateEvent =({eventInfo})=>{
             alert('活動名和名稱不能空白')
         }
     }
+ 
+    return(<Container as={Form} className='text-center'>
+            <h1>修改活動</h1>
+            <Form.Group as={Row}>
+              <Form.Label column>活動名稱</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='text' value ={eventName} onChange={(e) => {setEventName(e.target.value)}} disabled/>
+              </Col> 
+            </Form.Group>
 
-    return(<div>
-        <h1>修改活動</h1>
-        <label>活動名稱: </label>
-        <input type='text' value ={eventName} onChange={(e) => {setEventName(e.target.value)}} disabled></input>
-        <br/>
-        <label>活動到期日: </label>
-        <input type='date' value ={eventDate.substr(0, 10)} onChange={(e) => {setEventDate(e.target.value)}}></input>
-        <br/>
-        <button onClick={UpDateEvent}>送出</button>
-        </div>)
+            <br size="sm"/>
+            <Form.Group as={Row}>
+              <Form.Label column>活動到期日</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='date' value ={eventDate.substr(0, 10)} onChange={(e) => {setEventDate(e.target.value)}}/>
+              </Col> 
+            </Form.Group>
+            <br/>
+
+            <div className='d-flex justify-content-center'>
+              <Button variant='success' onClick={UpDateEvent}>送出</Button>
+            </div>
+            
+          </Container>)
 }
 export default UpdateEvent
