@@ -42,17 +42,40 @@ const ManageOrder = ({setOrderInfo})=>{
       })
    }
 
+   const ReturnOrder=(orderNo)=>{
+    axios({
+      method: 'POST',
+      url: 'http://localhost:5000/product/manage/order/delete',
+      data:
+      {
+        userName: window.sessionStorage.getItem('userName'),
+        token: window.sessionStorage.getItem('token'),
+        orderNo:orderNo,
+      }
+    }).then((response) => {
+      if(response.data.state !== 500){
+        alert('訂單已撤銷')
+      }
+      else{
+        alert(response.data.error)
+      }
+    })
+   }
+
    const ButtonView =(data)=>{
-     if(data.status !=='申請取消' && data.status !=='取消成功'){
+     if(data.status !=='申請取消' && data.status !=='取消成功' && data.status !=='賣家撤銷此訂單'){
        return(
+        <ButtonGroup vertical>
               <Link to="/Products/business/updateorder">
                 <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>
                   Update
                 </Button>
               </Link>
+              <Button variant="outline-success" onClick={e=>ReturnOrder(data.orderNo)} disabled={data.status !=='未出貨'}>刪除訂單</Button>
+        </ButtonGroup>
              )
       }
-      else if(data.status ==='取消成功'){
+      else if(data.status ==='取消成功' || data.status ==='賣家撤銷此訂單'){
         return(<div></div>)
       }
       else{
@@ -81,7 +104,6 @@ const ManageOrder = ({setOrderInfo})=>{
                   <td>{data.customerId}</td> 
                   <td>{Math.round(data.price *parseInt(data.quantity) * parseFloat(data.discount))}</td> 
                   {ButtonView(data)}
-
                 </tr>
            )
       })

@@ -50,6 +50,7 @@ const ViewMyCoupon =()=>{
 
     return(<Container className='text-center' >
             <h1 className='fw-bold bg-dark p-2 text-dark bg-opacity-10' >我的優惠券</h1>
+            <h3 className='fw-bold bg-dark p-2 text-dark bg-opacity-10' >優惠券使用說明:商家發放的優惠券只能用在該商家</h3>
             <hr/>
             <Table>
               <thead>
