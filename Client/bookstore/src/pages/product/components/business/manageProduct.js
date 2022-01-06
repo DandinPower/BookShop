@@ -102,9 +102,9 @@ const ManageProduct = ({setProductInfo}) => {
                 {listBooks}
               </tbody>
             </Table>
-            <Button variant='success' href="/Products/business/addproduct">
-              新增商品
-            </Button>
+            <div className='d-flex justify-content-end'>
+              <Button size='lg' variant='success' href="/Products/business/addproduct">新增商品</Button>
+            </div>
           </Container>
         )
 }

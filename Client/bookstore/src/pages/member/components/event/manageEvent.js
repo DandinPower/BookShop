@@ -1,6 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import {ButtonGroup, Container, Table, Button} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const ManageEvent = ({setEventInfo})=>{
     const [events,setEvents] = useState([''])
@@ -50,19 +52,38 @@ const ManageEvent = ({setEventInfo})=>{
     }
 
     const ListEvent = events.map((event)=>{
-      return(<div>
-             <div>活動名稱: {event.name}</div>
-             <div>活動到期日: {event.date}</div>
-             <Link to = '/member/event/updateEvent'><button onClick={e => setEventInfo(event)}>修改活動</button></Link>
-             <button onClick={e => deleteEvent(event.name)}>刪除活動</button>
-             <Link to = '/member/event/addCoupon'><button onClick={e => setEventInfo(event)}>新增優惠券</button></Link>
-             <br/>
-             </div>)
+      return(<tr>
+              <td>{event.name}</td>
+              <td>{event.date}</td>
+              <td>
+                <ButtonGroup vertical>
+                  <Link to = '/member/event/updateEvent'><button className='me-2' onClick={e => setEventInfo(event)}>修改活動</button></Link>
+                  <br/>
+                  <button onClick={e => deleteEvent(event.name)}>刪除活動</button>
+                  <br/>
+                  <Link to = '/member/event/addCoupon'><button onClick={e => setEventInfo(event)}>新增優惠券</button></Link>
+                </ButtonGroup>
+              </td>
+             </tr>)
   })
 
-    return(<div>
-           {ListEvent}
-           <Link to = '/member/event/AddEvent'><button>新增活動</button></Link>
-           </div>)
+    return(<Container >
+            <Table hover className='text-center align-middle'>
+              <thead>
+                <tr>
+                  <th>活動名稱</th>
+                  <th>活動到期日</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ListEvent}
+              </tbody>
+            </Table>
+
+            <div className="d-flex justify-content-end">
+              <Button variant='success' size='lg' href='/member/event/AddEvent'>新增活動</Button>
+            </div>
+           </Container>)
 }
 export default ManageEvent

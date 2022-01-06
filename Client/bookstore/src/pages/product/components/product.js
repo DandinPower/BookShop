@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {useState,useEffect} from 'react'
-import { Container, Row, Col, ButtonGroup, Button, ButtonToolbar} from 'react-bootstrap'; 
+import { Container, Row, Col, Button, Table} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import {Link} from 'react-router-dom'
 
@@ -59,11 +59,12 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
     }
     const listComments = comments.map((data)=>{
         return(
-            <div>  
-                <div>customerName:{data.name}</div>
-                <div>star:{data.star}</div>
-                <div>comment:{data.comment}</div>
-            </div>) 
+            <tr>  
+                <td>{data.name}</td>
+                <td>{data.star}</td>
+                <td>{data.comment}</td>
+            </tr>
+          ) 
     })
 
     return(
@@ -76,7 +77,7 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                   <Col aria-label="productInfo">
                     <br size="lg"/>
                     <Row className="text-center">
-                      <h3>{bookInfo.name}</h3>
+                      <h3 className='fw-bold'>{bookInfo.name}</h3>
                     </Row>
                     <hr/>
                     <Row>
@@ -101,7 +102,7 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                         </Row>
                         <br/>
                         <Row>
-                       <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>
+                          <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>
                         </Row>
                       </Col>
                     </Row>
@@ -115,10 +116,22 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                   </Col>
                 </Row>
 
-                <Row>
-                  暫無評論
-                  {listComments}
+                <br size='lg'/>
+                <Row className='text-center'>
+                  <Table >
+                    <thead className='fw-bold'>
+                      <tr>
+                        <td>買家名字</td>
+                        <td>評等</td>
+                        <td>評論</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listComments}
+                    </tbody>
+                  </Table>
                 </Row>
+
               </Container>   
     )
 }
@@ -134,4 +147,15 @@ export default Product
             <button onClick={postBook}>直接購買</button>
             <button onClick = {leave}>瀏覽其他商品</button>
             <div>{listComments}</div>
+
+            <thead>
+                    <tr>
+                      <td>買家名字</td>
+                      <td>評等</td>
+                      <td>評論</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {listComments}
+                  </tbody>
         </div>*/ 

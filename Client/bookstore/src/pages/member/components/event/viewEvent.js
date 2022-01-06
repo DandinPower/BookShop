@@ -1,6 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import {Container, Table} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const ViewEvent=({setEventName})=>{
     const [events,setEvents] = useState([''])
@@ -20,17 +22,29 @@ const ViewEvent=({setEventName})=>{
     },[])
      
     const ListEvent = events.map((event)=>{
-        return(<div>
-               <div>舉辦人ID: {event.organizerId}</div>
-               <div>舉辦商家: {event.organizerName}</div>
-               <div>活動名稱: {event.name}</div>
-               <div>活動到期日: {event.date}</div>
-               <Link to='/member/event/ViewCoupon'><button onClick={e => setEventName(event.name)}>查看此活動優惠券</button></Link>
-               <br/>
-               </div>)
+        return(<tr>
+                <td>{event.organizerName}</td>
+                <td>{event.name}</td>
+                <td>{event.date}</td>
+                <td><Link to='/member/event/ViewCoupon'><button onClick={e => setEventName(event.name)}>查看此活動優惠券</button></Link></td>
+               </tr>)
     })
 
-    return(<div>{ListEvent}</div>)
+    return(
+          <Container as={Table} hover className="text-center fw-bold">
+            <thead>
+              <tr>
+                <td>舉辦商家</td>
+                <td>活動名稱</td>
+                <td>活動到期日</td>
+                <td>操作</td>
+              </tr>
+            </thead>
+            <tbody>
+              {ListEvent}
+            </tbody>
+          </Container>
+        )
    
 }
 export default ViewEvent

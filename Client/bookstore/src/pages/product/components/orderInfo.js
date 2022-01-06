@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react'
 import axios from 'axios'
-import {Container,Table, Form, Col, Row, Button} from 'react-bootstrap'; 
+import {Container, Col, Row, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
 
@@ -256,23 +256,21 @@ const OrderInfo = ({checkOrderInfo})=>{
             catch(error){
             }
             return(
-              <Row>
-                <Col><img src={`data:image/png;base64,${data.image}`} width="200" height="200"></img></Col>
-                <Col className="w-20"></Col>
-                <Col className="w-20">{data.name}</Col>
+              <Container as={Row}>
+                <Col><img src={`data:image/png;base64,${data.image}`} width="180" height="180"></img></Col>
+                <Col className="d-flex align-middle">{data.name}</Col>
                 <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
                 <Col>{Math.round(data.price * parseInt(data.quantity)*(discount))}</Col>
                 <Col><Button variant="outline-danger" onClick={e => deleteBook(data.productId)}>Delete</Button></Col>  
-              </Row>              
-                )
+              </Container>              
+            )
         }))
     }
 
     const ListBooksByBusinessName = FilterNameBooks.map((books)=>{  
         return(
           <Container bordered>
-            <br size="lg"/>
-            
+            <br size="lg"/> 
             {ListBooks(books)}
             <br size="lg"/>
             <Row className="bg-dark p-2 text-dark bg-opacity-10">  
@@ -282,17 +280,16 @@ const OrderInfo = ({checkOrderInfo})=>{
             </Row>
             <br size="lg"/>
             <hr></hr>
-          
           </Container>
         )
     })
 
     return(
-    <Container>
-      <hr/>  
+    <Container >
+      <hr></hr>
       {ListBooksByBusinessName}
       <Container>
-        
+
         <div className="d-flex justify-content-end">
           <p className="me-2">全站優惠碼:{ListFullSiteCoupon} </p>
           <p className="me-2">不使用<input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input></p>

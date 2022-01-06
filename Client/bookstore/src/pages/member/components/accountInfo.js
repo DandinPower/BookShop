@@ -202,7 +202,7 @@ const AccountInfo =()=>{
                         <tr>
                             <th className="w-30 text-center">Description</th>
                             <td>
-                            <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'} placehodler='請在此打上你的介紹'/>
+                            <Form.Control as="textarea" type="text" value={description} onChange={(e) => {setDescription(e.target.value)}} disabled={type === 'customer'} placehodler='請在此打上你的介紹'/>
                             </td>
                         </tr>
                         <tr>

@@ -88,6 +88,8 @@ insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()
 
 alter table coupon add column description varchar(100);*/
 
+set SQL_SAFE_UPDATES = 0;
+
 alter table orders add column address varchar(50) not null,add column paymentInfo varchar(20) default "現金" not null;
 delete from manage;
 delete from orders;
@@ -97,3 +99,8 @@ insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)va
 insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()),3);
 insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)value(3,"2021-12-8",1,0.77,"台灣總統府","信用卡");
 insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
+<<<<<<< HEAD
+=======
+
+select * from event;
+>>>>>>> 86489f75e23b56798780bab51455d7c331887762

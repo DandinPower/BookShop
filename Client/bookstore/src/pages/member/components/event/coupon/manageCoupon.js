@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import {Container, Table, ButtonGroup} from 'react-bootstrap'
 
 const ManageCoupon = ({setCouponInfo}) =>{
     const [coupons,setCoupons] = useState([''])
@@ -49,20 +50,39 @@ const ManageCoupon = ({setCouponInfo}) =>{
     }
 
     const ListCoupon = coupons.map((coupon)=>{
-        return(<div>
-               <div>優惠碼: {coupon.code}</div>
-               <div>優惠券到期日: {coupon.date}</div>
-               <div>優惠折扣: {coupon.discount}</div>
-               <div>優惠券使用次數: {coupon.maxQuantity}</div>
-               <div>活動名稱: {coupon.name}</div>
-               <Link to='/member/event/updateCoupon'><button onClick={e => setCouponInfo(coupon)}>更新優惠</button></Link>
-               <button onClick={e => deleteCoupon(coupon.code)}>刪除優惠券</button>
-               <br/>
-               </div>)
+        return(<tr>
+                <td>{coupon.code}</td>
+                <td>{coupon.date}</td>
+                <td>{coupon.discount}</td>
+                <td>{coupon.maxQuantity}</td>
+                <td>{coupon.name}</td>
+                <td>
+                  <ButtonGroup vertical>
+                    <Link to='/member/event/updateCoupon'><button onClick={e => setCouponInfo(coupon)}>更新優惠</button></Link>
+                    <br/>
+                    <button onClick={e => deleteCoupon(coupon.code)}>刪除優惠券</button>
+                  </ButtonGroup>
+                </td>
+               </tr>)
     })
     
-    return(<div>
-           {ListCoupon}
-           </div>)
+    return(<Container>
+           <Table hover className='text-center align-middle'>
+            <thead className="fw-bold">
+              <tr>
+                <td>優惠碼</td>
+                <td>優惠券到期日</td>
+                <td>優惠折扣</td>
+                <td>優惠券剩餘數量</td>
+                <td>活動名稱</td>
+                <td>操作</td>
+              </tr>
+            </thead>
+            <tbody>
+              {ListCoupon}
+            </tbody>
+           </Table>
+            
+           </Container>)
 }
 export default ManageCoupon

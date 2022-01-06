@@ -1,6 +1,8 @@
 import { useState ,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Container, Table} from 'react-bootstrap'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const ManageBusinessAccount = ({setAccountInfo})=>{
     const [accountsInfo,setAccountsInfo] = useState([''])
@@ -29,21 +31,40 @@ const ManageBusinessAccount = ({setAccountInfo})=>{
 
     const listAccounts = accountsInfo.map((data)=>{
         return (
-            <div>
-              <div>businessId: {data.id}</div>
-              <div>businessName: {data.name}</div>
-              <div>phone: {data.phone}</div>
-              <div>email: {data.email}</div>
-              <div>address: {data.address}</div>
-              <div>enable: {data.enable}</div>
-              <div>
-              <Link to='/member/admin/manageAccount'><button onClick={e => setAccountInfo(data)}>修改此帳號權限</button></Link>
-              </div>
+            <tr>
+              <td>{data.id}</td>
+              <td>{data.name}</td>
+              <td>{data.phone}</td>
+              <td>{data.email}</td>
+              <td>{data.address}</td>
+              <td>{data.enable}</td>
+              <td>
+                <Link to='/member/admin/manageAccount'><button onClick={e => setAccountInfo(data)}>修改此帳號權限</button></Link>
+              </td>
               <br/>
-            </div>
+            </tr>
         )
     })
 
-    return(<div>{listAccounts}</div>)
+    return(
+      <Container>
+      <Table hover className='text-center align-middle'>
+        <thead>
+          <tr>
+            <th>廠商ID</th>
+            <th>廠商名稱</th>
+            <th>電話</th>
+            <th>e-mail</th>
+            <th>地址</th>
+            <th>權限許可</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listAccounts}
+        </tbody>
+      </Table>
+
+     </Container>)
 }
 export default ManageBusinessAccount
