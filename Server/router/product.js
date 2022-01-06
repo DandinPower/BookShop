@@ -727,56 +727,95 @@ router.post('/manage/update/image/:productId', file.UploadImage.single('image'),
 })
 
 router.post('/manage/order/delete', datatype.verifyToken, async (req, res, next) => {
-    var userName = req.body.userName;
-    var orderNo = req.body.orderNo;
-    try {
-        var businessId = await database.GetUserId(userName)
-        console.log(businessId)
-        if (businessId != null) {
-            try {
-                var sqlDelete = `delete from orders where orderNo = ${orderNo} and ${orderNo} in (select orderNo from manage where businessId = ${businessId});`
-                console.log(sqlDelete)
-                var result = await database.sqlConnection(sqlDelete)
-                console.log(result)
-                if (result["affectedRows"] != 0) {
-                    let response = {
-                        "error": "",
-                        "state": 200
-                    }
-                    res.json(response)
-                }
-                else {
-                    let response = {
-                        "error": "找不到該訂單",
-                        "state": 500
-                    }
-                    res.json(response)
-                }
-            } catch (e) {
-                console.log(e)
+    var userName = req.body.userName
+    var orderNo = req.body.orderNo
+    var state = true
+    if (state) {
+        try {
+            var userId = await database.GetUserId(userName)
+            console.log(userId)
+            if (userId == null) {
+                state = false
                 let response = {
-                    "error": "網路連線失敗",
+                    "error": "找不到該用戶",
                     "state": 500
                 }
                 res.json(response)
             }
-        }
-        else {
+
+        } catch (e) {
             console.log(e)
+            state = false
             let response = {
-                "error": "找不到該用戶",
+                "error": "網路連線失敗",
                 "state": 500
             }
             res.json(response)
         }
-
-    } catch (e) {
-        console.log(e)
-        let response = {
-            "error": "網路連線失敗",
-            "state": 500
+    }
+    if (state) {
+        try {
+            const sqlCheckStatus = `select O.status from orders as O where O.orderNo = ${orderNo} and ${orderNo} in (select orderNo from manage where businessId = ${userId});`
+            console.log(sqlCheckStatus)
+            var result = await database.sqlConnection(sqlCheckStatus)
+            if (result.length == 0) {
+                state = false
+                let response = {
+                    "error": "找不到該訂單",
+                    "state": 500
+                }
+                res.json(response)
+            }
+            else {
+                var status = result[0].status
+                if (status != '未出貨' & status != '出貨中' & status != '訂單完成') {
+                    state = false
+                    let response = {
+                        "error": "此訂單狀態不能撤銷",
+                        "state": 500
+                    }
+                    res.json(response)
+                }
+            }
+        } catch (e) {
+            console.log(e)
+            state = false
+            let response = {
+                "error": "網路連線失敗",
+                "state": 500
+            }
+            res.json(response)
         }
-        res.json(response)
+    }
+    if (state) {
+        try {
+            const sql = `update orders set status = "賣家撤銷此訂單" where orderNo = ${orderNo};`
+            var result = await database.sqlConnection(sql)
+            console.log(result)
+            if (result["affectedRows"] != 0) {
+                let response = {
+                    "error": "",
+                    "state": 200
+                }
+                res.json(response)
+            }
+            else {
+                state = false
+                let response = {
+                    "error": "未知的錯誤",
+                    "state": 500
+                }
+                res.json(response)
+            }
+        } catch (e) {
+            console.log(e)
+            state = false
+            let response = {
+                "error": "網路連線失敗",
+                "state": 500
+            }
+            res.json(response)
+        }
     }
 })
 
