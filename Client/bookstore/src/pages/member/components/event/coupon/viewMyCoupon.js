@@ -23,13 +23,26 @@ const ViewMyCoupon =()=>{
               }
           })
     },[])
+
+    const OutPutDate=(date)=>{
+      try{
+        return(
+        <div>
+          <label>日期:{date.substr(0,10)}</label>
+        </div>
+        )
+      }
+      catch(error){
+        return(<label></label>)
+      }
+    }
     
     const ListCoupons = coupons.map((coupon)=>{
         return(<tr>
                 <td>{coupon.code}</td>
                 <td>{coupon.discount}</td>
                 <td>{coupon.description}</td>
-                <td>{coupon.date}</td>
+                <td>{OutPutDate(coupon.date)}</td>
                 <td>{coupon.quantity}</td>
                </tr>)
     })

@@ -41,12 +41,25 @@ const ViewCoupon =({eventName})=>{
           })
     }
 
+    const OutPutDate=(date)=>{
+        try{
+          return(
+          <div>
+            <label>日期:{date.substr(0,10)}</label>
+          </div>
+          )
+        }
+        catch(error){
+          return(<label></label>)
+        }
+      }
+
     const ListCoupons = coupons.map((coupon)=>{
         return(<div>
                <div>活動名稱: {coupon.name}</div>
                <div>活動優惠碼: {coupon.code}</div>
                <div>活動折扣: {coupon.discount}</div>
-               <div>活動到期日: {coupon.date}</div>
+               <div>活動到期日: {OutPutDate(coupon.date)}</div>
                <div>優惠券使用次數: {coupon.maxQuantity}</div>
                <div>優惠券描述: {coupon.description}</div>
                <button onClick={e=> ReceiveCoupon(coupon.code)}>領取優惠券</button>

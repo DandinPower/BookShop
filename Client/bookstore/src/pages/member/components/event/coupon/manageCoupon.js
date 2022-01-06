@@ -49,10 +49,24 @@ const ManageCoupon = ({setCouponInfo}) =>{
       })
     }
 
+    const OutPutDate=(date)=>{
+      try{
+        return(
+        <div>
+          <label>日期:{date.substr(0,10)}</label>
+        </div>
+        )
+      }
+      catch(error){
+        return(<label></label>)
+      }
+    }
+
+
     const ListCoupon = coupons.map((coupon)=>{
         return(<tr>
                 <td>{coupon.code}</td>
-                <td>{coupon.date}</td>
+                <td>{OutPutDate(coupon.date)}</td>
                 <td>{coupon.discount}</td>
                 <td>{coupon.maxQuantity}</td>
                 <td>{coupon.description}</td>
