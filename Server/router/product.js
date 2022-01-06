@@ -768,7 +768,7 @@ router.post('/manage/order/delete', datatype.verifyToken, async (req, res, next)
             }
             else {
                 var status = result[0].status
-                if (status != '未出貨' & status != '出貨中' & status != '訂單完成') {
+                if (status != '未出貨') {
                     state = false
                     let response = {
                         "error": "此訂單狀態不能撤銷",
