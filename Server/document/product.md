@@ -292,7 +292,8 @@
         "address": "台南市",
         "paymentInfo": "信用卡", //限定現金,信用卡
         "orderNo": 2,
-        "status": "未出貨",
+        "status": "訂單完成",
+        "commentState":"已評論",  //只會有已評論跟未評論
         "orderDate": "2021-11-28T16:00:00.000Z",
         "arrivalDate": "2021-12-28T16:00:00.000Z"
       },
@@ -305,6 +306,7 @@
         "paymentInfo": "信用卡", //限定現金,信用卡
         "orderNo": 3,
         "status": "未出貨",
+        "commentState":"未評論",
         "orderDate": "2021-11-28T16:00:00.000Z",
         "arrivalDate": "2021-12-28T16:00:00.000Z"
       }
