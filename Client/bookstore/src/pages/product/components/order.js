@@ -22,8 +22,6 @@ const Order =({setClientOrderInfo})=>{
     },[])
 
     const WithdrawOrder=(orderNo)=>{
-      console.log(orderNo);
-      /*
       axios({
         method: 'POST',
         url: 'http://localhost:5000/product/order/cancel',
@@ -41,7 +39,6 @@ const Order =({setClientOrderInfo})=>{
           alert(response.data.error)
         )
       })
-      */
     }
 
     let listOrder = ''
@@ -54,6 +51,8 @@ const Order =({setClientOrderInfo})=>{
             <td>{book.name}</td> 
             <td>{book.orderDate}</td>
             <td>{book.arrivalDate}</td>
+            <td>{book.address}</td>
+            <td>{book.paymentInfo}</td>
             <td>{book.quantity}</td>
             <td>{book.status}</td> 
             <td>{Math.round(book.price * parseInt(book.quantity) * parseFloat(book.discount))}</td> 
@@ -61,7 +60,7 @@ const Order =({setClientOrderInfo})=>{
             <ButtonGroup vertical>
                 <Link to="/Products/ordercomment"  onClick={ e => setClientOrderInfo(book)} ><button disabled={book.status !=='訂單完成'}>評價此訂單</button></Link>
                 <br/>
-                <button  onClick={e => WithdrawOrder(book.orderNo)}>撤銷此訂單</button>
+                <Button variant='outline-danger' onClick={e => WithdrawOrder(book.orderNo)} disabled={book.status !=='未出貨'}>撤銷此訂單</Button>
             </ButtonGroup>
           </tr>
         )
@@ -79,6 +78,9 @@ const Order =({setClientOrderInfo})=>{
                     <th>訂單編號</th>
                     <th>產品名稱</th>
                     <th>下訂日期</th>
+                    <th>到達日期</th>
+                    <th>配送地址</th>
+                    <th>付款方式</th>
                     <th>到達日期</th>
                     <th>數量</th>
                     <th>訂單狀態</th>

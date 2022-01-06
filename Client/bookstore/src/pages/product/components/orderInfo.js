@@ -11,6 +11,8 @@ const OrderInfo = ({checkOrderInfo})=>{
     const [coupons, setCoupons] = useState([]);
     const [useCoupons,setUseCoupons] =useState([]);
     const [checkCoupon,setCheckCoupon] = useState(true);
+    const [address,setAddress] = useState(window.sessionStorage.getItem('address'))
+    const [payment,setPayment] = useState('現金');
     //取得商家名稱
     var businessNames = [];
     books.forEach(book => {
@@ -69,8 +71,6 @@ const OrderInfo = ({checkOrderInfo})=>{
         })
         UseCoupon(-1,'',1)
     },[])
-
-    console.log(coupons);
     
     const ListCoupon =(bname)=>{
         let couponById = coupons.filter(coupon => coupon.businessName === bname);
@@ -179,7 +179,9 @@ const OrderInfo = ({checkOrderInfo})=>{
             'token': window.sessionStorage.getItem('token'),
             'productId': book.productId,
             'quantity':  book.quantity ,
-            'discount': discount * fullSiteDiscount
+            'discount': discount * fullSiteDiscount,
+            'address':address,
+            'paymentInfo':payment
         }
         return(bookInfo);
     })
@@ -257,7 +259,7 @@ const OrderInfo = ({checkOrderInfo})=>{
             }
             return(
               <Container as={Row}>
-                <Col><img src={`data:image/png;base64,${data.image}`} width="180" height="180"></img></Col>
+                <Col><img src={`data:image/png;base64,${data.image}`} width="180" height="180" alt=''></img></Col>
                 <Col className="d-flex align-middle">{data.name}</Col>
                 <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
                 <Col>{Math.round(data.price * parseInt(data.quantity)*(discount))}</Col>
@@ -296,6 +298,14 @@ const OrderInfo = ({checkOrderInfo})=>{
           <Button className="me-2" variant="danger" onClick={ e => deleteall()}>撤銷全部</Button>
         </div>
         <br size="lg"/>
+        <div>
+            <label>配送地址:<input type='text' value={address} onChange={e =>setAddress(e.target.value)}></input></label>
+            <br size="lg"/>
+            <label>付款方式:
+                <label>現金</label><input type='radio' value='現金' name='pay' onClick={e=> setPayment(e.target.value)} checked={payment==='現金'}></input>
+                <label>信用卡</label><input type='radio' value='信用卡' name='pay' onClick={e=> setPayment(e.target.value)} checked={payment==='信用卡'}></input>
+            </label>
+        </div>
         <div className="d-flex justify-content-end">
           <h1 className="me-4">總金額:{price}</h1>
           <Button variant="success" size="lg" onClick={ e => OrderBooks()}>下訂</Button>

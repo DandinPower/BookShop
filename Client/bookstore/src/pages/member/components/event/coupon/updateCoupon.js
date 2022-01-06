@@ -7,6 +7,7 @@ const UpdateCoupon =({couponInfo})=>{
     const [date,setDate] = useState(couponInfo.date)
     const [discount,setDiscount] = useState(couponInfo.discount)
     const [maxQuantity,setMaxQuantity] = useState(couponInfo.maxQuantity)
+    const [description,setDescription] = useState(couponInfo.description)
 
     const UpdateCoupon = ()=>{
         if(date !==''  &&  discount > 0 && maxQuantity > 0 && discount < 1){
@@ -21,7 +22,8 @@ const UpdateCoupon =({couponInfo})=>{
               code:couponInfo.code,
               date:date.substr(0, 10),
               discount:discount,
-              maxQuantity:maxQuantity
+              maxQuantity:maxQuantity,
+              description:description
             }
           }).then((response) => {
             if(response.data.state !== 500){
@@ -68,6 +70,14 @@ const UpdateCoupon =({couponInfo})=>{
                   <Form.Label column>優惠券發送總數量</Form.Label>
                   <Col xs={10}>
                       <Form.Control type='number' value={maxQuantity} onChange={e => setMaxQuantity(e.target.value)}/>
+                  </Col> 
+              </Form.Group>
+
+              <br size="sm"/>
+              <Form.Group as={Row}>
+                  <Form.Label column>優惠券描述</Form.Label>
+                  <Col xs={10}>
+                      <Form.Control type='text' value={description} onChange={e => setDescription(e.target.value)}/>
                   </Col> 
               </Form.Group>
             </Form>

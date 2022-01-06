@@ -1,7 +1,10 @@
 import { Navbar, Container, Nav, Form, FormControl, Button} from 'react-bootstrap'; 
+import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';        
 import Logo from '../image/icon.jpg'
-const Header = () => {
+const Header = ({setSearchInfo}) => {
+    const [search, setSearch] = useState();
     let userName = window.sessionStorage.getItem('userName')
     let userType = window.sessionStorage.getItem('type')
     let userAuthority = window.sessionStorage.getItem('authority')
@@ -19,7 +22,7 @@ const Header = () => {
         }
         
     }
-    
+
     const TypeView =(accountType,accountAuthority)=>{
         if(accountType === 'customer'){
             return(<Nav>
@@ -101,8 +104,12 @@ const Header = () => {
                     placeholder="搜尋"
                     className="me-2"
                     aria-label="Search"
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
                     />
-                    <Button variant="light">Search</Button>
+                    <Link to='/Products/search'>
+                        <Button variant="light" onClick={setSearchInfo(search)}>Search</Button>
+                    </Link>
                 </Form>
                 </Navbar.Collapse>
             </Container>

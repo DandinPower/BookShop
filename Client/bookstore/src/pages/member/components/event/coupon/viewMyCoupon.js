@@ -28,6 +28,7 @@ const ViewMyCoupon =()=>{
         return(<tr>
                 <td>{coupon.code}</td>
                 <td>{coupon.discount}</td>
+                <td>{coupon.description}</td>
                 <td>{coupon.date}</td>
                 <td>{coupon.quantity}</td>
                </tr>)
@@ -42,6 +43,7 @@ const ViewMyCoupon =()=>{
                 <tr>
                   <th>活動優惠碼</th>
                   <th>活動折扣</th>
+                  <th>優惠券描述</th>
                   <th>活動到期日</th>
                   <th>優惠券使用次數</th>
                 </tr>

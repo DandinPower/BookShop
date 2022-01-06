@@ -30,6 +30,7 @@ import UpdateCoupon from "../member/components/event/coupon/updateCoupon";
 import ViewEvent from "../member/components/event/viewEvent";
 import ViewCoupon from "../member/components/event/coupon/viewCoupon";
 import ViewMyCoupon from "../member/components/event/coupon/viewMyCoupon";
+import Search from "../product/components/search";
 import React, {useState} from 'react';
 
 const Home = () => {
@@ -42,10 +43,11 @@ const Home = () => {
     const [eventInfo,setEventInfo] = useState(['']);
     const [couponInfo,setCouponInfo] = useState(['']);
     const [eventName,setEventName] = useState('');
+    const [searchInfo,setSearchInfo] = useState('');
     return (
         <BrowserRouter>
         <div>
-            <Header/>
+            <Header setSearchInfo={setSearchInfo}/>
             <br size="lg"/>
             <br size="lg"/>
             <br size="lg"/>
@@ -72,6 +74,7 @@ const Home = () => {
             <Route path="/member/accountInfo" element={<AccountInfo/>}/>
             <Route path="/Products/category" element={<Category setBookInfo={setBookInfo}/>}/>
             <Route path="/Products/product" element={<Product bookInfo={bookInfo} setCheckOrderInfo={setCheckOrderInfo}/>}/>
+            <Route path="/Products/search" element={<Search searchInfo={searchInfo} setBookInfo={setBookInfo}/>}/>
             <Route path="/Products/shopcart" element={<ShopCart setCheckOrderInfo={setCheckOrderInfo}/>}/>
             <Route path="/Products/orderInfo" element={<OrderInfo checkOrderInfo={checkOrderInfo}/>}/>
             <Route path="/member/order" element={<Order setClientOrderInfo={setClientOrderInfo}/>}/>
