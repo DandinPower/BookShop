@@ -262,11 +262,23 @@ router.post('/search', datatype.verifyToken, async (req, res, next) => {
         console.log(customerId)
         try {
             let response = []
-            var sqlSearch = `select P.price,P.name,O.quantity,O.orderNo,O.status,O.discount,O.address,O.paymentInfo,O.orderDate,O.arrivalDate from product as P,orders as O,manage as M,customer as C where P.no = M.productId and O.orderNo = M.orderNo and O.customerId = ${customerId} and C.id = O.customerId;`
+            var sqlSearch = `select P.price,P.name,O.quantity,O.orderNo,O.status,PC.comment as commentState,O.discount,O.address,O.paymentInfo,O.orderDate,O.arrivalDate \
+                                from product as P \
+                                join manage as M on P.no = M.productId \
+                                join orders as O on O.orderNo = M.orderNo \  
+                                join customer as C on C.id = O.customerId \
+                                left join product_comment as PC on PC.orderNo = O.orderNo and PC.customerId = C.id \
+                                where O.customerId = ${customerId};`
             console.log(sqlSearch)
             var result = await database.sqlConnection(sqlSearch)
             result.forEach(function (item, index, array) {
                 let product = datatype.json2json(item)
+                if (product["commentState"] != null) {
+                    product["commentState"] = "已評論"
+                }
+                else {
+                    product["commentState"] = "未評論"
+                }
                 console.log(product)
                 response.push(product)
             });
