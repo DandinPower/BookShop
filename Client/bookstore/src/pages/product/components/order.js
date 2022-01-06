@@ -21,6 +21,29 @@ const Order =({setClientOrderInfo})=>{
           })
     },[])
 
+    const WithdrawOrder=(orderNo)=>{
+      console.log(orderNo);
+      /*
+      axios({
+        method: 'POST',
+        url: 'http://localhost:5000/product/order/cancel',
+        data:
+        {
+          userName: window.sessionStorage.getItem('userName'),
+          token: window.sessionStorage.getItem('token'),
+          orderNo:orderNo
+        }
+      }).then((response) => {
+        if(response.data.state !== 500){
+          alert('商品撤回申請成功，請靜待商家回覆')
+        }
+        else(
+          alert(response.data.error)
+        )
+      })
+      */
+    }
+
     let listOrder = ''
 
     if (orderBooks !== undefined) {
@@ -38,7 +61,7 @@ const Order =({setClientOrderInfo})=>{
             <ButtonGroup vertical>
                 <Link to="/Products/ordercomment"  onClick={ e => setClientOrderInfo(book)} ><button disabled={book.status !=='訂單完成'}>評價此訂單</button></Link>
                 <br/>
-                <Button variant="outline-danger">撤銷此訂單</Button>
+                <button  onClick={e => WithdrawOrder(book.orderNo)}>撤銷此訂單</button>
             </ButtonGroup>
           </tr>
         )
