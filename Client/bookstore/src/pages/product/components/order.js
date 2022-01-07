@@ -41,8 +41,19 @@ const Order =({setClientOrderInfo})=>{
       })
     }
 
+    const OutPutDate=(date)=>{
+      try{
+        return(
+        <div>
+          <label>{date.substr(0,10)}</label>
+        </div>
+        )
+      }
+      catch(error){
+        return(<label></label>)
+      }
+    }
 
-    console.log(orderBooks);
     let listOrder = ''
 
     if (orderBooks !== undefined) {
@@ -51,8 +62,8 @@ const Order =({setClientOrderInfo})=>{
           <tr>
             <td>{book.orderNo}</td>
             <td>{book.name}</td> 
-            <td>{book.orderDate}</td>
-            <td>{book.arrivalDate}</td>
+            <td>{OutPutDate(book.orderDate)}</td>
+            <td>{OutPutDate(book.arrivalDate)}</td>
             <td>{book.commentState}</td>
             <td>{book.address}</td>
             <td>{book.paymentInfo}</td>

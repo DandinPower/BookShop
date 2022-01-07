@@ -16,7 +16,9 @@ const ViewMyCoupon =()=>{
             }
           }).then((response) => {
             if(response.data.state !== 500){
+              
                 setCoupons(response.data)
+                console.log(response.data);
             }
             else{
                 alert(response.data.error)
@@ -37,9 +39,8 @@ const ViewMyCoupon =()=>{
       }
     }
 
-    const viewCoupons =()=>{
-      try{
-        coupons.map((coupon)=>{
+    
+      const listCoupons = coupons.map((coupon)=>{
           return(<tr>
                   <td>{coupon.code}</td>
                   <td>{coupon.discount}</td>
@@ -48,10 +49,7 @@ const ViewMyCoupon =()=>{
                   <td>{coupon.quantity}</td>
                  </tr>)
         })
-      }catch(error){
-        return(<div></div>)
-      }
-    }
+
 
 
     return(<Container className='text-center' >
@@ -69,7 +67,7 @@ const ViewMyCoupon =()=>{
                 </tr>
               </thead>
               <tbody>
-                {viewCoupons}
+                {listCoupons}
               </tbody>
             </Table>
             <p className='p-2 text-dark bg-opacity-10 text-end' >備註:商家發放的優惠券只能用在該商家</p>
