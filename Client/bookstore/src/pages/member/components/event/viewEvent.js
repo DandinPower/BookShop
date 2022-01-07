@@ -25,7 +25,7 @@ const ViewEvent=({setEventName})=>{
       try{
         return(
         <div>
-          <label>日期:{date.substr(0,10)}</label>
+          <label>{date.substr(0,10)}</label>
         </div>
         )
       }
@@ -44,13 +44,13 @@ const ViewEvent=({setEventName})=>{
     })
 
     return(
-          <Container as={Table} hover className="text-center fw-bold">
+          <Container as={Table} hover className="text-center">
             <thead>
               <tr>
-                <td>舉辦商家</td>
-                <td>活動名稱</td>
-                <td>活動到期日</td>
-                <td>操作</td>
+                <th>舉辦商家</th>
+                <th>活動名稱</th>
+                <th>活動到期日</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>

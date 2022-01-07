@@ -1,7 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import axios from 'axios'
-import {Container, Col, Row, Button} from 'react-bootstrap'; 
+import {Container, Col, Row, Button, Form, FormCheck} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
+
 
 
 const OrderInfo = ({checkOrderInfo})=>{
@@ -132,8 +133,8 @@ const OrderInfo = ({checkOrderInfo})=>{
     
    
     const ListFullSiteCoupon = fullSiteCoupon.map((coupon)=>{
-        return(<label>{coupon.code}
-            <input type='radio' disabled={coupon.quantity === 0} value={coupon.discount} name={-1} id={coupon.code} onClick={e=> UseCoupon(-1,e.target.id,e.target.value)}></input></label>)
+        return(
+            <Form.Check className="me-2" label={coupon.code} type='radio' disabled={coupon.quantity === 0} value={coupon.discount} name={-1} id={coupon.code} onClick={e=> UseCoupon(-1,e.target.id,e.target.value)}/>)
     })
 
     function deleteBook (BID){
@@ -258,7 +259,7 @@ const OrderInfo = ({checkOrderInfo})=>{
             catch(error){
             }
             return(
-              <Container as={Row}>
+              <Container as={Row} className="h-100 d-flex align-middle">
                 <Col><img src={`data:image/png;base64,${data.image}`} width="180" height="180" alt=''></img></Col>
                 <Col className="d-flex align-middle">{data.name}</Col>
                 <Col className="w-20"><input type='number' value={data.quantity} onChange={e => changeQuantity(data.productId,e.target.value)}></input></Col>
@@ -290,27 +291,43 @@ const OrderInfo = ({checkOrderInfo})=>{
     <Container >
       <hr></hr>
       {ListBooksByBusinessName}
-      <Container>
 
-        <div className="d-flex justify-content-end">
-          <p className="me-2">全站優惠碼:{ListFullSiteCoupon} </p>
-          <p className="me-2">不使用<input type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}></input></p>
-          <Button className="me-2" variant="danger" onClick={ e => deleteall()}>撤銷全部</Button>
-        </div>
+      <div className="d-flex justify-content-end">
+        <Button className="me-2" variant="danger" onClick={ e => deleteall()}>刪除全部</Button>
+      </div>
+
+      <Form as={Container}>
+        <Form.Group as={Row} >
+          <Form.Label column className="text-center">全站優惠碼</Form.Label>
+          <Col xs={10} className='align-middle'>
+            <Form.Check label="不使用" type='radio' value={1} name={-1} onClick={e=> UseCoupon(-1,'',e.target.value)}/>
+            {ListFullSiteCoupon} 
+          </Col>
+        </Form.Group>
+
         <br size="lg"/>
-        <div>
-            <label>配送地址:<input type='text' value={address} onChange={e =>setAddress(e.target.value)}></input></label>
-            <br size="lg"/>
-            <label>付款方式:
-                <label>現金</label><input type='radio' value='現金' name='pay' onClick={e=> setPayment(e.target.value)} checked={payment==='現金'}></input>
-                <label>信用卡</label><input type='radio' value='信用卡' name='pay' onClick={e=> setPayment(e.target.value)} checked={payment==='信用卡'}></input>
-            </label>
-        </div>
+        <Form.Group as={Row}>
+          <Form.Label column className="text-center">配送地址</Form.Label>
+          <Col xs={10}>
+            <Form.Control inline label="未出貨"  type='text' value={address} onChange={e =>setAddress(e.target.value)}/>
+          </Col>
+        </Form.Group>
+        
+        <br size="lg"/>
+        <Form.Group as={Row}>
+          <Form.Label column className="text-center">付款方式</Form.Label>
+          <Col xs={10}>
+            <Form.Check label="現金" type='radio' value='現金' name='pay' onClick={e=> setPayment(e.target.value)} checked={payment==='現金'}/>
+            <Form.Check label="信用卡" type='radio' value='信用卡' name='pay' onClick={e=> setPayment(e.target.value)} checked={payment==='信用卡'}/>
+          </Col>
+        </Form.Group>
+
         <div className="d-flex justify-content-end">
           <h1 className="me-4">總金額:{price}</h1>
           <Button variant="success" size="lg" onClick={ e => OrderBooks()}>下訂</Button>
         </div>
-      </Container>
+      </Form>
+      
     </Container>)
 }
 export default OrderInfo

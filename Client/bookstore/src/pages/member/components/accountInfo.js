@@ -148,7 +148,7 @@ const AccountInfo =()=>{
     if (window.sessionStorage.getItem('token')!== null) {
         return(
             <Container>
-                <Table striped bordered hover>
+                <Table striped bordered hover className="align-middle">
                     <tbody>
                         <tr>
                             <th className="w-30 text-center">會員帳號</th>

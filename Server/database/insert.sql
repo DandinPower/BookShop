@@ -67,3 +67,5 @@ insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)va
 insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
 
 insert into product_comment(productId,customerId,orderNo,star,comment) value(4,3,3,5,"好書推薦");
+
+DELETE FROM `have`;
