@@ -1,4 +1,5 @@
-#create database dandinpo_teamproject;
+drop database dandinpo_teamproject;
+create database dandinpo_teamproject;
 use dandinpo_teamproject;
 
 create table organizer (
@@ -73,7 +74,7 @@ create table business (
 create table product (
 	no int primary key auto_increment,
 	businessId int,
-    description varchar(100),
+    description varchar(200),
     name varchar(30) not null unique,
     price int not null,
     launch char(1) default 1 not null,

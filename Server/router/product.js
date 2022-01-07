@@ -58,7 +58,7 @@ router.get('/category/:name', async (req, res, next) => {
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
-        console.log(result);
+        //console.log(result);
         result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
             if (product["image"] != null) {
@@ -67,7 +67,7 @@ router.get('/category/:name', async (req, res, next) => {
             else {
                 product["image"] = ""
             }
-            console.log(product)
+            //console.log(product)
             response.push(product)
         });
     } catch (e) {
@@ -82,7 +82,7 @@ router.get('/all', async (req, res, next) => {
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
-        console.log(result);
+        //console.log(result);
         result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
             if (product["image"] != null) {
@@ -91,7 +91,7 @@ router.get('/all', async (req, res, next) => {
             else {
                 product["image"] = ""
             }
-            console.log(product)
+            //console.log(product)
             response.push(product)
         });
     } catch (e) {
@@ -279,7 +279,7 @@ router.post('/search', datatype.verifyToken, async (req, res, next) => {
                 else {
                     product["commentState"] = "未評論"
                 }
-                console.log(product)
+                //console.log(product)
                 response.push(product)
             });
             res.json(response)
@@ -355,7 +355,7 @@ router.post('/manage/search', datatype.verifyToken, async (req, res, next) => {
                 const sqlInsert = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where B.id = ${businessId};`
                 var result = await database.sqlConnection(sqlInsert)
                 var response = []
-                console.log(result)
+                //console.log(result)
                 result.forEach(function (item, index, array) {
                     let product = datatype.json2json(item)
                     if (product["image"] != null) {
@@ -364,7 +364,7 @@ router.post('/manage/search', datatype.verifyToken, async (req, res, next) => {
                     else {
                         product["image"] = ""
                     }
-                    console.log(product)
+                    //console.log(product)
                     response.push(product)
                 });
             } catch (e) {
