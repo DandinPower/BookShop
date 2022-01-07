@@ -62,7 +62,7 @@ const ViewCoupon =({eventName})=>{
                <div>活動到期日: {OutPutDate(coupon.date)}</div>
                <div>優惠券使用次數: {coupon.maxQuantity}</div>
                <div>優惠券描述: {coupon.description}</div>
-               <button onClick={e=> ReceiveCoupon(coupon.code)}>領取優惠券</button>
+               <button onClick={e=> ReceiveCoupon(coupon.code)} disabled={window.sessionStorage.getItem('type')!=='customer'}>領取優惠券</button>
                <br/>
                </div>)
     })
