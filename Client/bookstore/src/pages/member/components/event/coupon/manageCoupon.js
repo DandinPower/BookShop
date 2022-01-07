@@ -53,7 +53,7 @@ const ManageCoupon = ({setCouponInfo}) =>{
       try{
         return(
         <div>
-          <label>日期:{date.substr(0,10)}</label>
+          <label>{date.substr(0,10)}</label>
         </div>
         )
       }

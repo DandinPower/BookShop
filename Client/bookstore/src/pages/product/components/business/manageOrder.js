@@ -67,11 +67,10 @@ const ManageOrder = ({setOrderInfo})=>{
        return(
         <ButtonGroup vertical>
               <Link to="/Products/business/updateorder">
-                <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>
-                  Update
-                </Button>
+                <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>更新訂單</Button>
               </Link>
-              <Button variant="outline-success" onClick={e=>ReturnOrder(data.orderNo)} disabled={data.status !=='未出貨'}>刪除訂單</Button>
+              <br />
+              <Button variant="outline-danger" onClick={e=>ReturnOrder(data.orderNo)} disabled={data.status !=='未出貨'}>撤銷訂單</Button>
         </ButtonGroup>
              )
       }
@@ -81,7 +80,7 @@ const ManageOrder = ({setOrderInfo})=>{
       else{
         return(
           <ButtonGroup vertical>
-             <Button variant="outline-danger" onClick={e =>PostWithdrawRes('Yes',data.orderNo)}>接受撤回</Button>
+             <Button variant="outline-success" onClick={e =>PostWithdrawRes('Yes',data.orderNo)}>接受撤回</Button>
              <br/>
              <Button variant="outline-danger" onClick={e =>PostWithdrawRes('No',data.orderNo)}>拒絕撤回</Button>
           </ButtonGroup>
@@ -103,13 +102,13 @@ const ManageOrder = ({setOrderInfo})=>{
                   <td>{data.productId}</td> 
                   <td>{data.customerId}</td> 
                   <td>{Math.round(data.price *parseInt(data.quantity) * parseFloat(data.discount))}</td> 
-                  {ButtonView(data)}
+                  <td>{ButtonView(data)}</td>
                 </tr>
            )
       })
 
     return(<Container >
-            <Table bordered className="text-center align-middle">
+            <Table bordered hover className="text-center align-middle">
               <thead>
                 <tr>
                   <th>訂單編號</th>

@@ -63,7 +63,7 @@ const Order =({setClientOrderInfo})=>{
             <ButtonGroup vertical>
                 <Link to="/Products/ordercomment"  onClick={ e => setClientOrderInfo(book)} ><button disabled={(book.status !=='訂單完成') || (book.commentState ==='已評論')}>評價此訂單</button></Link>
                 <br/>
-                <Button variant='outline-danger' onClick={e => WithdrawOrder(book.orderNo)} disabled={book.status !=='未出貨'}>撤銷此訂單</Button>
+                <button onClick={e => WithdrawOrder(book.orderNo)} disabled={book.status !=='未出貨'}>取消訂單</button>
             </ButtonGroup>
           </tr>
         )
