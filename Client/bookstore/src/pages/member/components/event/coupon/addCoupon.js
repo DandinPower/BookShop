@@ -8,6 +8,7 @@ const AddCoupon = ({eventInfo}) =>{
     const [date,setDate] = useState('')
     const [discount,setDiscount] = useState()
     const [maxQuantity,setMaxQuantity] = useState()
+    const [description,setDescription] = useState()
 
     const SendCoupon = ()=>{
         if(date !=='' && code !=='' && code.length <= 10 &&  discount > 0 && maxQuantity > 0 && discount < 1){
@@ -23,7 +24,8 @@ const AddCoupon = ({eventInfo}) =>{
               code:code,
               date:date,
               discount:discount,
-              maxQuantity:maxQuantity
+              maxQuantity:maxQuantity,
+              description:description
             }
           }).then((response) => {
             if(response.data.state !== 500){
@@ -81,7 +83,17 @@ const AddCoupon = ({eventInfo}) =>{
                   <Form.Control type='number'onChange={e => setMaxQuantity(e.target.value)}/>
               </Col> 
           </Form.Group>
+
+          <br size="sm"/>
+          <Form.Group as={Row}>
+              <Form.Label column>優惠券描述</Form.Label>
+              <Col xs={10}>
+                  <Form.Control type='text'onChange={e => setDescription(e.target.value)}/>
+              </Col> 
+          </Form.Group>
         </Form>
+
+        
 
         <br size='lg'/>
         <div className='d-flex justify-content-center'>

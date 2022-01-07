@@ -20,12 +20,25 @@ const ViewEvent=({setEventName})=>{
               }
           })
     },[])
+
+    const OutPutDate=(date)=>{
+      try{
+        return(
+        <div>
+          <label>日期:{date.substr(0,10)}</label>
+        </div>
+        )
+      }
+      catch(error){
+        return(<label></label>)
+      }
+    }
      
     const ListEvent = events.map((event)=>{
         return(<tr>
                 <td>{event.organizerName}</td>
                 <td>{event.name}</td>
-                <td>{event.date}</td>
+                <td>{OutPutDate(event.date)}</td>
                 <td><Link to='/member/event/ViewCoupon'><button onClick={e => setEventName(event.name)}>查看此活動優惠券</button></Link></td>
                </tr>)
     })

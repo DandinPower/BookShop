@@ -100,4 +100,3 @@ insert into manage(businessId,orderNo,productId)value(5,(select last_insert_id()
 insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)value(3,"2021-12-8",1,0.77,"台灣總統府","信用卡");
 insert into manage(businessId,orderNo,productId)value(6,(select last_insert_id()),4);
 
-select * from event;

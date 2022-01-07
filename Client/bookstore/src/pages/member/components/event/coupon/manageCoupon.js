@@ -49,12 +49,27 @@ const ManageCoupon = ({setCouponInfo}) =>{
       })
     }
 
+    const OutPutDate=(date)=>{
+      try{
+        return(
+        <div>
+          <label>日期:{date.substr(0,10)}</label>
+        </div>
+        )
+      }
+      catch(error){
+        return(<label></label>)
+      }
+    }
+
+
     const ListCoupon = coupons.map((coupon)=>{
         return(<tr>
                 <td>{coupon.code}</td>
-                <td>{coupon.date}</td>
+                <td>{OutPutDate(coupon.date)}</td>
                 <td>{coupon.discount}</td>
                 <td>{coupon.maxQuantity}</td>
+                <td>{coupon.description}</td>
                 <td>{coupon.name}</td>
                 <td>
                   <ButtonGroup vertical>
@@ -74,6 +89,7 @@ const ManageCoupon = ({setCouponInfo}) =>{
                 <td>優惠券到期日</td>
                 <td>優惠折扣</td>
                 <td>優惠券剩餘數量</td>
+                <td>優惠券描述</td>
                 <td>活動名稱</td>
                 <td>操作</td>
               </tr>

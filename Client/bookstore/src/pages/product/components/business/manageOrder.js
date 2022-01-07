@@ -5,10 +5,10 @@ import {Container, Col, Table, Button, ButtonGroup} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const ManageOrder = ({setOrderInfo})=>{
-
     const [orderData, setOrderData] = useState([""]); 
+
     useEffect(()=>{
-        axios({
+      axios({
       method: 'POST',
       url: 'http://localhost:5000/product/manage/order/search',
       data:
@@ -20,6 +20,74 @@ const ManageOrder = ({setOrderInfo})=>{
       setOrderData(response.data)
     })
     },[])
+     
+   const PostWithdrawRes=(answer,orderNo)=>{
+      axios({
+        method: 'POST',
+        url: 'http://localhost:5000/product/order/cancel/confirm',
+        data:
+        {
+          userName: window.sessionStorage.getItem('userName'),
+          token: window.sessionStorage.getItem('token'),
+          orderNo:orderNo,
+          answer:answer
+        }
+      }).then((response) => {
+        if(response.data.state !== 500){
+          alert('已處理訂單撤銷')
+        }
+        else{
+          alert(response.data.error)
+        }
+      })
+   }
+
+   const ReturnOrder=(orderNo)=>{
+    axios({
+      method: 'POST',
+      url: 'http://localhost:5000/product/manage/order/delete',
+      data:
+      {
+        userName: window.sessionStorage.getItem('userName'),
+        token: window.sessionStorage.getItem('token'),
+        orderNo:orderNo,
+      }
+    }).then((response) => {
+      if(response.data.state !== 500){
+        alert('訂單已撤銷')
+      }
+      else{
+        alert(response.data.error)
+      }
+    })
+   }
+
+   const ButtonView =(data)=>{
+     if(data.status !=='申請取消' && data.status !=='取消成功' && data.status !=='賣家撤銷此訂單'){
+       return(
+        <ButtonGroup vertical>
+              <Link to="/Products/business/updateorder">
+                <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>
+                  Update
+                </Button>
+              </Link>
+              <Button variant="outline-success" onClick={e=>ReturnOrder(data.orderNo)} disabled={data.status !=='未出貨'}>刪除訂單</Button>
+        </ButtonGroup>
+             )
+      }
+      else if(data.status ==='取消成功' || data.status ==='賣家撤銷此訂單'){
+        return(<div></div>)
+      }
+      else{
+        return(
+          <ButtonGroup vertical>
+             <Button variant="outline-danger" onClick={e =>PostWithdrawRes('Yes',data.orderNo)}>接受撤回</Button>
+             <br/>
+             <Button variant="outline-danger" onClick={e =>PostWithdrawRes('No',data.orderNo)}>拒絕撤回</Button>
+          </ButtonGroup>
+        )
+      }
+   }
 
     const listOrder = orderData.map((data)=>{
         return(
@@ -28,21 +96,14 @@ const ManageOrder = ({setOrderInfo})=>{
                   <td>{data.name}</td> 
                   <td>{data.orderDate}</td>
                   <td>{data.arrivalDate}</td>
+                  <td>{data.address}</td>
+                  <td>{data.paymentInfo}</td>
                   <td>{data.quantity}</td>
                   <td>{data.status}</td> 
                   <td>{data.productId}</td> 
                   <td>{data.customerId}</td> 
                   <td>{Math.round(data.price *parseInt(data.quantity) * parseFloat(data.discount))}</td> 
-                  
-                  <ButtonGroup vertical>
-                    <Link to="/Products/business/updateorder">
-                      <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>
-                        Update
-                      </Button>
-                    </Link>
-                      <br/>
-                      <Button variant="outline-danger">Delete</Button>
-                    </ButtonGroup>
+                  {ButtonView(data)}
                 </tr>
            )
       })
@@ -55,6 +116,8 @@ const ManageOrder = ({setOrderInfo})=>{
                   <th>產品名稱</th>
                   <th>下訂日期</th>
                   <th>到達日期</th>
+                  <th>配送地址</th>
+                  <th>付款方式</th>
                   <th>數量</th>
                   <th>訂單狀態</th>
                   <th>產品編號</th>
@@ -83,4 +146,17 @@ export default ManageOrder
                 <div>產品名稱: {data.orderNo}</div>
                 <div>價格: {data.price}</div>
                 <Link to="/Products/business/updateorder"><button onClick={e =>setOrderInfo(data)}>修改此訂單</button></Link>
-            </div>*/
+            </div>
+                              <ButtonGroup vertical>
+                    <Link to="/Products/business/updateorder">
+                      <Button variant="outline-success" onClick={ e => setOrderInfo(data)}>
+                        Update
+                      </Button>
+                    </Link>
+                      <br/>
+                      <Button variant="outline-danger">接受撤回</Button>
+                    </ButtonGroup>
+            
+            
+            
+            */

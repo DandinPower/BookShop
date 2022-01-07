@@ -51,10 +51,23 @@ const ManageEvent = ({setEventInfo})=>{
       })
     }
 
+    const OutPutDate=(date)=>{
+      try{
+        return(
+        <div>
+          <label>日期:{date.substr(0,10)}</label>
+        </div>
+        )
+      }
+      catch(error){
+        return(<label></label>)
+      }
+    }
+
     const ListEvent = events.map((event)=>{
       return(<tr>
               <td>{event.name}</td>
-              <td>{event.date}</td>
+              <td>{OutPutDate(event.date)}</td>
               <td>
                 <ButtonGroup vertical>
                   <Link to = '/member/event/updateEvent'><button className='me-2' onClick={e => setEventInfo(event)}>修改活動</button></Link>
