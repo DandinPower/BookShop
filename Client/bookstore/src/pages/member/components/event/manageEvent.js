@@ -4,7 +4,7 @@ import axios from 'axios'
 import {ButtonGroup, Container, Table, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
-const ManageEvent = ({setEventInfo})=>{
+const ManageEvent = ({setEventInfo,setEventName})=>{
     const [events,setEvents] = useState([''])
 
     useEffect(()=>{
@@ -75,6 +75,8 @@ const ManageEvent = ({setEventInfo})=>{
                   <button onClick={e => deleteEvent(event.name)}>刪除活動</button>
                   <br/>
                   <Link to = '/member/event/addCoupon'><button onClick={e => setEventInfo(event)}>新增優惠券</button></Link>
+                  <br/>
+                  <Link to='/member/event/ViewCoupon'><button onClick={e => setEventName(event.name)}>查看此活動優惠券</button></Link>
                 </ButtonGroup>
               </td>
              </tr>)

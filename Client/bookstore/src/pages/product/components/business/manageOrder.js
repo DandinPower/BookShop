@@ -89,13 +89,26 @@ const ManageOrder = ({setOrderInfo})=>{
       }
    }
 
+   const OutPutDate=(date)=>{
+    try{
+      return(
+      <div>
+        <label>{date.substr(0,10)}</label>
+      </div>
+      )
+    }
+    catch(error){
+      return(<label></label>)
+    }
+  }
+
     const listOrder = orderData.map((data)=>{
         return(
                 <tr>
                   <td>{data.orderNo}</td>
                   <td>{data.name}</td> 
-                  <td>{data.orderDate}</td>
-                  <td>{data.arrivalDate}</td>
+                  <td>{OutPutDate(data.orderDate)}</td>
+                  <td>{OutPutDate(data.arrivalDate)}</td>
                   <td>{data.address}</td>
                   <td>{data.paymentInfo}</td>
                   <td>{data.quantity}</td>
