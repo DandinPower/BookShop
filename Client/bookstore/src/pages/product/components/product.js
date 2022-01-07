@@ -108,8 +108,8 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                     </Row>
 
                     <br size="lg"/>
-                    <Row>
-                      <Col className="w-30">
+                    <Row className="align-bottom">
+                      <Col className="w-30 d-flex justify-content-end">
                         <Button onClick={leave}>瀏覽其他商品</Button>
                       </Col>
                     </Row>
