@@ -36,16 +36,22 @@ const ViewMyCoupon =()=>{
         return(<label></label>)
       }
     }
-    
-    const ListCoupons = coupons.map((coupon)=>{
-        return(<tr>
-                <td>{coupon.code}</td>
-                <td>{coupon.discount}</td>
-                <td>{coupon.description}</td>
-                <td>{OutPutDate(coupon.date)}</td>
-                <td>{coupon.quantity}</td>
-               </tr>)
-    })
+
+    const viewCoupons =()=>{
+      try{
+        coupons.map((coupon)=>{
+          return(<tr>
+                  <td>{coupon.code}</td>
+                  <td>{coupon.discount}</td>
+                  <td>{coupon.description}</td>
+                  <td>{OutPutDate(coupon.date)}</td>
+                  <td>{coupon.quantity}</td>
+                 </tr>)
+        })
+      }catch(error){
+        return(<div></div>)
+      }
+    }
 
 
     return(<Container className='text-center' >
@@ -63,7 +69,7 @@ const ViewMyCoupon =()=>{
                 </tr>
               </thead>
               <tbody>
-                {ListCoupons}
+                {viewCoupons}
               </tbody>
             </Table>
               
