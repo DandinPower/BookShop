@@ -80,46 +80,49 @@ const HomeContent = ({ setBookInfo }) => {
     })
 
     return (
-        <Table striped bordered hover>
-            <tbody>
-                <tr>
-                    <td>
-                        <ListGroup variant='flush'>
-                            <ListGroup.Item action onClick={(e => { setSelectCate('all') })}>全部</ListGroup.Item>
-                            {listCategory}
-                        </ListGroup>
-                    </td>
-                    <td>
-                        <Container className='home'>
-                            <Row>
-                                <Col>
-                                    <Carousel>
-                                        <Carousel.Item>
-                                            <img src={carouselImg1} alt="First slide" />
-                                        </Carousel.Item>
-                                        <Carousel.Item>
-                                            <img src={carouselImg2} alt="Second slide" />
-                                        </Carousel.Item>
-                                        <Carousel.Item>
-                                            <img width={750} height={240} src={carouselImg3} alt="Third slide" />
-                                        </Carousel.Item>
-                                        <Carousel.Item>
-                                            <img src={carouselImg4} alt="fourth slide" />
-                                        </Carousel.Item>
-                                    </Carousel>
-                                </Col>
-                            </Row>
-                        </Container>
-                        <Container>
-                            <Row>
-
-                                {listBooks}
-                            </Row>
-                        </Container>
-                    </td>
-                </tr>
-            </tbody>
-        </Table>
+        <Table striped bordered className='home'  >
+        <tbody>
+            <tr>   
+                <td>
+                    <Carousel>
+                        <Carousel.Item>
+                            <img  width={1875} height={600} src={carouselImg1} alt="First slide"/>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img  width={1875} height={600} src={carouselImg2}  alt="Second slide"/>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img  width={1875} height={600} src={carouselImg3} alt="Third slide"/>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img  width={1875} height={600} src={carouselImg4} alt="fourth slide"/>
+                        </Carousel.Item>
+                    </Carousel>
+                </td>
+            </tr>
+            <tr>   
+                <td>
+                <Table striped bordered className='home' >
+                    <tbody>
+                        <tr>   
+                            <td>                    
+                                    <ListGroup variant = 'flush' style={{ width: "200px" }}>
+                                        <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
+                                        {listCategory}
+                                    </ListGroup>
+                            </td>                
+                            <Container >
+                                <Row>
+                                    {listBooks}
+                                </Row>
+                            </Container>
+                        </tr>
+                    </tbody>
+                </Table>
+                </td>
+            </tr>
+        </tbody>
+    </Table>
     )
 }
 export default HomeContent
