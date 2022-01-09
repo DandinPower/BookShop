@@ -84,27 +84,27 @@ const HomeContent = ({ setBookInfo }) => {
         <Table striped bordered className='home'  >
         <tbody>
             <tr>   
-                <td>
+                <td >
                     <Carousel>
                         <Carousel.Item>
                             {(userName==null)?
                                 <Link to="/member/login">
-                                    <img  width={1875} height={600} src={carouselImg3} alt="First slide"/>
+                                    <img className="d-block w-100"  src={carouselImg3} alt="First slide"/>
                                 </Link>
                                 :
                                 <Link to="/member/event/Center">
-                                    <img  width={1875} height={600} src={carouselImg3} alt="First slide"/>
+                                    <img className="d-block w-100" width={1875} height={600} src={carouselImg3} alt="First slide"/>
                                 </Link>
                             }
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg2}  alt="Second slide"/>
+                            <img  className="d-block w-100" width={1875} height={600} src={carouselImg2}  alt="Second slide"/>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg4} alt="Third slide"/>
+                            <img  className="d-block w-100" width={1875} height={600} src={carouselImg4} alt="Third slide"/>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg1} alt="Fourth slide"/>
+                            <img className="d-block w-100"  width={1875} height={600} src={carouselImg1} alt="Fourth slide"/>
                         </Carousel.Item>
                     </Carousel>
                 </td>
