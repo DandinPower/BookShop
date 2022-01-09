@@ -106,10 +106,10 @@ const HomeContent = ({ setBookInfo }) => {
                     <tbody>
                         <tr>   
                             <td>                    
-                                    <ListGroup variant = 'flush' style={{ width: "200px" }}>
-                                        <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
-                                        {listCategory}
-                                    </ListGroup>
+                                <ListGroup variant = 'flush' style={{ width: "200px" }}>
+                                    <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
+                                    {listCategory}
+                                </ListGroup>
                             </td>                
                             <Container >
                                 <Row>
