@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {useState,useEffect} from 'react'
-import { Container, Row, Col, Button, Table} from 'react-bootstrap'; 
+import { Container, Row, Col, Button, Table, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import {Link} from 'react-router-dom'
 
@@ -97,13 +97,10 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                       </Col>
 
                       <Col>
-                        <Row>
-                          <Button variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') !== 'customer'}>加入購物車</Button>
-                        </Row>
-                        <br/>
-                        <Row>
-                          <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>
-                        </Row>
+                        <ButtonGroup>
+                          <Button className="me-2 " variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') !== 'customer'}>加入購物車</Button>
+                          <Link to="/Products/orderInfo" onClick={postBook}><Button className="btn-block" variant="success" disabled={window.sessionStorage.getItem('type') !== 'customer'}>直接購買</Button></Link>
+                        </ButtonGroup>
                       </Col>
                     </Row>
 
@@ -158,4 +155,5 @@ export default Product
                   <tbody>
                     {listComments}
                   </tbody>
-        </div>*/ 
+        </div>
+<Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>*/ 

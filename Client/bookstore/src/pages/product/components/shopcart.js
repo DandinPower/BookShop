@@ -157,7 +157,7 @@ const ShopCart = ({setCheckOrderInfo}) => {
               <h3>總價格 : {price}</h3>
             </div>        
             <div className="d-flex justify-content-end">
-              <Link className="me-2"  to="/Products/orderInfo"><Button size="lg" variant='success' onClick={OrderBooks}>下單</Button></Link>
+              <Link className="me-2" to="/Products/orderInfo"><Button size="lg" variant='success' onClick={OrderBooks}>下單</Button></Link>
               <Button  size="sm" variant="outline-danger" onClick = {deleteall}>全部刪除</Button>
             </div>
             

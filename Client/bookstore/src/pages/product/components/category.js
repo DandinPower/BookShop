@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import './../../home/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';  
 import {Container, Row, Col, Table, ListGroup, Card, Button} from 'react-bootstrap'; 
 
@@ -47,11 +48,11 @@ const Category = ({setBookInfo}) =>{
         if(data.image !== undefined){
             return(
                 <Col  md="auto">
-                    <Card style={{ width: '10rem' }} className="h-100">
+                    <Card style={{ width: '15rem' }} className="h-100">
                             <Card.Img variant="top" src={`data:image/png;base64,${data.image}`}  alt={data.description} width="180" height="180"/>
                             <Card.Body className="d-flex flex-column">
-                                <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
-                                <Card.Text as="div" className="fw-light fs-6 content">{data.description}</Card.Text>
+                                <Card.Title className="text-center fw-bold Title">{data.name}</Card.Title>
+                                <Card.Text as="div" className="fw-light fs-6 Content">{data.description}</Card.Text>
                                 <Link to="/Products/product"  className="mt-auto"  >
                                     <Button variant="outline-success" className="w-100" onClick={e => setBookInfo(data)}>馬上購買</Button>
                                 </Link>            
