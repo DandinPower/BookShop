@@ -1,8 +1,28 @@
 .home{
     background-color: rgb(245, 243, 241);
 }
-.carousel .carousel-item img{
+.carousel .carousel-item {
     height: 600px;
     width: 1875px;
   }
-  
+.Content{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 16px;    
+    max-height: 32px;     
+    -webkit-line-clamp: 2; /* Write the number of 
+                              lines you want to be 
+                              displayed */
+    -webkit-box-orient: vertical;
+}
+.Title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+       
+    -webkit-line-clamp: 2; /* Write the number of 
+                              lines you want to be 
+                              displayed */
+    -webkit-box-orient: vertical;
+}

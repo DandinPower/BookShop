@@ -51,7 +51,7 @@ const Category = ({setBookInfo}) =>{
                             <Card.Img variant="top" src={`data:image/png;base64,${data.image}`}  alt={data.description} width="180" height="180"/>
                             <Card.Body className="d-flex flex-column">
                                 <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
-                                <Card.Text className="fw-light fs-6">{data.description}</Card.Text>
+                                <Card.Text as="div" className="fw-light fs-6 content">{data.description}</Card.Text>
                                 <Link to="/Products/product"  className="mt-auto"  >
                                     <Button variant="outline-success" className="w-100" onClick={e => setBookInfo(data)}>馬上購買</Button>
                                 </Link>            
