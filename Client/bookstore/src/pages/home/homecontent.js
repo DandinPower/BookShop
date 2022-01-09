@@ -8,6 +8,7 @@ import carouselImg3 from './../../image/getImage3.jpg';
 import carouselImg4 from './../../image/getImage4.jpg';
 import './home.css';
 import axios from 'axios'
+let userName = window.sessionStorage.getItem('userName')
 
 const HomeContent = ({ setBookInfo }) => {
     const [bookData, setBookData] = useState([""]);
@@ -59,8 +60,8 @@ const HomeContent = ({ setBookInfo }) => {
     const listBooks = bookData.map((data) => {
         if (data.image != undefined) {
             return (
-                <Col >
-                    <Card style={{ width: '10rem' }} className="h-100">
+                <Col  md="auto" >
+                    <Card style={{ width: '10rem'  }} className="h-100" >
                         <Card.Img variant="top" src={`data:image/png;base64,${data.image}`} alt={data.description} width="180" height="180" />
                         <Card.Body className="d-flex flex-column">
                             <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
@@ -83,19 +84,27 @@ const HomeContent = ({ setBookInfo }) => {
         <Table striped bordered className='home'  >
         <tbody>
             <tr>   
-                <td>
+                <td >
                     <Carousel>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg1} alt="First slide"/>
+                            {(userName==null)?
+                                <Link to="/member/login">
+                                    <img className="d-block w-100"  src={carouselImg3} alt="First slide"/>
+                                </Link>
+                                :
+                                <Link to="/member/event/Center">
+                                    <img className="d-block w-100" width={1875} height={600} src={carouselImg3} alt="First slide"/>
+                                </Link>
+                            }
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg2}  alt="Second slide"/>
+                            <img  className="d-block w-100" width={1875} height={600} src={carouselImg2}  alt="Second slide"/>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg3} alt="Third slide"/>
+                            <img  className="d-block w-100" width={1875} height={600} src={carouselImg4} alt="Third slide"/>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg4} alt="fourth slide"/>
+                            <img className="d-block w-100"  width={1875} height={600} src={carouselImg1} alt="Fourth slide"/>
                         </Carousel.Item>
                     </Carousel>
                 </td>
@@ -105,14 +114,14 @@ const HomeContent = ({ setBookInfo }) => {
                 <Table striped bordered className='home' >
                     <tbody>
                         <tr>   
-                            <td>                    
-                                <ListGroup variant = 'flush' style={{ width: "200px" }}>
-                                    <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
-                                    {listCategory}
-                                </ListGroup>
+                            <td width={"200px"} >                    
+                                    <ListGroup variant = 'flush' style={{ width: "200px" }}>
+                                        <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
+                                        {listCategory}
+                                    </ListGroup>
                             </td>                
                             <Container >
-                                <Row>
+                                <Row >
                                     {listBooks}
                                 </Row>
                             </Container>

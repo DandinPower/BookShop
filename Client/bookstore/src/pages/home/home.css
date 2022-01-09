@@ -1,7 +1,7 @@
 .home{
     background-color: rgb(245, 243, 241);
 }
-.carousel .carousel-item {
+.carousel .carousel-item img{
     height: 600px;
     width: 1875px;
   }
