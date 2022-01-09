@@ -59,7 +59,7 @@ const HomeContent = ({ setBookInfo }) => {
     const listBooks = bookData.map((data) => {
         if (data.image != undefined) {
             return (
-                <Col >
+                <Col  md="auto" >
                     <Card style={{ width: '10rem' }} className="h-100">
                         <Card.Img variant="top" src={`data:image/png;base64,${data.image}`} alt={data.description} width="180" height="180" />
                         <Card.Body className="d-flex flex-column">
@@ -105,14 +105,14 @@ const HomeContent = ({ setBookInfo }) => {
                 <Table striped bordered className='home' >
                     <tbody>
                         <tr>   
-                            <td>                    
+                            <td width={"200px"} >                    
                                     <ListGroup variant = 'flush' style={{ width: "200px" }}>
                                         <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
                                         {listCategory}
                                     </ListGroup>
                             </td>                
                             <Container >
-                                <Row>
+                                <Row >
                                     {listBooks}
                                 </Row>
                             </Container>
