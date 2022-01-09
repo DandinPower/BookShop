@@ -26,3 +26,6 @@
                               displayed */
     -webkit-box-orient: vertical;
 }
+.des{
+    line-height: 50px;
+}

@@ -64,8 +64,8 @@ const ViewCoupon =({eventName})=>{
             <td>{coupon.discount}</td>
             <td>{OutPutDate(coupon.date)}</td>
             <td>{coupon.maxQuantity}</td>
-            <td>{coupon.description}</td>
-            <td><Button variant='outline-primary' onClick={e=> ReceiveCoupon(coupon.code)} disabled={window.sessionStorage.getItem('type')!=='customer'}>領取優惠券</Button></td>
+            <td width="40%" className="text-start">{coupon.description}</td>
+            <td><Button variant='outline-success' onClick={e=> ReceiveCoupon(coupon.code)} disabled={window.sessionStorage.getItem('type')!=='customer'}>領取優惠券</Button></td>
           </tr>
           
                 )

@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {useState,useEffect} from 'react'
 import { Container, Row, Col, Button, Table, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import './../../home/home.css';
 import {Link} from 'react-router-dom'
 
 const Product = ({bookInfo,setCheckOrderInfo}) =>{
@@ -89,17 +90,20 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                           <p>商家名稱: {bookInfo.businessName}</p>
                         </Row>
                         <Row>
-                          <p>產品敘述: {bookInfo.description}</p>
-                        </Row>
-                        <Row>
                           <p>庫存狀態: {bookInfo.status}</p>
                         </Row>
+                        <Row>
+                          <p className="fw-bold">產品敘述</p>
+                          <hr/>
+                          <p className="des">{bookInfo.description}</p>
+                        </Row>
+                        
                       </Col>
 
                       <Col>
                         <ButtonGroup>
-                          <Button className="me-2 " variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') !== 'customer'}>加入購物車</Button>
-                          <Link to="/Products/orderInfo" onClick={postBook}><Button className="btn-block" variant="success" disabled={window.sessionStorage.getItem('type') !== 'customer'}>直接購買</Button></Link>
+                          <Button className="me-2" variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') !== 'customer'}>加入購物車</Button>
+                          <Link to="/Products/orderInfo" onClick={postBook}><Button variant="success" disabled={window.sessionStorage.getItem('type') !== 'customer'}>直接購買</Button></Link>
                         </ButtonGroup>
                       </Col>
                     </Row>

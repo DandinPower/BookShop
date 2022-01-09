@@ -63,7 +63,7 @@ const ManageProduct = ({setProductInfo}) => {
                   <td>{data.productId}</td>
                   <td>{data.name}</td>
                   <td>{data.price}</td>
-                  <td>{data.description}</td>
+                  <td width="40%" className="text-start">{data.description}</td>
                   <td>{data.category}</td> 
                   <td>{status}</td>
                   <td>{launch}</td>

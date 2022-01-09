@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import {Container, Table} from 'react-bootstrap'; 
+import {Container, Table, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';   
 
 const ViewEvent=({setEventName})=>{
@@ -39,7 +39,7 @@ const ViewEvent=({setEventName})=>{
                 <td>{event.organizerName}</td>
                 <td>{event.name}</td>
                 <td>{OutPutDate(event.date)}</td>
-                <td><Link to='/member/event/ViewCoupon'><button onClick={e => setEventName(event.name)}>查看此活動優惠券</button></Link></td>
+                <td><Link to='/member/event/ViewCoupon'><Button variant="outline-dark" onClick={e => setEventName(event.name)}>查看此活動優惠券</Button></Link></td>
                </tr>)
     })
 

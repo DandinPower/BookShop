@@ -110,13 +110,8 @@ const UpdateProduct = ({productInfo}) =>{
                     </Col> 
                 </Form.Group>
 
-                <br size="sm"/>
-                <Form.Group as={Row}>
-                    <Form.Label column className="text-center">商品敘述</Form.Label>
-                    <Col xs={10}>
-                        <Form.Control type="text" value={description} onChange={(e) => {setDescription(e.target.value)}}/>
-                    </Col> 
-                </Form.Group>
+                
+                
 
                 <br size="sm"/>
                 <Form.Group as={Row}>
@@ -131,6 +126,14 @@ const UpdateProduct = ({productInfo}) =>{
                     <Form.Label column className="text-center">商品分類</Form.Label>
                     <Col xs={10}>
                         <Form.Control type='text' value={category} onChange={(e) => {setCategory(e.target.value)}}/>
+                    </Col> 
+                </Form.Group>
+                
+                <br size="sm"/>
+                <Form.Group as={Row}>
+                    <Form.Label column className="text-center">商品敘述</Form.Label>
+                    <Col xs={10}>
+                        <Form.Control as="textarea" type="text" value={description} onChange={(e) => {setDescription(e.target.value)}}/>
                     </Col> 
                 </Form.Group>
 
