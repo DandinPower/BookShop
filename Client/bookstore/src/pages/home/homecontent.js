@@ -8,6 +8,7 @@ import carouselImg3 from './../../image/getImage3.jpg';
 import carouselImg4 from './../../image/getImage4.jpg';
 import './home.css';
 import axios from 'axios'
+let userName = window.sessionStorage.getItem('userName')
 
 const HomeContent = ({ setBookInfo }) => {
     const [bookData, setBookData] = useState([""]);
@@ -60,7 +61,7 @@ const HomeContent = ({ setBookInfo }) => {
         if (data.image != undefined) {
             return (
                 <Col  md="auto" >
-                    <Card style={{ width: '10rem' }} className="h-100">
+                    <Card style={{ width: '10rem'  }} className="h-100" >
                         <Card.Img variant="top" src={`data:image/png;base64,${data.image}`} alt={data.description} width="180" height="180" />
                         <Card.Body className="d-flex flex-column">
                             <Card.Title className="text-center fw-bold">{data.name}</Card.Title>
@@ -86,16 +87,24 @@ const HomeContent = ({ setBookInfo }) => {
                 <td>
                     <Carousel>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg1} alt="First slide"/>
+                            {(userName==null)?
+                                <Link to="/member/login">
+                                    <img  width={1875} height={600} src={carouselImg3} alt="First slide"/>
+                                </Link>
+                                :
+                                <Link to="/member/event/Center">
+                                    <img  width={1875} height={600} src={carouselImg3} alt="First slide"/>
+                                </Link>
+                            }
                         </Carousel.Item>
                         <Carousel.Item>
                             <img  width={1875} height={600} src={carouselImg2}  alt="Second slide"/>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg3} alt="Third slide"/>
+                            <img  width={1875} height={600} src={carouselImg4} alt="Third slide"/>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img  width={1875} height={600} src={carouselImg4} alt="fourth slide"/>
+                            <img  width={1875} height={600} src={carouselImg1} alt="Fourth slide"/>
                         </Carousel.Item>
                     </Carousel>
                 </td>
