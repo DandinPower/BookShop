@@ -54,7 +54,7 @@ router.get('/categories', async (req, res, next) => {
 })
 
 router.get('/category/:name', async (req, res, next) => {
-    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where P.category = "${req.params.name}";`
+    const sql = `select P.no as productId,A.name as businessName,P.description,P.name,P.price,P.status,P.launch,P.category,P.uploadedDate,I.content as image from product as P join business as B on P.businessId = B.id join account as A on B.id = A.id left join image_list as I on I.productId = P.no where P.category = "${req.params.name}" and P.launch = "1";`
     var response = []
     console.log(sql)
     try {
@@ -208,7 +208,8 @@ router.post('/add', datatype.verifyTokenByList, async (req, res, next) => {
                 var businessId = await database.GetBusinessId(productId)
                 console.log(businessId)
                 try {
-                    const sqlInsert = `insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)value(${customerId},"${currentDate}",${quantity},${discount},"${address}","${paymentInfo}");`
+                    const sqlInsert = `insert into orders(customerId,orderDate,quantity,discount,address,paymentInfo)value \
+                                        (${customerId},"${currentDate}",${quantity},${discount},"${address}","${paymentInfo}");`
                     console.log(sqlInsert)
                     var InsertResult = await database.sqlConnection(sqlInsert)
                     console.log(InsertResult)
@@ -319,7 +320,8 @@ router.post('/manage/add', datatype.verifyToken, async (req, res, next) => {
         console.log(businessId)
         if (businessId != null) {
             try {
-                const sqlInsert = `insert into product (businessId,description,name,price,status,category,uploadedDate) value (${businessId},"${description}","${name}",${price},"${status}","${category}","${currentDate}");`
+                const sqlInsert = `insert into product (businessId,description,name,price,status,category,uploadedDate) value \
+                                    (${businessId},"${description}","${name}",${price},"${status}","${category}","${currentDate}");`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["productId"] = result["insertId"]
@@ -402,7 +404,8 @@ router.post('/manage/update', datatype.verifyToken, async (req, res, next) => {
         console.log(businessId)
         if (businessId != null) {
             try {
-                const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}" where no = ${productId};`
+                const sqlInsert = `update product set description = "${description}",name = "${name}",price = ${price},status = "${status}",category = "${category}" \
+                                    where no = ${productId};`
                 var result = await database.sqlConnection(sqlInsert)
                 console.log(result)
                 response["state"] = 200

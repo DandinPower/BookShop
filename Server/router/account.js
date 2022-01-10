@@ -19,7 +19,8 @@ router.post('/register', async (req, res, next) => {
     let _type = data["type"]
 
     //放入Table `account`之中
-    const sql = `insert into account (address,gender,phone,email,password,userName,name) values ("${_address}","${_gender}","${_phone}","${_email}","${_userPassword}","${_userName}","${_name}");`
+    const sql = `insert into account (address,gender,phone,email,password,userName,name) values \
+                    ("${_address}","${_gender}","${_phone}","${_email}","${_userPassword}","${_userName}","${_name}");`
     var sql2 = ``;
     console.log(sql)
     var response = {
@@ -97,7 +98,13 @@ router.post('/login', async (req, res, next) => {
     try {
         var userId = await database.GetUserId(loginData["userName"])
         console.log(userId)
-        const sql = `select a.userName,a.password,a.name,a.enable,a.address,c.paymentInfo as info from account as a,customer as c where a.id = c.id and a.id = ${userId} union select a.userName,a.password,a.name,a.enable,a.address,b.description as info from account as a,business as b where a.id = b.id and a.id = ${userId};`
+        const sql = `select a.userName,a.password,a.name,a.enable,a.address,c.paymentInfo as info \
+                        from account as a,customer as c \
+                        where a.id = c.id and a.id = ${userId} \
+                        union \ 
+                        select a.userName,a.password,a.name,a.enable,a.address,b.description as info \
+                        from account as a,business as b \
+                        where a.id = b.id and a.id = ${userId};`
         console.log(sql)
         try {
             result = await database.sqlConnection(sql);
