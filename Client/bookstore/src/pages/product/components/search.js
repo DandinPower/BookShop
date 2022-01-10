@@ -7,6 +7,7 @@ import {Container, Row, Col, Table, ListGroup, Card, Button, ButtonGroup} from '
 const Search=({searchInfo,setBookInfo})=>{
     const [books, setBooks] = useState(['']);
     const [category, setCategory] = useState(['']);
+    const [categoryBooks,setCategoryBooks] = useState(['']);
     const [selectCate, setSelectCate] = useState('all');
     const [sort,setSort] = useState('Descend');
 
@@ -28,26 +29,16 @@ const Search=({searchInfo,setBookInfo})=>{
           })
     },[searchInfo])
 
-    let url;
-    if(selectCate === 'all'){
-        url = 'http://localhost:5000/product/';
-    }
-    else{
-        url = 'http://localhost:5000/product/category/';
-    }
-    
-    useEffect(
-        ()=>{
-            axios({
-                method: 'get',
-                url: url+selectCate
-              })
-              .then((result) => {
-                  setBooks(result.data)
-                })
-              .catch((err) => { console.error(err) })
-        }
-    ,[selectCate,url])
+    useEffect(()=>{
+      if(selectCate === 'all'){
+        setCategoryBooks(books)
+      }
+      else{
+        setCategoryBooks(books.filter(book => book.category === selectCate))
+      }
+    },[selectCate,books])
+
+    console.log(selectCate);
     
     if(sort === 'Descend'){
         books.sort(comparePriceDescend)
@@ -80,7 +71,7 @@ const Search=({searchInfo,setBookInfo})=>{
       return <ListGroup.Item action onClick={(e => {setSelectCate(e.target.innerHTML) })}>{data}</ListGroup.Item>
     })
 
-    const ListBooks = books.map((book)=>{
+    const ListBooks = categoryBooks.map((book)=>{
         return(
                 <Col md="auto">
                     <Card style={{ width: '15rem' }} className="h-100">
