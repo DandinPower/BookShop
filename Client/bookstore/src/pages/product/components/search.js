@@ -2,11 +2,23 @@ import React, { useEffect,useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';  
-import {Container, Row, Col, Table, ListGroup, Card, Button} from 'react-bootstrap'; 
+import {Container, Row, Col, Table, ListGroup, Card, Button, ButtonGroup} from 'react-bootstrap'; 
 
 const Search=({searchInfo,setBookInfo})=>{
     const [books, setBooks] = useState(['']);
+    const [category, setCategory] = useState(['']);
+    const [selectCate, setSelectCate] = useState('all');
     const [sort,setSort] = useState('Descend');
+
+    useEffect(()=>{
+      axios({
+          method: 'get',
+          url: 'http://localhost:5000/product/categories/',
+        })
+        .then((result) => {setCategory(result.data)})
+        .catch((err) => { console.error(err) })
+    },[])
+
     useEffect(()=>{
         axios({
             method: 'GET',
@@ -15,6 +27,27 @@ const Search=({searchInfo,setBookInfo})=>{
             setBooks(response.data)
           })
     },[searchInfo])
+
+    let url;
+    if(selectCate === 'all'){
+        url = 'http://localhost:5000/product/';
+    }
+    else{
+        url = 'http://localhost:5000/product/category/';
+    }
+    
+    useEffect(
+        ()=>{
+            axios({
+                method: 'get',
+                url: url+selectCate
+              })
+              .then((result) => {
+                  setBooks(result.data)
+                })
+              .catch((err) => { console.error(err) })
+        }
+    ,[selectCate,url])
     
     if(sort === 'Descend'){
         books.sort(comparePriceDescend)
@@ -43,9 +76,9 @@ const Search=({searchInfo,setBookInfo})=>{
       return 0;
     }
 
-    /*const listCategory = category.map((data) => {
-      return <ListGroup.Item action onClick={(e => { setSelectCate(e.target.innerHTML) })}>{data}</ListGroup.Item>
-    })*/
+    const listCategory = category.map((data) => {
+      return <ListGroup.Item action onClick={(e => {setSelectCate(e.target.innerHTML) })}>{data}</ListGroup.Item>
+    })
 
     const ListBooks = books.map((book)=>{
         return(
@@ -78,10 +111,17 @@ const Search=({searchInfo,setBookInfo})=>{
     return(
       <Table striped bordered hover>
         <tbody>
+            <tr>
+            <ButtonGroup >
+              <Button className="fs-6" variant="outline-success" onClick={e=> setSort('Descend')}>價錢由高到低</Button>
+              <Button variant="outline-success" onClick={e=> setSort('Ascend')}>價錢由低到高</Button>
+            </ButtonGroup>
+            </tr>
             <tr>   
                 <td width={"200px"}>
                     <ListGroup variant = 'flush'>
-                        <ListGroup.Item action>全部</ListGroup.Item>
+                        <ListGroup.Item action onClick={(e => {setSelectCate('all')})}>全部</ListGroup.Item>
+                        {listCategory}
                     </ListGroup>
                 </td>
                 <td>

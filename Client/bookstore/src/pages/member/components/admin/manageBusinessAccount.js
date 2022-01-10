@@ -1,7 +1,7 @@
 import { useState ,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import {Container, Table} from 'react-bootstrap'; 
+import {Container, Table, Button} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const ManageBusinessAccount = ({setAccountInfo})=>{
@@ -39,7 +39,7 @@ const ManageBusinessAccount = ({setAccountInfo})=>{
               <td>{data.address}</td>
               <td>{data.enable}</td>
               <td>
-                <Link to='/member/admin/manageAccount'><button onClick={e => setAccountInfo(data)}>修改此帳號權限</button></Link>
+                <Link to='/member/admin/manageAccount'><Button variant="outline-danger" onClick={e => setAccountInfo(data)}>修改此帳號權限</Button></Link>
               </td>
               <br/>
             </tr>
