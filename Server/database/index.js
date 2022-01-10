@@ -1,8 +1,8 @@
 const mysql = require('mysql')
 
 //Li本地端
-
-/*const pool = mysql.createPool({
+/*
+const pool = mysql.createPool({
     connectionLimit: 10,
     password: 'ELEfox650',
     user: 'root',
