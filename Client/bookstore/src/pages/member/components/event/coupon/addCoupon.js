@@ -88,7 +88,7 @@ const AddCoupon = ({eventInfo}) =>{
           <Form.Group as={Row}>
               <Form.Label column>優惠券描述</Form.Label>
               <Col xs={10}>
-                  <Form.Control type='text'onChange={e => setDescription(e.target.value)}/>
+                  <Form.Control as="textarea" type='text'onChange={e => setDescription(e.target.value)}/>
               </Col> 
           </Form.Group>
         </Form>

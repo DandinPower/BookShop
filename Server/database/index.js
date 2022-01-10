@@ -4,7 +4,7 @@ const mysql = require('mysql')
 /*
 const pool = mysql.createPool({
     connectionLimit: 10,
-    password: '1234',
+    password: 'ELEfox650',
     user: 'root',
     database: 'dandinpo_teamproject',
     host: 'localhost',
@@ -12,7 +12,7 @@ const pool = mysql.createPool({
 })*/
 
 //Liaw本地端
-
+/*
 const pool = mysql.createPool({
     connectionLimit: 10,
     password: 'root',
@@ -20,8 +20,8 @@ const pool = mysql.createPool({
     database: 'dandinpo_teamproject',
     host: 'localhost',
     port: '3306'
-})
-/*
+})*/
+
 const pool = mysql.createPool({
     connectionLimit: 10,
     password: 'admin',
@@ -29,7 +29,7 @@ const pool = mysql.createPool({
     database: 'dandinpo_teamproject',
     host: '70.40.216.229',
     port: '3306'
-})*/
+})
 
 let sqlConnection = (sql) => {
     return new Promise((resolve, reject) => {

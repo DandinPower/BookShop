@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import {Container, Table, ButtonGroup} from 'react-bootstrap'
+import {Container, Table, ButtonGroup, Button} from 'react-bootstrap'
 
 const ManageCoupon = ({setCouponInfo}) =>{
     const [coupons,setCoupons] = useState([''])
@@ -69,13 +69,13 @@ const ManageCoupon = ({setCouponInfo}) =>{
                 <td>{OutPutDate(coupon.date)}</td>
                 <td>{coupon.discount}</td>
                 <td>{coupon.maxQuantity}</td>
-                <td>{coupon.description}</td>
+                <td width="30%" className="text-start">{coupon.description}</td>
                 <td>{coupon.name}</td>
                 <td>
                   <ButtonGroup vertical>
-                    <Link to='/member/event/updateCoupon'><button onClick={e => setCouponInfo(coupon)}>更新優惠</button></Link>
+                    <Link to='/member/event/updateCoupon'><Button variant="outline-success" onClick={e => setCouponInfo(coupon)}>更新優惠券</Button></Link>
                     <br/>
-                    <button onClick={e => deleteCoupon(coupon.code)}>刪除優惠券</button>
+                    <Button variant="outline-danger" onClick={e => deleteCoupon(coupon.code)}>刪除優惠券</Button>
                   </ButtonGroup>
                 </td>
                </tr>)

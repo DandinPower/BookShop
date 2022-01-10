@@ -70,13 +70,13 @@ const ManageEvent = ({setEventInfo,setEventName})=>{
               <td>{OutPutDate(event.date)}</td>
               <td>
                 <ButtonGroup vertical>
-                  <Link to = '/member/event/updateEvent'><button className='me-2' onClick={e => setEventInfo(event)}>修改活動</button></Link>
+                  <Link to = '/member/event/updateEvent'><Button variant="outline-success" className='me-2' onClick={e => setEventInfo(event)}>修改活動</Button></Link>
                   <br/>
-                  <button onClick={e => deleteEvent(event.name)}>刪除活動</button>
+                  <Link to = '/member/event/addCoupon'><Button variant="outline-success" onClick={e => setEventInfo(event)}>新增優惠券</Button></Link>
                   <br/>
-                  <Link to = '/member/event/addCoupon'><button onClick={e => setEventInfo(event)}>新增優惠券</button></Link>
+                  <Link to = '/member/event/manageEvent'><Button variant="outline-danger" onClick={e => deleteEvent(event.name)}>刪除活動</Button></Link>                 
                   <br/>
-                  <Link to='/member/event/ViewCoupon'><button onClick={e => setEventName(event.name)}>查看此活動優惠券</button></Link>
+                  <Link to='/member/event/ViewCoupon'><Button variant="outline-dark" onClick={e => setEventName(event.name)}>查看此活動優惠券</Button></Link>
                 </ButtonGroup>
               </td>
              </tr>)

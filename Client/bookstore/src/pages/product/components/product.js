@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, {useState,useEffect} from 'react'
-import { Container, Row, Col, Button, Table} from 'react-bootstrap'; 
+import { Container, Row, Col, Button, Table, ButtonGroup} from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import './../../home/home.css';
 import {Link} from 'react-router-dom'
 
 const Product = ({bookInfo,setCheckOrderInfo}) =>{
@@ -89,21 +90,21 @@ const Product = ({bookInfo,setCheckOrderInfo}) =>{
                           <p>商家名稱: {bookInfo.businessName}</p>
                         </Row>
                         <Row>
-                          <p>產品敘述: {bookInfo.description}</p>
-                        </Row>
-                        <Row>
                           <p>庫存狀態: {bookInfo.status}</p>
                         </Row>
+                        <Row>
+                          <p className="fw-bold">產品敘述</p>
+                          <hr/>
+                          <p className="des">{bookInfo.description}</p>
+                        </Row>
+                        
                       </Col>
 
                       <Col>
-                        <Row>
-                          <Button variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') !== 'customer'}>加入購物車</Button>
-                        </Row>
-                        <br/>
-                        <Row>
-                          <Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>
-                        </Row>
+                        <ButtonGroup>
+                          <Button className="me-2" variant="outline-success" onClick={addShopCart} disabled={window.sessionStorage.getItem('type') !== 'customer'}>加入購物車</Button>
+                          <Link to="/Products/orderInfo" onClick={postBook}><Button variant="success" disabled={window.sessionStorage.getItem('type') !== 'customer'}>直接購買</Button></Link>
+                        </ButtonGroup>
                       </Col>
                     </Row>
 
@@ -158,4 +159,5 @@ export default Product
                   <tbody>
                     {listComments}
                   </tbody>
-        </div>*/ 
+        </div>
+<Button variant="success" onClick={postBook} disabled={window.sessionStorage.getItem('type') !== 'customer'}><Link to="/Products/orderInfo">直接購買</Link></Button>*/ 

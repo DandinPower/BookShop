@@ -44,7 +44,17 @@
 .navbar-brand {
     display: flex;
     align-items: center;
-  }
-  .navbar-brand>img {
+}
+.navbar-brand>img {
     padding: 7px 14px;
-  }
+}
+
+
+.description{
+    display: block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+ 
