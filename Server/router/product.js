@@ -19,7 +19,7 @@ router.get('/search/:keywords', async (req, res, next) => {
     console.log(sql)
     try {
         result = await database.sqlConnection(sql);
-        console.log(result);
+        //console.log(result);
         result.forEach(function (item, index, array) {
             let product = datatype.json2json(item)
             if (product["image"] != null) {
@@ -28,7 +28,7 @@ router.get('/search/:keywords', async (req, res, next) => {
             else {
                 product["image"] = ""
             }
-            console.log(product)
+            //console.log(product)
             response.push(product)
         });
     } catch (e) {
