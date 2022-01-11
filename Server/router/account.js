@@ -19,7 +19,7 @@ router.post('/register', async (req, res, next) => {
     let _type = data["type"]
 
     //放入Table `account`之中
-    const sql = `insert into account (address,gender,phone,email,password,userName,name) values \
+    const sql = `insert into account (address,gender,phone,email,password,userName,name) value \
                     ("${_address}","${_gender}","${_phone}","${_email}","${_userPassword}","${_userName}","${_name}");`
     var sql2 = ``;
     console.log(sql)
