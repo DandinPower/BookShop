@@ -1,4 +1,4 @@
-const mysql = require('mysql')
+const mysql = require('mysql2')
 
 //Li本地端
 /*
@@ -20,14 +20,25 @@ const pool = mysql.createPool({
     database: 'dandinpo_teamproject',
     host: 'localhost',
     port: '3306'
-})
-*/
+})*/
+
+/*
 const pool = mysql.createPool({
     connectionLimit: 10,
     password: 'admin',
     user: 'dandinpo_admin',
     database: 'dandinpo_teamproject',
     host: '70.40.216.229',
+    port: '3306'
+})*/
+
+//GCP
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    password: 'root',
+    user: 'root',
+    database: 'dandinpo_teamproject',
+    host: '104.199.201.195',
     port: '3306'
 })
 

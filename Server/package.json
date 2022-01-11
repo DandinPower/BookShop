@@ -23,5 +23,8 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.14",
     "puppeteer": "^13.0.0"
+  },
+  "dependencies": {
+    "mysql2": "^2.3.3"
   }
 }
