@@ -35,6 +35,12 @@
     ```bash
     npm run server
     ```
+
+# 資料庫安裝
+
+1. 打開mysql workbench 
+2. 先運行Server/database/setup.sql
+3. 再運行Server/database/insert.sql
     
 
 ## Account
