@@ -68,12 +68,12 @@
 
 - 首頁
     
-    ![1.JPG](image/1.jpg)
+    ![1.JPG](image/1.JPG)
     
 - 商品瀏覽
     
-    ![2.JPG](image/2.jpg)
+    ![2.JPG](image/2.JPG)
     
 - 結帳頁面
     
-    ![3.JPG](image/3.jpg)
+    ![3.JPG](image/3.JPG)
