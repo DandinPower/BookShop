@@ -62,3 +62,18 @@
 ## Event
 
 [說明文件](Server/document/event.md)
+
+
+# 簡單介面
+
+- 首頁
+    
+    ![1.JPG](image/1.jpg)
+    
+- 商品瀏覽
+    
+    ![2.JPG](image/2.jpg)
+    
+- 結帳頁面
+    
+    ![3.JPG](image/3.jpg)
